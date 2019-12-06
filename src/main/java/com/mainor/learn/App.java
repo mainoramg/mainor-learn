@@ -17,12 +17,16 @@ public class App
 //        System.out.println( "isVoid true: " + test.letsChangeTheType(true, PlayingWithEnum.Type.VOID).toString() );
 //        System.out.println( "isVoid false: " + test.letsChangeTheType(false, PlayingWithEnum.Type.VOID).toString() );
 
-        MapToHtml mapToHtml = new MapToHtml();
-        System.out.println(mapToHtml.mapToHtml(mapToHtml.getData()));
+//        MapToHtml mapToHtml = new MapToHtml();
+//        System.out.println(mapToHtml.mapToHtml(mapToHtml.getData()));
 
-        String downloads = "[test]";
-        downloads = downloads.substring(1);
-        downloads = downloads.substring(0, downloads.length() - 1);
-        System.out.println("downloads="+downloads);
+//        String downloads = "[test]";
+//        downloads = downloads.substring(1);
+//        downloads = downloads.substring(0, downloads.length() - 1);
+//        System.out.println("downloads="+downloads);
+
+        PalyingWithOptional palyingWithOptional = new PalyingWithOptional();
+        palyingWithOptional.mapExample("mainoramg.com.test");
+        palyingWithOptional.mapExample(null);
     }
 }
