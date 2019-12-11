@@ -25,8 +25,16 @@ public class App
 //        downloads = downloads.substring(0, downloads.length() - 1);
 //        System.out.println("downloads="+downloads);
 
-        PalyingWithOptional palyingWithOptional = new PalyingWithOptional();
-        palyingWithOptional.mapExample("mainoramg.com.test");
-        palyingWithOptional.mapExample(null);
+//        PalyingWithOptional palyingWithOptional = new PalyingWithOptional();
+//        palyingWithOptional.mapExample("mainoramg.com.test");
+//        palyingWithOptional.mapExample(null);
+
+        PlayingWithDates playingWithDates = new PlayingWithDates();
+        String date = "05/02/1970";
+        playingWithDates.setLocalDateFromString(date);
+        System.out.println("Original date: "+date);
+        System.out.println("Month: "+playingWithDates.getMonth());
+        System.out.println("Day: "+playingWithDates.getDay());
+        System.out.println("Year: "+playingWithDates.getYear());
     }
 }
