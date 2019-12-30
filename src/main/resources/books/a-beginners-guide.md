@@ -1,5 +1,8 @@
 # A beginners Guide
-## Java Keywords
+
+## Chapter 1: Java Fundamentals
+
+### Java Keywords
 These keywords cannot be used as names for a variable, class, or method. The keywords `const` and `goto` are reserved but not used.
 ```text
 abstract    default    goto          package         this
@@ -20,7 +23,7 @@ In addition to the keywords, Java reserves the following. These are values used 
 ```text
 true        false      null
 ```
-## Identifiers
+### Identifiers
 An identifier is a name given to a method, a variable, or any other user-defined item.
 * Can be from one to several characters long.
 * May start with any **letter** of the alphabet, an **underscore**, or a **dollar** sign. Next may be either a **letter**, a **digit**, a **dollar** sign, or an **underscore**.
@@ -33,7 +36,10 @@ Here are some examples of acceptable identifiers:
 Test    x       y2        MaxLoad
 $up     _top    my_var    sample23
 ```
-## Primitive Types
+
+## Chapter 2: Introducing Data Types and Operators
+
+### Primitive Types
 At the core of Java are eight primitive types of data. The term *primitive* is used here to indicate that these types are not objects in a object-oriented sense, but rather, normal binary values. These primitive types are not objects because of efficiency concerns.
 
 Type | Meaning
@@ -47,7 +53,7 @@ int | Integer
 long | Long integer
 short | Short integer
 
-### Integers
+#### Integers
 Java defines four integer types: **byte**, **short**, **int**, and **long**. All of the integer types are signed positive and negative values. Java does not support unsigned (positive-only) integers.
 
 Type | Width in Bits | Range
@@ -63,7 +69,7 @@ Use of the integer types:
 * **int**: the most commonly used integer type is **int**. Variables of type **int** are often employed to control loops, to index arrays, and to perform general purpose math.
 * **long**: when you need an integer that has a range greater than **int**, use **long**.
 
-### Floating-Point
+#### Floating-Point
 The floating-point types can represent numbers that have fractional components. There are two kinds of floating-point types: **float** and **double**.
 
 Type | Width in Bits | Represent
@@ -73,7 +79,7 @@ double | 64 | Double-precision numbers
 
 Of the two, **double** is the most commonly used because all of the math functions in Java's class library use **double** values. For example, the **sqrt()** method (which is defined by the **Math** class) returns a **double** value that is the square root of its **double** argument.
 
-### Characters
+#### Characters
 Java uses Unicode. Unicode defines a character set than can represent all of the characters found in all human languages. The standard 8-bit ASCII character set is a subset of Unicode and range from 0 to 127. Thus, the ASCII characters are still valid Java characters.
 
 Type | Width in Bits | Range
@@ -94,7 +100,7 @@ ch = 90;
 System.out.println("ch is now "+ch); //output: ch is now Z
 ```
 
-## Literals
+### Literals
 
 *Literals* refer to fixed values that are represented in their human readable form. Literals are also called *constants*. Java literals can be of any of the primitive data types.
 
@@ -115,12 +121,177 @@ Beginning with JDK 7, you can embed one or more underscores into an integer or f
 ```
 This specifies the value 123,451,234. The use of underscores is particularly useful when encoding things like part numbers, customer IDs, and status codes that are commonly thought of as consisting of subgroups of digits.
 
-### Hexadecimal, Octal and Binary Literals
+#### Hexadecimal, Octal and Binary Literals
 
 Literal | Example | Note
--------- | ------ | ----
+------- | ------- | ----
 Hexadecimal | 0xFF | A hexadecimal literal must begin with **0x** or **0X** (a zero followed by an x or X)
 Octal | 018 | An octal literal begins with a zero
 Binary | 0b1100 | A binary literal must begin with **0b** or **0B** (a zero followed by an b or B). Important: only beginning with JDK 7
+
+#### Character Escape Sequences
+
+These sequences are used in place of the characters that they represent.
+
+Escape Sequence | Description
+--------------- | -----------
+\' | Single quote
+\" | Double quote
+\\ | Backslash
+\r | Carriage return
+\n | New line
+\f | Form feed
+\t | Horizontal tab
+\b | Backspace
+\ddd | Octal constant (where *ddd* is an octal constant)
+\uxxxx | Hexadecimal constant (where *xxxx* is a hexadecimal constant)
+
+For example, this assigns **ch** the tab character:
+```java
+char ch = '\t';
+```
+
+#### String Literals
+
+A *string* is a set of characters enclosed by double quotes. In addition to normal characters, a string literal can also contain one or more of the escape sequences. For example:
+```java
+System.out.println("First line\nSecond line");
+System.out.println("A\tB\tC");
+```
+
+### The scope and Lifetime of Variables
+
+There is one quirk to Java's scope rules that may surprise you: although blocks can be nested, no variable declared within an inner scope can have the same name as a variable declared by an enclosing scope. For example the following program, which tries to declare two separate variables with the same name, will not compile:
+```java
+public class NestVar {
+    public static void main(String args[]) {
+        int count;
+        for (count = 0; count < 10; count++) {
+            System.out.println("This is count: "+count);
+            int count; //illegal !!!!!!!!!!!!!!!!!!!!!!!!!!!
+            for (count = 0; count < 2; count++)
+                System.out.println("This program is in error!");
+        }
+    }
+}
+```
+
+### Operators
+
+#### Arithmetic Operators
+
+Operator | Meaning
+-------- | -------
++ | Addition (also unary plus)
+- | Subtraction (also unary minus)
+* | Multiplication
+/ | Division
+% | Modulus
+++ | Increment
+-- | Decrement
+
+Special situations:
+* The operators +, -, *, and / can be used on objects of type **char**.
+* When / is applied to an integer, any reminder will be truncated. Example: 10/3 = 3
+* You can obtain the remainder of a division by suing the modulus operator %. Example: 10 % 3 = 1
+* The % can be applied to both integer and floating-point types. Thus, 10.0 % 3.0 is also 1.
+
+##### Increment and Decrement
+
+The increment operator adds 1 to its operand, and the decrement operator subtracts 1. Therefore,
+
+`x++;` is the same as `x = x + 1;`
+
+`x--;` is the same as `x = x - 1;`
+
+Both the increment and decrement operators can either precede (prefix) or follow (postfix) the operand. For example,
+
+`x = x + 1;` 
+
+can be written as `++x; // prefix form` 
+
+or as `x++; // postfix form`
+
+When an increment or decrement operator precedes its operand, Java will perform the corresponding operation prior to obtaining the operand's value for use by the rest of the expression. If the operator follows its operand, Java will obtain the operand's value before incrementing or decrementing it. Consider the following:
+```java
+x = 10;
+y = ++x;
+// x is set to 11
+// y is set to 11
+
+x = 10;
+y = x++;
+// x is set to 11
+// y is set to 10
+```
+
+#### Relational and Logical Operators
+
+The relational operators ans shown here:
+
+Operator | Meaning
+-------- | -------
+== | Equal to
+!= | Not equal to
+> | Greater than
+< | Less than
+>= | Greater than or equal to
+<= | Less than or equal to
+
+The logical operators are shown next:
+
+Operator | Meaning
+-------- | -------
+& | AND
+&#124; | OR
+^ | XOR (exclusive OR)
+&#124;&#124; | Short-circuit OR
+&& | Short-circuit AND
+! | NOT
+
+Note: all of the relational operators can be applied to all numeric types and to type **char**.
+
+Truth table for logical operators:
+
+p | q | p & q | p &#124; q | p ^ q | !p
+- | - | ----- | ---------- | ----- | --
+False | False | False | False | False | True
+True | False | False | True | True | False
+False | True | False | True | True | True
+True | True | True | True | False | False
+
+As the table shows, the outcome of an exclusive OR operation is true when exactly one and only one operand is true.
+
+#### Short-Circuit Logical Operators
+
+The short-circuit AND operator is **&&**, and the short-circuit OR operator is **||**. Their normal counterparts are **&** and **|**. The only difference between the normal and short-circuit versions is that the normal operands will always evaluate each operand, but short-circuit versions will evaluate the second operand only when necessary.
+
+#### The Assigment Operator
+
+Pending.
+
+#### Shorthand Assignments
+
+Pending.
+
+#### Type Conversion in Assignments
+
+Pending.
+
+#### Casting Incompatible Types
+
+Pending.
+
+#### Operator Precedence
+
+Pending.
+
+#### Expressions
+
+Pending.
+
+##### Type Conversion in Expressions
+
+Pending.
 
 Enjoy!
