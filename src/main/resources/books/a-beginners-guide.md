@@ -367,14 +367,15 @@ ch = (char) b; // Cast between incompatible types. ch = 'X'
 
 #### Operator Precedence
 
-The following table shows the order of precedence for all Java operators, from highest to lowest. Although technically separators, the **[]**, **()**, and **.** can also act like operators. In that capacity, they would have the highest precedence.
+The following table shows the order of precedence for all Java operators, from highest to lowest.
 
 **Highest** | &nbsp; | &nbsp; | &nbsp; | &nbsp; | &nbsp; | &nbsp;
 ----------- | ------ | ------ | ------ | ------ | ------ | ------
+[] | () | . |  |  |  | 
 ++ (postfix) | -- (postfix) |  |  |  |  | 
 ++ (prefix) | -- (prefix) | ~ | ! | + (unary) | - (unary) | (type-cast)
 &#42; | / | % |  |  |  | 
-+ | - |  |  |  |  | 
+&#43; | - |  |  |  |  | 
 &gt;&gt; | &gt;&gt;&gt; | << |  |  |  | 
 &gt; | &gt;= | < | <= | instanceof |  | 
 == | != |  |  |  |  | 
@@ -413,7 +414,7 @@ b = 10;
 b = (byte) (b * b); // Cast is needed here to assign an int to a byte.
 ```
 
-Somewhat counterintuitively, no cast is needed when assigning **b &#42; b** to **i**, because **b** is promoted to **int** when the expression is evaluated. However, when you try to assign **b &#42; b** to **b**, you do need a cast—back to **byte**! Keep this in mind if you get unexpected type-incompatibility error messages on expressions that would otherwise seem perfectly OK.
+Somewhat counterintuitively, no cast is needed when assigning **b &#42; b** to **i**, because **b** is promoted to **int** when the expression is evaluated. However, when you try to assign **b &#42; b** to **b**, you do need a cast-back to **byte**! Keep this in mind if you get unexpected type-incompatibility error messages on expressions that would otherwise seem perfectly OK.
 
 This same sort of situation also occurs when performing operations on **char**s. For example, in the following fragment, the cast back to **char** is needed because of the promotion of **ch1** and **ch2** to **int** within the expression:
 ```java
