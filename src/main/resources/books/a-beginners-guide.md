@@ -135,9 +135,9 @@ These sequences are used in place of the characters that they represent.
 
 Escape Sequence | Description
 --------------- | -----------
-\' | Single quote
-\" | Double quote
-\\ | Backslash
+\\' | Single quote
+\\" | Double quote
+\\\ | Backslash
 \r | Carriage return
 \n | New line
 \f | Form feed
@@ -182,13 +182,13 @@ public class NestVar {
 
 Operator | Meaning
 -------- | -------
-+ | Addition (also unary plus)
-- | Subtraction (also unary minus)
-* | Multiplication
-/ | Division
-% | Modulus
-++ | Increment
--- | Decrement
+`+` | Addition (also unary plus)
+`-` | Subtraction (also unary minus)
+`*` | Multiplication
+`/` | Division
+`%` | Modulus
+`++` | Increment
+`--` | Decrement
 
 Special situations:
 * The operators +, -, *, and / can be used on objects of type **char**.
@@ -233,7 +233,7 @@ Operator | Meaning
 -------- | -------
 == | Equal to
 != | Not equal to
-> | Greater than
+&gt; | Greater than
 < | Less than
 >= | Greater than or equal to
 <= | Less than or equal to
@@ -253,8 +253,8 @@ Note: all of the relational operators can be applied to all numeric types and to
 
 Truth table for logical operators:
 
-p | q | p & q | p &#124; q | p ^ q | !p
-- | - | ----- | ---------- | ----- | --
+ p  |  q  | p & q | p &#124; q | p ^ q | !p 
+--- | --- | ----- | ---------- | ----- | ---
 False | False | False | False | False | True
 True | False | False | True | True | False
 False | True | False | True | True | True
