@@ -235,7 +235,7 @@ Operator | Meaning
 != | Not equal to
 &gt; | Greater than
 < | Less than
->= | Greater than or equal to
+&gt;= | Greater than or equal to
 <= | Less than or equal to
 
 The logical operators are shown next:
