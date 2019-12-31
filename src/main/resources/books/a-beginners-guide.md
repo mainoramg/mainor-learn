@@ -298,7 +298,44 @@ Because there operators combine an operation with an assignment, they are formal
 
 #### Type Conversion in Assignments
 
-Pending.
+In programming, it is common to assign one type of variable to another. For example, you might want to assign an **int** value to a **float** variable, as shown here:
+```java
+int i;
+float f; 
+
+i = 10;
+f = i; // assign an int to a float 
+```
+
+When compatible types are mixed in an assignment, the value of the right side is automatically converted to the type of the left side. Thus, in the preceding fragment, the value in **i** is converted into a **float** and then assigned to **f**. However, because of Java's strict type checking, not all types are compatible, and thus, not all type conversions are implicitly allowed. For example, **boolean** and **int** are not compatible. 
+
+When one type of data is assigned to another type of variable, an *automatic type conversion* will take place if:
+* The two types are compatible.
+* The destination type is larger than the source type.
+
+When these two conditions are met, a *widening conversion* takes place. For example, the **int** type is always large enough to hold all valid **byte** values, and both **int** and **byte** are integer types, so an automatic conversion from **byte** to **int** can be applied.
+
+For widening conversions, the numeric types, including integer and floating-point types, are compatible with each other. For example, the following program is perfectly valid since **long** to **double** is a widening conversion that is automatically performed. 
+```java
+long L;
+double D;
+
+L = 100123285L;
+D = L; // Automatic conversion from long to double
+```
+
+Although there is an automatic conversion from **long** to **double**, there is no automatic conversion from **double** to **long**, since this is not a widening conversion. Thus, the following version of the preceding program is invalid.
+```java
+long L;
+double D;
+
+D = 100123285.0;
+L = D; // Illegal !!! No automatic conversion from double to long
+```
+Some interesting facts about conversions:
+* There are no automatic conversions from the numeric types to **char** or **boolean**.
+* **char** and **boolean** are not compatible with each other.
+* An integer literal can be assigned to **char**.
 
 #### Casting Incompatible Types
 
