@@ -339,18 +339,89 @@ Some interesting facts about conversions:
 
 #### Casting Incompatible Types
 
-Pending.
+When a cast involves a *narrowing conversion*, information might be lost:
+* When casting a **long** into a **short**, information will be lost if the **long**'s value is greater than the range of a **short** because its high-order bits are removed.
+* When a floating-point value is cast to an integer type, the fractional component will also be lost due to truncation. For example, if the value 1.23 is assigned to an integer, the resulting value will simply be 1. The 0.23 is lost. 
+
+The following program demonstrates some type conversions that require casts: 
+```java
+double x, y;
+byte b;
+int i;
+char ch;
+
+x = 10.0;
+y = 3.0;
+
+i = (int) (x / y); // Truncation will occur in this conversion. Cast double to int. i = 3
+
+i = 100;
+b = (byte) i; // No loss of info here. A byte can hold the value 100. b = 100
+
+i = 257;
+b = (byte) i; // Information loss this time. A byte cannot hold the value 257. b = 1
+
+b = 88; // ASCII code for X
+ch = (char) b; // Cast between incompatible types. ch = 'X'
+```
 
 #### Operator Precedence
 
-Pending.
+The following table shows the order of precedence for all Java operators, from highest to lowest. Although technically separators, the **[]**, **()**, and **.** can also act like operators. In that capacity, they would have the highest precedence.
+
+**Highest** | &nbsp; | &nbsp; | &nbsp; | &nbsp; | &nbsp; | &nbsp;
+----------- | ------ | ------ | ------ | ------ | ------ | ------
+++ (postfix) | -- (postfix) |  |  |  |  | 
+++ (prefix) | -- (prefix) | ~ | ! | + (unary) | - (unary) | (type-cast)
+&#42; | / | % |  |  |  | 
++ | - |  |  |  |  | 
+&gt;&gt; | &gt;&gt;&gt; | << |  |  |  | 
+&gt; | &gt;= | < | <= | instanceof |  | 
+== | != |  |  |  |  | 
+& |  |  |  |  |  | 
+^ |  |  |  |  |  | 
+&#124; |  |  |  |  |  | 
+&& |  |  |  |  |  | 
+&#124;&#124; |  |  |  |  |  | 
+?: |  |  |  |  |  | 
+-&gt; |  |  |  |  |  | 
+= | op= |  |  |  |  | 
+**Lowest** |  |  |  |  |  | 
+
 
 #### Expressions
 
-Pending.
-
 ##### Type Conversion in Expressions
 
-Pending.
+Within an expression, it is possible to mix two or more different types of data as long as they are compatible with each other. For example, you can mix **short** and **long** within an expression because they are both numeric types. When different types of data are mixed within an expression, they are all converted to the same type. This is accomplished through the use of Java's *type promotion rules*:
+* First, all **char**, **byte**, and **short** values are promoted to **int**.
+* Then, if one operand is a **long**, the whole expression is promoted to **long**.
+* If one operand is a **float** operand, the entire expression is promoted to **float**.
+* If any of the operands is **double**, the result is **double**.
+
+It is important to understand that type promotions apply only to the values operated upon when an expression is evaluated. For example, if the value of a **byte** variable is promoted to **int** inside an expression, outside the expression, the variable is still a **byte**. Type promotion only affects the evaluation of an expression.
+
+Type promotion can, however, lead to somewhat unexpected results. For example, when an arithmetic operation involves two **byte** values, the following sequence occurs: First, the **byte** operands are promoted to **int**. Then the operation takes place, yielding an **int** result. Thus, the outcome of an operation involving two **byte** values will be an **int**. This is not what you might intuitively expect. Consider the following program:
+```java
+byte b;
+int i;
+
+b = 10;
+i = b * b; // No cast needed because result is already elevated to int.
+
+b = 10;
+b = (byte) (b * b); // Cast is needed here to assign an int to a byte.
+```
+
+Somewhat counterintuitively, no cast is needed when assigning **b &#42; b** to **i**, because **b** is promoted to **int** when the expression is evaluated. However, when you try to assign **b &#42; b** to **b**, you do need a cast—back to **byte**! Keep this in mind if you get unexpected type-incompatibility error messages on expressions that would otherwise seem perfectly OK.
+
+This same sort of situation also occurs when performing operations on **char**s. For example, in the following fragment, the cast back to **char** is needed because of the promotion of **ch1** and **ch2** to **int** within the expression:
+```java
+char ch1 = 'a', ch2 = 'b';
+
+ch1 = (char) (ch1 + ch2);
+```
+
+Without the cast, the result of adding **ch1** to **ch2** would be **int**, which can't be assigned to a **char**. 
 
 Enjoy!
