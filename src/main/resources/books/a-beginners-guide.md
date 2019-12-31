@@ -268,11 +268,33 @@ The short-circuit AND operator is **&&**, and the short-circuit OR operator is *
 
 #### The Assigment Operator
 
-Pending.
+The assigment operator does have one interesting attribute that you may not be familiar with: it allows you to create a chain of assignments. For example:
+```java
+int x, y, z;
 
-#### Shorthand Assignments
+x = y = z = 100; // set x, y, and z to 100
+```
 
-Pending.
+#### Shorthand Assignments (Compound Assignments)
+
+Java provides special *shorthand* assignment operators that simplify the coding of certain assignments statements. This shorthand will work for all the binary operators in Java (that is, those that require two operands). The general form of the shorthand is:
+
+*var op = expression*
+
+Some examples:
+
+`x = x + 10;` can be written as `x += 10;`
+
+`x = x - 100;` is the same as `x -= 100;`
+
+Thus, the arithmetic and logical shorthand assignment operators are the following:
+
+Operator | Operator | Operator | Operator
+-------- | -------- | -------- | --------
++= | -= | *= | /=
+%= | &= | &#124;= | ^=
+
+Because there operators combine an operation with an assignment, they are formally referred to as *compound assignment* operators.
 
 #### Type Conversion in Assignments
 
