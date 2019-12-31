@@ -35,6 +35,7 @@ Icon
 
 # IntelliJ
 .idea
+*.iml
 
 # Maven
 target
