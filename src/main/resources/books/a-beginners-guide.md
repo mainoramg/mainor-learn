@@ -845,4 +845,86 @@ Outer loop pass 8, Inner loop: 1234
 Outer loop pass 9, Inner loop: 1234
 ```
 
+## Chapter 4: Introducing Classes, Objects, and Methods
+
+### Class Fundamentals
+
+A class is a template that defines the form of an object.
+
+#### Defining a Class
+
+Pending: screenshot 84.
+
+### How Objects Are Created
+
+Pending: screenshot 85.
+
+### Reference Variables and Assignment
+
+Pending: screenshot 85, 86.
+
+### Returning from a Method
+
+Pending: screenshot 87.
+
+### Constructors
+
+Pending: screenshot 88.
+
+### The new Operator Revisited
+
+Pending: screenshot 89.
+
+### Garbage Collection
+
+Pending: screenshot 89, 90.
+
+### The finalize() Method
+
+Pending: screenshot 91, 92.
+
+### The this Keyword
+
+Pending: screenshot 93, 94.
+
+## Chapter 5: More Data Types and Operators
+
+### Arrays
+
+Pending: screenshot 95.
+
+#### One-Dimensional Arrays
+
+Pending: screenshot 95, 96, 97, 98, 99, 100.
+
+### Multidimensional Arrays
+
+#### Two-Dimensional Arrays
+
+Pending: screenshot 100, 101.
+
+### Irregular Arrays
+
+Pending: screenshot 103.
+
+#### Arrays of Three or more Dimensions
+
+Pending: screenshot 104.
+
+#### Initializing Multidimensional Arrays
+
+Pending: screenshot 104, 105.
+
+### Alternative Array Declaration Syntax
+
+Pending: screenshot 106.
+
+### Assigning Array References
+
+Pending: screenshot 107, 108.
+
+### Using the length Member
+
+Pending: screenshot 109.
+
 Enjoy!
