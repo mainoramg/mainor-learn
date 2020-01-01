@@ -701,11 +701,148 @@ Typically, *label* is the name of a label that identifies a block of code. When 
 
 To name a block, put a label at the start of it. The block being labeled can be a stand-alone block, or a statement that has a block as its target. A *label* is any valid Java identifier followed by a colon. Once you have labeled a block, you can then use this label as the target of a **break** statement. Doing so causes execution to resume at the *end* of the labeled block. For example, the following program shows three nested blocks:
 ```java
-// pending. Screenshot 79 of 109
+for (int i = 1; i < 4; i++) {
+    one: {
+        two: {
+            three: {
+                System.out.println("\ni is " + i);
+                if (i == 1) break one; // Break to a label
+                if (i == 2) break two;
+                if (i == 3) break three;
+                
+                // this is never reached
+                System.out.println("won't print");
+            }
+            System.out.println("After block three.");
+        }
+        System.out.println("After block two.");
+    }
+    System.out.println("After block one.");
+}
+System.out.println("After for.");
+```
+
+The output from the program is shown here:
+```text
+i is 1
+After block one.
+
+i is 2
+After block two.
+After block one.
+
+i is 3
+After block three.
+After block two.
+After block one.
+After for.
+```
+
+Here is another example. This time, **break** is being used to jump outside of a series of nested **for** loops. When the **break** statement in the inner loop is executed, program control jumps to the end of the block defined by the outer **for** loop, which is labeled by **done**. This causes the remainder of all three loops to be bypassed.
+```java
+done: for (int i = 0; i < 10; i++) {
+    for (int j = 0; j < 10; j++) {
+        for (int k = 0; k < 10; k++) {
+            System.out.println(k + " ");
+            if (k == 5) break done; // jump to done
+        }
+        System.out.println("After k loop"); // won't execute
+    }
+    System.out.println("After j loop"); // won't execute
+}
+System.out.println("After i loop");
+```
+
+The output from the program is shown here:
+```text
+0 
+1 
+2 
+3 
+4 
+5 
+After i loop
+```
+
+Precisely where you put a label is very important, especially when working with loops. For example, consider the following program:
+```java
+int x = 0, y = 0;
+
+// here, put label before for statement.
+stop1: for (x = 0; x < 5; x++) {
+    for (y = 0; y < 5; y++) {
+        if (y == 2) break stop1;
+        System.out.println("x and y: " + x + " " + y);
+    }
+}
+
+System.out.println();
+
+// now, put a label immediately before {
+for (x = 0; x < 5; x++)
+stop2: {
+    for (y = 0; y < 5; y++) {
+        if (y == 2) break stop2;
+        System.out.println("x and y: " + x + " " + y);
+    }
+}
+```
+
+The output from the program is shown here:
+```text
+x and y: 0 0
+x and y: 0 1
+
+x and y: 0 0
+x and y: 0 1
+x and y: 1 0
+x and y: 1 1
+x and y: 2 0
+x and y: 2 1
+x and y: 3 0
+x and y: 3 1
+x and y: 4 0
+x and y: 4 1
+```
+
+Keep in mind that you cannot **break** to any label that is not defined for an enclosing block. Since the loop labeled **one** does not enclose the **break** statement, it is not possible to transfer control to that block. For example, the following program is invalid and will not compile:
+```java
+one: for (int i = 0; i < 3; i++) {
+    System.out.print("Pass " + i + ": ");
+}
+
+for (int j = 10; j < 100; j++) {
+    if (j == 10) break one; // WRONG!!!
+    System.out.print(j + " ");
+}
 ```
 
 ### Use continue
 
-Pending.
+In **while** and **do-while** loops, a **continue** statement will cause control to go directly to the conditional expression and then continue the looping process. In the case of the **for**, the iteration expression of the loop is evaluated, then the conditional expression is executed, and then the loop continues.
+
+As with the **break** statement, **continue** may specify a label to describe which enclosing loop to continue. Here is an example program that uses **continue** with a label:
+```java
+outerloop: for (int i = 1; i < 10; i++) {
+    System.out.print("\nOuter loop pass " + i + ", Inner loop: ");
+    for (int j = 1; j < 10; j++) {
+        if (j == 5) continue outerloop; // continue outer loop
+        System.out.print(j);
+    }
+}
+```
+
+The output from the program is shown here:
+```text
+Outer loop pass 1, Inner loop: 1234
+Outer loop pass 2, Inner loop: 1234
+Outer loop pass 3, Inner loop: 1234
+Outer loop pass 4, Inner loop: 1234
+Outer loop pass 5, Inner loop: 1234
+Outer loop pass 6, Inner loop: 1234
+Outer loop pass 7, Inner loop: 1234
+Outer loop pass 8, Inner loop: 1234
+Outer loop pass 9, Inner loop: 1234
+```
 
 Enjoy!
