@@ -1017,7 +1017,7 @@ It is important to understand that **finalize()** is called just before garbage 
 
 The **this** has some important uses: the Java syntax permits the name of a parameter or a local variable to be the same as the name of an instance variable. When this happens, the local name hides the instance variable. You can gain access to the hidden instance variable by referring to it through **this**. For example, the following is a syntactically valid way to write the **Pwr()** constructor.
 ```java
-Pwr (double b, int e) {
+Pwr(double b, int e) {
     this.b = b; // This refers to the b instance variable, not the parameter.
     this.e = e;
 
@@ -1031,11 +1031,27 @@ Pwr (double b, int e) {
 
 ### Arrays
 
-Pending: screenshot 95.
+Although arrays in Java can be used just like arrays in other programming languages, they have one special attribute: they are implemented as objects. This fact is one reason that a discussion of arrays was deferred until objects had been introduced. By implementing arrays as objects, several important advantages are gained, not the least of which is that unused arrays can be garbage collected.
 
 #### One-Dimensional Arrays
 
-Pending: screenshot 95, 96, 97, 98, 99, 100.
+A one-dimensional array is a list of related variables. Such lists are common in programming. For example, you might use a one-dimensional array to store the account numbers of the active users on a network. Another array might be used to store the current batting averages for a baseball team.
+
+To declare a one-dimensional array, you can use this general form:
+```text
+type array-name[] = new type[size];
+```
+
+Here, *type* declares the element type of the array. (The element type is also commonly referred to as the base type.) The element type determines the data type of each element contained in the array. The number of elements that the array will hold is determined by *size*. Since arrays are implemented as objects, the creation of an array is a two-step process. First, you declare an array reference variable. Second, you allocate memory for the array, assigning a reference to that memory to the array variable. Thus, arrays in Java are dynamically allocated using the **new** operator.
+
+Here is an example. The following creates an **int** array of 10 elements and links it to an array reference variable named **sample**:
+```java
+int sample[] = new int[10];
+```
+
+This declaration works just like an object declaration. The **sample** variable holds a reference to the memory allocated by **new**.
+
+Pending: screenshot 97, 98, 99, 100.
 
 ### Multidimensional Arrays
 
