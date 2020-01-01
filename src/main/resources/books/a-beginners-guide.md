@@ -905,7 +905,7 @@ Pending: screenshot 100, 101.
 
 ### Irregular Arrays
 
-Pending: screenshot 103.
+Pending: screenshot 102, 103.
 
 #### Arrays of Three or more Dimensions
 
