@@ -1168,26 +1168,165 @@ table[1][2] --> 7
 
 ### Irregular Arrays
 
-Pending: screenshot 102, 103.
+When you allocate memory for a multidimensional array, you need to specify only the memory for the first (leftmost) dimension. You can allocate the remaining dimensions separately. For example, the following code allocates memory for the first dimension of **table** when it is declared. It allocates the second dimension manually:
+```java
+int table[][] = new int[3][];
+table[0] = new int[4];
+table[1] = new int[4];
+table[2] = new int[4];
+```
+
+Although there is no advantage to individually allocating the second dimension arrays in this situation, there may be in others. For example, when you allocate dimensions separately, you do not need to allocate the same number of elements for each index. Since multidimensional arrays are implemented as arrays of arrays, the length of each array is under your control. For example:
+```java
+int riders[][] = new int[5][];
+riders[0] = new int[10];
+riders[1] = new int[10];
+riders[2] = new int[10];
+riders[3] = new int[2]; // only two elements long
+riders[4] = new int[2]; // only two elements long
+```
 
 #### Arrays of Three or more Dimensions
 
-Pending: screenshot 104.
+Java allows arrays with more than two dimensions. Here is the general form of a multidimensional array declaration:
+```text
+type name[][]...[] = new type[size1][size2]...[sizeN];
+```
+
+For example, the following declaration creates a 4 x 10 x 3 three-dimensional integer array:
+```java
+int multidim[][][] = new int[4][10][3];
+```
 
 #### Initializing Multidimensional Arrays
 
-Pending: screenshot 104, 105.
+A multidimensional array can be initialized by enclosing each dimension's initializer list within its own set of curly braces. For example, the general form of array initialization for a two-dimensional array is shown here:
+```text
+type-specifier array_name[][] = {
+    { val, val, val, ..., val },
+    { val, val, val, ..., val },
+    { val, val, val, ..., val },
+    .
+    .
+    .
+    { val, val, val, ..., val }
+};
+```
+
+Here, *val* indicates an initialization value. Each inner block designates a row. Within each row, the first value will be stored in the first position of the subarray, the second value in the second position, and so on. Notice that commas separate the initializer blocks and that a semicolon follows the closing }.
+
+For example, the following program initializes an array called **sqrs** with the numbers 1 through 10 and their squares:
+```java
+int sqrs [][] = {
+    { 1, 1 },
+    { 2, 4 },
+    { 3, 9 },
+    { 4, 16 },
+    { 5, 25 },
+    { 6, 36 },
+    { 7, 49 },
+    { 8, 64 },
+    { 9, 81 },
+    { 10, 100 }
+};
+```
 
 ### Alternative Array Declaration Syntax
 
-Pending: screenshot 106.
+There is a second form that can be used to declare an array:
+```text
+type[] var-name;
+```
+
+Here, the square brackets follow the type specifier, not the name of the array variable. For example, the following two declarations are equivalent:
+```java
+int counter[] = new int[3];
+int[] counter = new int[3];
+```
+
+The following declarations are also equivalent:
+```java
+char table[][] = new char[3][4];
+char[][] table = new char[3][4];
+```
+
+This alternative declaration form offers convenience when declaring several arrays at the same time. For example:
+```java
+int[] nums, nums2, nums3; // create three arrays
+``` 
+
+This creates three array variables of type **int**. It is the some as writing:
+```java
+int nums[], nums2[], nums3[]; // also, create three arrays
+```
+
+The alternative declaration form is also useful when specifying an array as a return type for a method. For example:
+```java
+int[] someMethod() { ... }
+```
+ 
+This declares that **someMethod()** returns an array of type **int**.
 
 ### Assigning Array References
 
-Pending: screenshot 107, 108.
+As with other objects, when you assign one array reference variable to another, you are simply changing what object that variable refers to. You are not causing a copy of the array to be made, nor are you causing the contents of one array to be copied to the other. For example, consider this program:
+```java
+// Assigning array reference variables
+public class AssignARef {
+    public static void main(String[] args){
+        int nums1[] = new int[10];
+        int nums2[] = new int[10];
+
+        for (int i = 0; i < 10; i++)
+            nums1[i] = i;
+
+        for (int i = 0; i < 10; i++)
+            nums2[i] = -i;
+
+        System.out.print("Here is num1: ");
+        for (int i = 0; i < 10; i++)
+            System.out.print(nums1[i] + " ");
+        System.out.println();
+
+        System.out.print("Here is num2: ");
+        for (int i = 0; i < 10; i++)
+            System.out.print(nums2[i] + " ");
+        System.out.println();
+
+        nums2 = nums1; // Assign an array reference: now nums2 refers to nums1
+
+        System.out.print("Here is num2 after assignment: ");
+        for (int i = 0; i < 10; i++)
+            System.out.print(nums2[i] + " ");
+        System.out.println();
+
+        nums2[3] = 99; // now operate on nums1 array through nums2
+
+        System.out.print("Here is num1 after change through nums2: ");
+        for (int i = 0; i < 10; i++)
+            System.out.print(nums1[i] + " ");
+        System.out.println();
+    }
+}
+```
+
+The output from the program is shown here:
+```text
+Here is num1: 0 1 2 3 4 5 6 7 8 9 
+Here is num2: 0 -1 -2 -3 -4 -5 -6 -7 -8 -9 
+Here is num2 after assignment: 0 1 2 3 4 5 6 7 8 9 
+Here is num1 after change through nums2: 0 1 2 99 4 5 6 7 8 9 
+```
+
+As the output shows, after the assignment of **nums1** to **nums2**, both array reference variables refer to the same object.
 
 ### Using the length Member
 
-Pending: screenshot 109.
+Keep in mind that the value of **length** has nothing to do with the number of elements that are actually in use. It contains the number of elements that the array is capable of holding.
+
+To obtain the length of any individual array part of a two-dimensional array, you will use an expression such as this:
+```java
+table[0].length
+```
 
 Enjoy!
