@@ -1051,13 +1051,112 @@ int sample[] = new int[10];
 
 This declaration works just like an object declaration. The **sample** variable holds a reference to the memory allocated by **new**.
 
-Pending: screenshot 97, 98, 99, 100.
+Arrays can be initialized when they are created. The general form for initializing a one-dimensional array is shown here:
+```text
+type array-name[] = { val1. val2, val3, ..., valN };
+```
+
+Here, the initial values are specified by *val1* through *valN*. They are assigned in sequence, left to right, in index order. Java automatically allocates an array large enough to hold the initializers that you specify. There is no need to explicitly use the **new** operator. For example:
+```java
+int nums[] = {99, -10, 100123, -978, 463};
+```
+
+##### Bubble Sort Example
+
+Because a one-dimensional array organizes data into an indexable linear list, it is the perfect data structure for sorting. In this project you will learn a simple way to sort an array. As you may know, there are a number of different sorting algorithms. There are the quick sort, the shaker sort, and the shell sort, to name just three. However, the best known, simplest, and easiest to understand is called the Bubble sort. Although the Bubble sort is not very efficient-in fact, its performance is unacceptable for sorting large arrays-it may be used effectively for sorting small arrays.
+
+The Bubble sort gets its name from the way it performs the sorting operation. It uses the repeated comparison and, if necessary, exchange of adjacent elements in the array. In this process, small values move toward one end and large ones toward the other end. The process is conceptually similar to bubbles finding their own level in a tank of water. The Bubble sort operates by making several passes through the array, exchanging out-of-place elements when necessary. The number of passes required to ensure that the array is sorted is equal to one less than the number of elements in the array.
+
+Here is the code that forms the core of the Bubble sort. The array being sorted is called **nums**.
+```java
+// This is the Bubble sort.
+for (a = 1; a < size; a++) {
+    for (b = size - 1; b >= a; b--) {
+        if (nums[b-1] > nums[b]) { // if out of order
+            // exchange elements
+            t = nums[b-1];
+            nums[b-1] = nums[b];
+            nums[b] = t;
+        }
+    }
+}
+```
+
+Notice that sort relies on two **for** loops. The inner loop checks adjacent elements in the array, looking for out-of-order elements. When an out-of-order element pair is found, the two elements are exchanged. With each pass, the smallest of the remaining elements moves into its proper location. The outer loop causes this process to repeat until the entire array has been sorted. Here is the entire **Bubble** program:
+```java
+/*
+    Bubble.java
+    Demonstrate the Bubble sort.
+*/
+public class Bubble {
+    public static void main(String args[]) {
+        int nums[] = {99, -10, 100123, 18, -978, 5623, 463, -9, 287, 49};
+        int a, b, t;
+
+        // display original array
+        System.out.print("Original array is:");
+        for (int i = 0; i < nums.length; i++)
+            System.out.print(" " + nums[i]);
+        System.out.println();
+        
+        // This is the Bubble sort
+        for (a = 1; a < nums.length; a++) {
+            for (b = nums.length - 1; b >= a; b--) {
+                if (nums[b-1] > nums[b]) { // if out of order
+                    // exchange elements
+                    t = nums[b-1];
+                    nums[b-1] = nums[b];
+                    nums[b] = t;
+                }
+            }
+        }
+
+        // display sorted array
+        System.out.print("Sorted array is:");
+        for (int i = 0; i < nums.length; i++)
+            System.out.print(" " + nums[i]);
+        System.out.println();
+    }
+}
+```
+
+The output from the program is shown here:
+```text
+Original array is: 99 -10 100123 18 -978 5623 463 -9 287 49
+Sorted array is: -978 -10 -9 18 49 99 287 463 5623 100123
+```
+
+Although the Bubble sort is good for small arrays, it is not efficient when used on larger ones. The best general-purpose sorting algorithm is the Quicksort.
 
 ### Multidimensional Arrays
 
+In Java, a multidimensional array is an array of arrays.
+
 #### Two-Dimensional Arrays
 
-Pending: screenshot 100, 101.
+The simplest form of the multidimensional array is the two-dimensional array. A two-dimensional array is, in essence, a list of one-dimensional arrays. To declare a two-dimensional integer array **table** of size 10, 20 you would write:
+```java
+int table[][] = new int[10][20];
+```
+
+Pay careful attention to the declaration. Unlike some other computer languages, which use commas to separate the array dimensions, Java places each dimension in its own set of brackets. Similarly, to access point 3, 5 of array **table**, you would use **table[3][5]**.
+
+In the next example, a two-dimensional array is loaded with the numbers 1 through 12:
+```java
+
+``` 
+
+In this example, **table[0][0]** will have the value 1, **table[0][1]** the value 2, **table[0][2]** the value 3, and so on. The value of **table[2][3]** will be 12. Conceptually, the array will look like this:
+
+Index | `0` | `1` | `2` | `3`
+----- | --- | --- | --- | ---
+`0` | 1 | 2 | 3 | 4 
+`1` | 5 | 6 | 7 | 8 
+`2` | 9 | 10 | 11 | 12 
+
+```text
+table[1][2] --> 7
+```
 
 ### Irregular Arrays
 
