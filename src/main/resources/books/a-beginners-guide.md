@@ -1143,7 +1143,15 @@ Pay careful attention to the declaration. Unlike some other computer languages, 
 
 In the next example, a two-dimensional array is loaded with the numbers 1 through 12:
 ```java
+int table[][] = new int[3][4];
 
+for (int t = 0; t < 3; ++t) {
+    for (int i = 0; i < 4; ++i) {
+        table[t][i] = (t*4)+i+1;
+        System.out.print(table[t][i] + " ");
+    }
+    System.out.println();
+}
 ``` 
 
 In this example, **table[0][0]** will have the value 1, **table[0][1]** the value 2, **table[0][2]** the value 3, and so on. The value of **table[2][3]** will be 12. Conceptually, the array will look like this:
