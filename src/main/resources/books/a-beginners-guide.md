@@ -636,8 +636,7 @@ do {
 Although the braces are not necessary when only one statement is present, they are often used to improve readability of the **do-while** construct, thus preventing confusion with the **while**. The **do-while** loop executes as long as the conditional expression is true.
 
 **Question: Given the flexibility inherent in all of Java's loops, what criteria should I use when selecting a loop? That is, how do I choose the right loop for a specific job?**
-
-Answer:
+**Answer**:
 * Use a **for** loop when performing a known number of iterations.
 * Use the **do-while** when you need a loop that will always perform at least one iteration.
 * The **while** is best used when the loop will repeat an unknown number of times.
@@ -1342,9 +1341,8 @@ Here, *type* specifies the type, and *itr-var* specifies the name of an *iterati
 
 Because the iteration variable receives values from the collection, *type* must be the same as (or compatible with) the elements stored in the collection. Thus, when iterating over arrays, *type* must be compatible with the element type of the array.
 
-**Question: Aside from arrays, what other types of collections can the for-each style **for** loop cycle through?**
-
-Answer: One of the most important uses of the for-each style **for** is to cycle through the contents of a collection defined by the Collections Framework. The Collections Framework is a set of classes that implement various data structures, such as lists, vectors, sets, and maps.
+**Question: Aside from arrays, what other types of collections can the for-each style** for **loop cycle through?**
+**Answer**: One of the most important uses of the for-each style **for** is to cycle through the contents of a collection defined by the Collections Framework. The Collections Framework is a set of classes that implement various data structures, such as lists, vectors, sets, and maps.
 
 The following fragment uses a for-each style **for** loop to compute the sum of the values in an array:
 ```java
@@ -1431,6 +1429,90 @@ Summation: 90
 
 ### Strings
 
-Pending.
+In many other programming languages, a string is an array of characters. This is not the case in Java. In Java, strings are objects.
+
+#### Constructing Strings
+
+Different ways you can construct a **String**:
+* You can construct a **String** just like you construct any other type of object: `String str = new String("Hello")`
+* You can also construct a **String** from another **String**. For example: `String str = new String("Hello")` and then `String str2 = new String(str)`
+* Another easy way to create a **String** is shown here: `String str = "Java strings are powerful."`
+
+#### Operating on Strings
+
+The **String** class contains several methods that operate on strings. Here are the general forms for a few:
+
+Method Name | Method Operation
+----------- | ---------------
+`boolean equals(str)` | Returns true if the invoking string contains the same character sequence as *str*.
+`int length()` | Obtains the length of a string.
+`char charAt(index)` | Obtains the character at the index specified by *index*.
+`int compareTo(str)` | Returns less than zero if the invoking string is less than *str*, greater than zero if the invoking string is greater than *str*, and zero if the strings are equal.
+`int indexOf(str)` | Searches the invoking string for the substring specified by *str*. Returns the index of the first match or -1 on failure.
+`int lastIndexOf(str)` | Searches the invoking string for the substring specified by *str*. Returns the index of the last match or -1 on failure.
+
+Here is a program that demonstrate these methods:
+```java
+String str1 = "When it comes to Web programming, Java is #1.";
+String str2 = new String(str1);
+String str3 = "Java strings are powerful.";
+int result, idx;
+char ch;
+
+System.out.println("Length of str1: " + str1.length());
+
+// display str1, one char at a time.
+for (int i = 0; i < str1.length(); i++)
+    System.out.print(str1.charAt(i));
+System.out.println();
+
+if (str1.equals(str2))
+    System.out.println("str1 equals str2");
+else
+    System.out.println("str1 does not equals str2");
+
+if (str1.equals(str3))
+    System.out.println("str1 equals str3");
+else
+    System.out.println("str1 does not equals str3");
+
+result = str1.compareTo(str3);
+if (result == 0)
+    System.out.println("str1 and str3 are equal");
+else if (result < 0)
+    System.out.println("str1 is less than str3");
+else
+    System.out.println("str1 is greater than str3");
+
+// assign a new string to str2
+str2 = "One Two Three One";
+
+idx = str2.indexOf("One");
+System.out.println("Index of first occurrence of One: " + idx);
+idx = str2.lastIndexOf("One");
+System.out.println("Index of last occurrence of One: " + idx);
+```
+
+This program generates the following output:
+```text
+Length of str1: 45
+When it comes to Web programming, Java is #1.
+str1 equals str2
+str1 does not equals str3
+str1 is greater than str3
+Index of first occurrence of One: 0
+Index of last occurrence of One: 14
+```
+
+You can *concatenate* (join together) two strings using the + operator. For example:
+```java
+String str1 = "One";
+String str2 = "Two";
+String str3 = "Three";
+String str4 = str1 + str2 + str3; // initializes str4 with the string: "OneTwoThree"
+```
+
+**Question: Why does** String **define the** equals() **method? Cant't I just use** == **?**
+**Answer**: The **equals()** method compares the character sequences of two **String** objects for equality. Applying the **==** to two **String** references simply determines whether the two references refer to the same object.
 
 Enjoy!
