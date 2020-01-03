@@ -1329,4 +1329,108 @@ To obtain the length of any individual array part of a two-dimensional array, yo
 table[0].length
 ```
 
+### The For-Each Style for Loop
+
+The second form of the **for** implements a "for-each" style loop. A for-each loop cycles through a collection of objects, such as an array, in strictly sequential fashion, from start to finish. Originally, Java did not offer a for-each style loop. However, with the release of JDK 5, the **for** loop was enhanced to provide this option. The for-each style of **for** is also referred to as the *enhanced* **for** loop.
+
+The general form of the for-each style **for** is shown here:
+```text
+for (type itr-var : collection) statement-block
+```
+
+Here, *type* specifies the type, and *itr-var* specifies the name of an *iteration variable* that will receive the elements from a collection, one at a time, from beginning to end. The collection being cycled through is specified by *collection*. With each iteration of the loop, the next element in the collection is retrieved and stored in *itr-var*. The loop repeats until all elements in the collection have been obtained. Thus, when iterating over an array of size *N*, the enhanced **for** obtains the elements in the array in index order, from 0 to *N*-1.
+
+Because the iteration variable receives values from the collection, *type* must be the same as (or compatible with) the elements stored in the collection. Thus, when iterating over arrays, *type* must be compatible with the element type of the array.
+
+**Question: Aside from arrays, what other types of collections can the for-each style **for** loop cycle through?**
+
+Answer: One of the most important uses of the for-each style **for** is to cycle through the contents of a collection defined by the Collections Framework. The Collections Framework is a set of classes that implement various data structures, such as lists, vectors, sets, and maps.
+
+The following fragment uses a for-each style **for** loop to compute the sum of the values in an array:
+```java
+int nums[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+int sum = 0;
+
+for (int x : nums) sum += x;
+```
+
+Although the for-each **for** loop iterates until all elements in an array have been examined, it is possible to terminate the loop early by using a **break** statement. For example, this loop sums only the first five elements of **nums**:
+```java
+int nums[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+int sum = 0;
+// Sum only the first 5 elements
+for (int x : nums) {
+    sum += x;
+    if (x == 5) break; // stop the loop when 5 is obtained
+}
+```
+
+There is one important point to understand about the for-each style **for** loop. Its iteration variable is "read-only" as it relates to the underlying array. An assignment to the iteration variable has no effect on the underlying array. In other words, you can't change the contents of the array by assigning the iteration variable a new value. For example, consider this program:
+```java
+// The for-each loop is essentially read-only.
+int nums[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+for (int x : nums) {
+    System.out.print(x + " ");
+    x = x * 10; // no effect on nums
+}
+System.out.println();
+
+for (int x : nums)
+    System.out.print(x + " ");
+System.out.println();
+```
+
+The first **for** loop increases the value of the iteration variable by a factor of 10. However, this assignment has no effect on the underlying array **nums**, as the second **for** loop illustrates. The output, shown here, proves this point:
+```text
+1 2 3 4 5 6 7 8 9 10 
+1 2 3 4 5 6 7 8 9 10 
+```
+
+#### Iterating Over Multidimensional Arrays
+
+The enhanced **for** also works on multidimensional arrays. Remember, however, that in Java, multidimensional arrays consist of *arrays of arrays*. This is important when iterating over a multidimensional array because each iteration obtains the *next array*, not an individual element. Furthermore, the iteration variable in the **for** loop must be compatible with the type of array being obtained. For example, consider the following program, it uses nested **for** loops to obtain the elements of a two-dimensional array in row order, from first to last:
+```java
+int sum = 0;
+int nums[][] = new int [3][5];
+
+// give nums some values
+for (int i = 0; i < 3; i++)
+    for (int j = 0; j < 5; j++)
+        nums[i][j] = (i+1)*(j+1);
+
+// Use for-each for loop to display and sum the values
+for (int x[] : nums) { // Notice how x is declared
+    for (int y : x) {
+        System.out.println("Value is: " + y);
+        sum += y;
+    }
+}
+System.out.println("Summation: " + sum);
+``` 
+
+The output from this program is shown here:
+```text
+Value is: 1
+Value is: 2
+Value is: 3
+Value is: 4
+Value is: 5
+Value is: 2
+Value is: 4
+Value is: 6
+Value is: 8
+Value is: 10
+Value is: 3
+Value is: 6
+Value is: 9
+Value is: 12
+Value is: 15
+Summation: 90
+```
+
+### Strings
+
+Pending.
+
 Enjoy!
