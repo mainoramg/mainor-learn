@@ -1515,4 +1515,33 @@ String str4 = str1 + str2 + str3; // initializes str4 with the string: "OneTwoTh
 **Question: Why does** String **define the** equals() **method? Cant't I just use** == **?**
 **Answer**: The **equals()** method compares the character sequences of two **String** objects for equality. Applying the **==** to two **String** references simply determines whether the two references refer to the same object.
 
+#### Strings Are Immutable
+
+The content of a **String** object are immutable. That is, once created, the character sequence that makes up the string cannot be altered. It must be made clear, however, that **String** reference variables may, of course, change the object to which they refer. It is just that the content of a specific **String** object cannot be changed after it is created.
+
+**Question: You say that once created,** String **objects are immutable. I understand that, from a practical point of view, this is not a serious restriction, but what if I want to create a string that can be changed?**
+**Answer**: You're in luck. Java offers a class called **StringBuffer**, which creates string objects that can be changed. For example, in addition to the **charAt()** method, which obtains the character at a specific location, **StringBuffer** defines **setCharAt()**, which sets a character within the string. Java also supplies **StringBuilder**, which is related to **StringBuffer**, and also supports strings that can be changed. However, for most purposes you will want to use **String**, not **StringBuffer** or **StringBuilder**.
+
+To fully understand why immutable strings are not a hindrance, we will use another of String's methods: **substring()**. The **substring()** method returns a new string that contains a specified portion of the invoking string. Because a new **String** object is manufactured that contains the substring, the original string is unaltered, and the rule of immutability remains intact. The form of **substring()** that we will be using is shown here:
+```text
+String substring(int startIndex, int endIndex)
+```
+
+Here, *startIndex* specifies the beginning index, and *endIndex* specifies the stopping point. Here is a program that demonstrates **substring()** ) and the principle of immutable strings:
+```java
+String orgstr = "Java makes the Web move.";
+
+// construct a substring
+String substr = orgstr.substring(5, 18); // This creates a new string that contains the desired substring
+
+System.out.println("orgstr: " + orgstr); // orgstr: Java makes the Web move.
+System.out.println("substr: " + substr); // substr: makes the Web
+```
+
+As you can see, the original string **orgstr** is unchanged, and **substr** contains the substring.
+
+### Using Command-Line Arguments
+
+Pending.
+
 Enjoy!
