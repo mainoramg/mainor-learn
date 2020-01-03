@@ -1542,6 +1542,59 @@ As you can see, the original string **orgstr** is unchanged, and **substr** cont
 
 ### Using Command-Line Arguments
 
+A command-line argument is the information that directly follows the program's name on the command line when it is executed. To access the command--line arguments inside a Java program is quite easy-they are stored as strings in the **String** array passed to **main()**. For example, the following program displays all of the command-line arguments that it is called with:
+```java
+class CLDemo {
+    public static void main(String args[]) {
+        System.out.println("These are " + args.length + " command-line arguments.");
+        System.out.println("They are: ");
+        for (int i = 0; i < args.length; i++)
+            System.out.println("arg[" + i + "]: " + args[i]);
+    }
+}
+```
+
+If the program above is executed like this: `java CLDemo one two three` you will see the following output:
+```text
+These are 3 command-line arguments.
+They are: 
+arg[0]: one
+arg[1]: two
+arg[2]: three
+```
+
+### The Bitwise Operators
+
 Pending.
+
+### The ? Operator (Ternary Operator)
+
+The **?** operator is often used to replace **if-else** statements of this general form:
+```text
+if (condition)
+    var = expression1;
+else
+    var = expression2;
+```
+
+The **?** is called a *ternary operator* because it requires three operands. It takes the general form:
+```text
+Exp1 ? exp2 : Exp3;
+```
+
+where *Exp1* is a **boolean** expression, and *Exp2* and *Exp3* are expressions of any type other than **void**. The type of *Exp2* and *Exp3* must be the same (or compatible), though.
+
+The value of a **?** expression is determined like this: *Exp1* is evaluated. If it is true, then *Exp2* is evaluated and becomes the value of the entire **?** expression. If *Exp1* is false, then *Exp3* is evaluated and its value becomes the value of the expression.
+
+Consider this **if-else** example:
+```java
+if (x < 0) y = 10;
+else y = 20;
+```
+
+This is how this sequence can be rewritten using the **?** operator:
+```java
+y = (x < 0) ? 10 : 20;
+```
 
 Enjoy!
