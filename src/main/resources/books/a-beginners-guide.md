@@ -1597,4 +1597,111 @@ This is how this sequence can be rewritten using the **?** operator:
 y = (x < 0) ? 10 : 20;
 ```
 
+## Chapter 6: A Closer Look at Methods and Classes
+
+### Controlling Access to Class Members
+
+#### Java's Access Modifiers
+
+Member access control is achieved through the use of three *access modifiers*: **public**, **private**, and **protected**:
+* **public**: member can be accessed by other code in your program. This includes methods defined inside other classes.
+* **private**: member can be accessed only by other members of its class. Thus, methods in other classes cannot access a **private** member of another class.
+* The default access setting (in which no access modifier is used) is the same as **public** unless your program is broken down into packages.
+
+A *package* is, essentially, a grouping of classes. Packages are both an organizational and an access control feature.
+
+An access modifier precedes the rest of a member's type specification. That is, it must begin a member's declaration statement. Here are some examples:
+```java
+public String errMsg;
+private accountBalance bal;
+
+private boolean isError(byte status) { // ...
+```
+
+### Pass Objects to Methods
+
+#### How Arguments Are Passed
+
+You need to understand in a general sense the two ways in which an argument can be passed to a subroutine. As you will see, although Java uses call-by-value to pass arguments, the precise effect differs between whether a primitive type or a reference type is passed.
+
+##### Call-By-Value
+
+The first way is *call-by-value*. This approach copies the *value* of an argument into the formal parameter of the subroutine. Therefore, changes made to the parameter of the subroutine have no effect on the argument in the call.
+
+When you pass a primitive type, such as **int* or **double**, to a method, it is passed by value. Thus, a copy of the argument is made, and what occurs to the parameter that receives the argument has no effect outside the method. For example, consider the following program:
+```java
+class Test {
+    // This method causes no change to the arguments used in the call.
+    void noChange(int i, int j) {
+        i = i + j;
+        j = -j;
+    }
+}
+
+public class CallByValue {
+    public static void main(String[] args) {
+        Test ob = new Test();
+
+        int a = 15, b = 20;
+
+        System.out.println("a and b before call: " + a + " " + b);
+        ob.noChange(a, b);
+        System.out.println("a and b after call: " + a + " " + b);
+    }
+}
+```
+
+The output from this program is shown here:
+```text
+a and b before call: 15 20
+a and b after call: 15 20
+```
+
+As you can see, the operations that occur inside **noChange()** have no effect on the values of **a** and **b** used in the call.
+
+##### Call-By-Reference
+
+The second way an argument can be passed is *call-by-reference*. In this approach, a reference to an argument (not the value of the argument) is passed to the parameter. Inside the subroutine, this reference is used to access the actual argument specified in the call. This means that changes made to the parameter *will* affect the argument used to call the subroutine.
+
+When you pass an object to a method, the situation changes dramatically, because objects are implicitly passed by reference. Keep in mind that when you create a variable of a class type, you are creating a reference to an object. It is the reference, not the object itself, that is actually passed to the method. As a result, when you pass this reference to a method, the parameter that receives it will refer to the same object as that referred to by the argument. This effectively means that objects are passed to methods by use of call-by-reference. Changes to the object inside the method *do* affect the object used as an argument. For example, consider the following program:
+```java
+class Test {
+    int a, b;
+
+    Test(int i, int j) {
+        a = i;
+        b = j;
+    }
+
+    // Pass an object. Now, ob.a and ob.b in object used in the call will be changed.
+    void change(Test ob) {
+        ob.a = ob.a + ob.b;
+        ob.b = -ob.b;
+    }
+}
+
+public class PassObRef {
+    public static void main(String[] args) {
+        Test ob = new Test(15, 20);
+
+        System.out.println("ob.a and ob.b before call: " + ob.a + " " + ob.b);
+        ob.change(ob);
+        System.out.println("ob.a and ob.b after call: " + ob.a + " " + ob.b);
+    }
+}
+```
+
+The output from this program is shown here:
+```text
+ob.a and ob.b before call: 15 20
+ob.a and ob.b after call: 35 -20
+```
+
+As you can see, in this case, the actions inside **change()** have affected the object used as an argument.
+
+**Question: Is there any way that I can pass a primitive type by reference?**
+**Answer**: Not directly. However, Java defines a set of classes that *wrap* the primitive types in objects. These are **Double**, **Float**, **Byte**, **Short**, **Integer**, **Long**, and **Character**. In addition to allowing a primitive type to be passed by reference, these wrapper classes define several methods that enable you to manipulate their values. For example, the numeric type wrappers include methods that convert a numeric value from its binary form into its human-readable **String** form, and vice versa.
+
+Remember, when an object reference is passed to a method, the reference itself is passed by use of call-by-value. However, since the value being passed refers to an object, the copy of that value will still refer to the same object referred to by its corresponding argument.
+
 Enjoy!
