@@ -1704,4 +1704,140 @@ As you can see, in this case, the actions inside **change()** have affected the 
 
 Remember, when an object reference is passed to a method, the reference itself is passed by use of call-by-value. However, since the value being passed refers to an object, the copy of that value will still refer to the same object referred to by its corresponding argument.
 
+### Method Overloading
+
+In java, two or more methods within the same class can share the same name, as long as their parameter declarations are different. Method overloading is one of the ways that Java implements polymorphism. Method overloading supports polymorphism because it is one way that Java implements the "one interface, multiple methods" paradigm.
+
+You must observe one important restriction: the type and/or number of the parameters of each overloaded method must differ. It is not sufficient for two methods to differ only in their return types. Of course, overloaded methods *may* differ in their return types, too.
+
+Java provides certain automatic type conversions. There conversions also apply to parameters of overloaded methods. For example:
+```java
+class Overload2 {
+    void f(int x) {
+        System.out.println("Inside f(int): " + x);
+    }
+
+    void f(double x) {
+        System.out.println("Inside f(double): " + x);
+    }
+}
+class TypeConv {
+    public static void main(String[] args) {
+        Overload2 ob = new Overload2();
+        int i = 10;
+        double d = 10.1;
+        byte b = 99;
+        short s = 10;
+        float f = 11.5F;
+
+        ob.f(i); // calls ob.f(int)
+        ob.f(d); // calls ob.f(double)
+
+        ob.f(b); // calls ob.f(int) - type conversion
+        ob.f(s); // calls ob.f(int) - type conversion
+        ob.f(f); // calls ob.f(double) - type conversion
+    }
+}
+```
+
+The output from this program is shown here:
+```text
+Inside f(int): 10
+Inside f(double): 10.1
+Inside f(int): 99
+Inside f(int): 10
+Inside f(double): 11.5
+```
+
+In this example, only two versions of **f()** are defined: one that has an **int** parameter and one that has a **double** parameter. However, it is possible to pass **f()** a **byte**, **short**, or **float** value. In the case of **byte** and **short**, Java automatically converts them to **int**. Thus, **f(int)** is invoked. In the case of **float**, the value is converted to **double** and **f(double)** is called.
+
+It is important to understand, however, that the automatic conversions apply only if there is no direct match between a parameter and an argument. For example, here is the preceding program with the addition of a version of **f()** that specifies a **byte** parameter:
+```java
+class Overload2 {
+    void f(byte x) { // This version specifies a byte parameter
+        System.out.println("Inside f(byte): " + x);
+    }
+
+    void f(int x) {
+        System.out.println("Inside f(int): " + x);
+    }
+
+    void f(double x) {
+        System.out.println("Inside f(double): " + x);
+    }
+}
+class TypeConv {
+    public static void main(String[] args) {
+        Overload2 ob = new Overload2();
+        int i = 10;
+        double d = 10.1;
+        byte b = 99;
+        short s = 10;
+        float f = 11.5F;
+
+        ob.f(i); // calls ob.f(int)
+        ob.f(d); // calls ob.f(double)
+
+        ob.f(b); // calls ob.f(byte) - now, no type conversion
+
+        ob.f(s); // calls ob.f(int) - type conversion
+        ob.f(f); // calls ob.f(double) - type conversion
+    }
+}
+```
+
+Now when the program is run, the following output is produced:
+```text
+Inside f(int): 10
+Inside f(double): 10.1
+Inside f(byte): 99
+Inside f(int): 10
+Inside f(double): 11.5
+```
+
+In this version, since is a version of **f()** that takes a **byte** argument, when **f()** is called with a **byte** argument, **f(byte)** is invoked and the automatic conversion to **int** does not occur.
+
+When you overload a method, each version of that method can perform any activity you desire. There is no rule stating that overloaded methods must relate to one another. However, from a stylistic point of view, method overloading implies a relationship. In practice, you should overload only closely related operations. 
+
+**Question: I've heard the term *signature* used by Java programmers. What is it?**
+**Answer**: As it applies to Java, a signature is the name of a method plus its parameter list. Thus, for the purposes of overloading, no two methods within the same class can have the same signature. Notice that a signature does not include the return type, since it is not used by Java for overload resolution.
+
+### Overloading Constructors
+
+Like methods, constructors can also be overloaded. Doing so allows you to construct objects in a variety of ways. One of the most common reasons that constructors are overloaded is to allow one object to initialize another. For example, consider this program that uses the **Summation** class to compute the summation of an integer value:
+```java
+class Summation {
+    int sum;
+
+    // Construct from an int
+    Summation(int num) {
+        sum  = 0;
+        for (int i = 1; i <= num; i++)
+            sum += i;
+    }
+
+    // Construct from another object
+    Summation(Summation ob) {
+        sum = ob.sum;
+    }
+}
+class SumDemo {
+    public static void main(String[] args) {
+        Summation s1 = new Summation(5);
+        Summation s2 = new Summation(s1);
+
+        System.out.println("s1.sum: " + s1.sum);
+        System.out.println("s2.sum: " + s2.sum);
+    }
+}
+```
+
+The output is shown here:
+```text
+s1.sum: 15
+s2.sum: 15
+```
+
+Often, as this example shows, an advantage of providing a constructor that uses one object to initialize another is efficiency. In this case, when **s2** is constructed, it is not necessary to recompute the summation. Of course, even in cases when efficiency is not an issue, it is often useful to provide a constructor that makes a copy of an object.
+
 Enjoy!
