@@ -1994,4 +1994,310 @@ Square root of 3 is 1.7320508075688772
 
 As you can see, the **static** block is executed before any objects are constructed.
 
+### Introducing Nested and Inner Classes
+
+In java, you can define a *nested class*. This is a class that is declared within another class. A nested class does not exist independently of its enclosing class. Thus, the scope of a nested class is bounded by its outer class. A nested class that is declared directly within its enclosing class scope is a member of its enclosing class. It is also possible to declare a nested class that is local to a block.
+
+There are two general types of nested classes: those that are preceded by the **static** modifier and those that are not. The only type that we are concerned about in this book is the non-static variety. This type of nested class is also called an *inner class*. It has access to all of the variables and methods of its outer class and may refer to them directly in the same way that other non-**static** members of the outer class do.
+
+Here is an example that uses an inner class:
+```java
+class Outer {
+    int nums[];
+
+    Outer(int n[]) {
+        nums = n;
+    }
+
+    void getMin() {
+        Inner inOb = new Inner();
+        System.out.println("Minimum: " + inOb.min());
+    }
+
+    // This is an inner class
+    class Inner {
+        int min() {
+            int m = nums[0];
+
+            for (int i = 1; i < nums.length; i++)
+                if (nums[i] < m) m = nums[i];
+
+            return m;
+        }
+    }
+}
+class NestedClassDemo {
+    public static void main(String[] args) {
+        int x[] = {3, 2, 1, 5, 6, 9, 7, 8};
+        Outer outOb = new Outer(x);
+        outOb.getMin();
+    }
+}
+```
+
+The output is shown here:
+```text
+Minimum: 1
+```
+
+As mentioned, it is possible to nest a class within a block scope. Doing so simply creates a localized class that is not known outside its block. This is an example:
+```java
+class LocalClassDemo {
+    public static void main(String[] args) { // this is a scope block defined by main method
+        
+        // An inner class inside main method
+        class ShowBits {
+            int numbits;
+            
+            ShowBits(int n) {
+                numbits = n;
+            }
+            
+            // ...
+            // more methods if you want
+        }
+        
+        // ...
+        // more code if you want
+    }
+}
+```
+
+One last point: You can create an inner class that does not have a name. This is called an *anonymous inner class*. An object of an anonymous inner class is instantiated when the class is declared, using **new**.
+
+**Question: What makes a** static **nested class different from a non-static one?**
+**Answer**: A **static** nested class is one that has the **static** modifier applied. Because it is **static**, it can access only other **static** members of the enclosing class directly. It must access other members of its outer class through an object reference.
+
+### Varargs: Variable-Length Arguments
+
+Sometimes you will want to create a method that takes a variable number of arguments, based on its precise usage. In this situation, it would be convenient to pass only the arguments to which the defaults did not apply. To create such a method implies that there must be some way to create a list of arguments that is variable in length, rather than fixed.
+
+In the past, methods that required a variable-length argument list could be handled two ways, neither of which was particularly pleasing. First, if the maximum number of arguments was small and known, then you could create overloaded versions of the method, one for each way the method could be called. Although this works and is suitable for some situations, it applies to only a narrow class of situations. In cases where the maximum number of potential arguments is larger, or unknowable, a second approach was used in which the arguments were put into an array, and then the array was passed to the method.
+
+Beginning with JDK 5, this need was addressed by the inclusion of a feature that simplified the creation of methods that require a variable number of arguments. This feature is called *varargs*, which is short for variable-length arguments. A method that takes a variable number of arguments is called a *variable-arity method*, or simply a *varargs method*. The parameter list for a varargs method is not fixed, but rather variable in length. Thus, a varargs method can take a variable number of arguments.
+
+#### Varargs Basics
+
+A variable-length argument is specified by three periods (...). For example, here is how to write a method called **vaTest()** that takes a variable number of arguments:
+```java
+// vaTest() uses a vararg.
+static void vaTest(int ... v) { // Declare a variable-length argument list
+    System.out.println("Number of args: " + v.length);
+    System.out.println("Contents: ");
+
+    for (int i = 0; i < v.length; i++)
+        System.out.println(" arg " + i + ": " + v[i]);
+
+    System.out.println();
+}
+```
+Notice that **v** si declared as shown here: `int ... v`
+
+This syntax tells the compiler that **vaTest()** can be called with zero or more arguments. Furthermore, it causes **v** to be implicitly declared as an array of type **int[]**. Thus, inside **vaTest()**, **v** is accessed using the normal array syntax.
+
+Here is a complete program that demonstrates **vaTest()**:
+```java
+class VarArgs {
+    // vaTest() uses a vararg.
+    static void vaTest(int ... v) { // Declare a variable-length argument list
+        System.out.println("Number of args: " + v.length);
+        System.out.println("Contents: ");
+
+        for (int i = 0; i < v.length; i++)
+            System.out.println(" arg " + i + ": " + v[i]);
+
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        // Notice how vaTest() can be called with a variable number of arguments
+        vaTest(10);      // 1 arg
+        vaTest(1, 2, 3); // 3 args
+        vaTest();            // no args
+    }
+}
+```
+
+The output from this program is shown here:
+```text
+Number of args: 1
+Contents: 
+ arg 0: 10
+
+Number of args: 3
+Contents: 
+ arg 0: 1
+ arg 1: 2
+ arg 2: 3
+
+Number of args: 0
+Contents: 
+```
+
+There are two important things to notice about this program. First, as explained, inside **vaTest()**, **v** is operated on as an array. This is because **v** is an array. The **...** syntax simply tells the compiler that a variable number of arguments will be used, and that these arguments will be stored in the array referred to by **v**. Second, in **main()**, **vaTest()** is called with different numbers of arguments, including no arguments at all. The arguments are automatically put in an array and passed to **v**. In the case of no arguments, the length of the array is zero.
+
+A method can have "normal" parameters along with a variable-length parameter. However, the variable-length parameter must be the last parameter declared by the method. For example, this method declaration is perfectly acceptable:
+```java
+int doIt(int a, int b, double c, int ... vals) { 
+```
+
+In this case, the first three arguments used in a call to **doIt()** are matched to the first three parameters. Then, any remaining arguments are assumed to belong to ***vals***.
+
+Here is a reworked version of the **vaTest()** method that takes a regular argument and a variable-length argument:
+```java
+class VarArgs2 {
+    // Here, msg is a normal parameter and v is a varargs parameter
+    static void vaTest(String msg, int ... v) { // A "normal" and vararg parameter
+        System.out.println(msg + v.length);
+        System.out.println("Contents: ");
+
+        for (int i = 0; i < v.length; i++)
+            System.out.println(" arg " + i + ": " + v[i]);
+
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        vaTest("One vararg: ", 10);
+        vaTest("Three varargs: ", 1, 2, 3);
+        vaTest("No varargs: ");
+    }
+}
+```
+
+The output from this program is shown here:
+```text
+One vararg: 1
+Contents: 
+ arg 0: 10
+
+Three varargs: 3
+Contents: 
+ arg 0: 1
+ arg 1: 2
+ arg 2: 3
+
+No varargs: 0
+Contents: 
+```
+
+Remember, the varargs parameter must be last. For example, the following declaration is incorrect:
+```java
+int doIt(int a, int b, double c, int ... vals, boolean stopFlag) { // Error!
+```
+
+Here, there is an attempt to declare a regular parameter after the varargs parameter, which is illegal. There is one more restriction to be aware of: there must be only one varargs parameter. For example, this declaration is also invalid:
+```java
+int doIt(int a, int b, double c, int ... vals, double ... morevals) { // Error!
+```
+
+The attempt to declare the second varargs parameter is illegal.
+
+#### Overloading Varargs Methods
+
+You can overload a method that takes a variable-length argument. For example, the following program overloads **vaTest()** three times:
+```java
+class VarArgs3 {
+    static void vaTest(int ... v) { // First version of vaTest()
+        System.out.println("vaTest(int ...): Number of args: " + v.length);
+        System.out.println("Contents: ");
+
+        for (int i = 0; i < v.length; i++)
+            System.out.println(" arg " + i + ": " + v[i]);
+
+        System.out.println();
+    }
+
+    static void vaTest(boolean ... v) { // Second version of vaTest()
+        System.out.println("vaTest(boolean ...): Number of args: " + v.length);
+        System.out.println("Contents: ");
+
+        for (int i = 0; i < v.length; i++)
+            System.out.println(" arg " + i + ": " + v[i]);
+
+        System.out.println();
+    }
+
+    static void vaTest(String msg, int ... v) { // Third version of vaTest()
+        System.out.println("vaTest(String, int ...): " + msg + v.length);
+        System.out.println("Contents: ");
+
+        for (int i = 0; i < v.length; i++)
+            System.out.println(" arg " + i + ": " + v[i]);
+
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        vaTest(1, 2, 3);
+        vaTest("Testing: ", 10, 20);
+        vaTest(true, false, false);
+    }
+}
+```
+
+The output produced by this program is shown here:
+```text
+vaTest(int ...): Number of args: 3
+Contents: 
+ arg 0: 1
+ arg 1: 2
+ arg 2: 3
+
+vaTest(String, int ...): Testing: 2
+Contents: 
+ arg 0: 10
+ arg 1: 20
+
+vaTest(boolean ...): Number of args: 3
+Contents: 
+ arg 0: true
+ arg 1: false
+ arg 2: false
+```
+
+This program illustrates both ways that a varargs method can be overloaded. First, the types of its vararg parameter can differ. This is the case for **vaTest(int ...)** and **vaTest(boolean ...)**. Remember, the **...** causes the parameter to be treated as an array of the specified type. Therefore, just as you can overload methods by using different types of array parameters, you can overload varargs methods by using different types of varargs. In this case, Java uses the type difference to determine which overloaded method to call.
+
+The second way to overload a varargs method is to add one or more normal parameters. This is what was done with **vaTest(String, int ...)**. In this case, Java uses both the number of arguments and the type of the arguments to determine which method to call.
+
+#### Varargs and Ambiguity
+
+Somewhat unexpected errors can result when overloading a method that takes a variable-length argument. These errors involve ambiguity because it is possible to create an ambiguous call to an overloaded varargs method. For example, consider the following program:
+```java
+// This program contains an error and will not compile!
+class VarArgs4 {
+    // Use an int vararg parameter
+    static void vaTest(int ... v) { // An int vararg
+        // ...
+    }
+
+    // Use a boolean vararg parameter
+    static void vaTest(boolean ... v) { // A boolean vararg
+        // ...
+    }
+
+    public static void main(String[] args) {
+        vaTest(1, 2, 3); // OK
+        vaTest(true, false, false); // OK
+        vaTest(); // Error: Ambiguous!
+    }
+}
+```
+
+In this program, the overloading of **vaTest()** is perfectly correct. However, this program will not compile because of the following call: `vaTest(); // Error: Ambiguous!`
+
+Because the vararg parameter can be empty, this call could be translated into a call to **vaTest(int ...)** or to **vaTest(boolean ...)**. Both are equally valid. Thus, the call is inherently ambiguous.
+
+Here is another example of ambiguity. The following overloaded versions of **vaTest()** are inherently ambiguous even though one takes a normal parameter:
+```java
+static void vaTest(int ... v) { // ...
+static void vaTest(int n, int ... v) { // ...
+``` 
+
+Although the parameter lists of **vaTest()** differ, there is no way for the compiler to resolve the following call: `vaTest(1)`
+
+Does this translate into a call to **vaTest(int ...)**, with one varargs argument, or into a call to **vaTest(int, int ...)** with no varargs arguments? There is no way for the compiler to answer this question. Thus, the situation is ambiguous.
+
+Because of ambiguity errors like those just shown, sometimes you will need to forego overloading and simply use two different method names. Also, in some cases, ambiguity errors expose a conceptual flaw in your code, which you can remedy by more carefully crafting a solution.
+
 Enjoy!
