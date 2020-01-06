@@ -1840,4 +1840,158 @@ s2.sum: 15
 
 Often, as this example shows, an advantage of providing a constructor that uses one object to initialize another is efficiency. In this case, when **s2** is constructed, it is not necessary to recompute the summation. Of course, even in cases when efficiency is not an issue, it is often useful to provide a constructor that makes a copy of an object.
 
+### Understanding static
+There will be times when you will want to define a class member that will be used independently of any object of that class. Normally a class member must be accessed through an object of its class, but it is possible to create a member that can be used by itself, without reference to a specific instance. To create such a member, precede its declaration with the keyword **static**. When a member is declared **static**, it can be accessed before any objects of its class are created, and without reference to any object. You can declare both methods and variables to be **static**. The most common example of a **static** member is **main()**. **main()** is declared as **static** because it must be called by the JVM when your program begins. Outside the class, to use a **static** member, you need only specify the name of its class followed by the dot operator. No object needs to be created. For example, if you want to assign the value 10 to a **static** variable called **count** that is part of the **Timer** class, use this line:
+```java
+Timer.count = 10;
+```
+
+Variables declared as **static** are, essentially, global variables. When an object is declared, no copy of a **static** variable is made. Instead, all instances of the class share the same **static** variable. Here is an example that shows the differences between a **static** variable and an instance variable:
+```java
+class StaticDemo {
+    int x; // a normal instance variable
+    static int y; // a static variable. There is one copy of y for all objects to share
+
+    // Return the sum of the instance variable x and the static variable y
+    int sum() {
+        return x + y;
+    }
+}
+class SDemo {
+    public static void main(String[] args) {
+        StaticDemo ob1 = new StaticDemo();
+        StaticDemo ob2 = new StaticDemo();
+
+        // Each object has its own copy of an instance variable
+        ob1.x = 10;
+        ob2.x = 20;
+        System.out.println("Of course, ob1.x and ob2.x are independent.");
+        System.out.println("ob1.x: " + ob1.x + "\nob2.x: " + ob2.x);
+        System.out.println();
+
+        // Each object shares one copy of a static variable
+        System.out.println("The static variable y is shared.");
+        StaticDemo.y = 19;
+        System.out.println("Set StaticDemo.y to 19");
+
+        System.out.println("ob1.sum(): " + ob1.sum());
+        System.out.println("ob2.sum(): " + ob2.sum());
+        System.out.println();
+
+        StaticDemo.y = 100;
+        System.out.println("Change StaticDemo.y to 100");
+
+        System.out.println("ob1.sum(): " + ob1.sum());
+        System.out.println("ob2.sum(): " + ob2.sum());
+        System.out.println();
+    }
+}
+```
+
+The output from this program is shown here:
+```text
+Of course, ob1.x and ob2.x are independent.
+ob1.x: 10
+ob2.x: 20
+
+The static variable y is shared.
+Set StaticDemo.y to 19
+ob1.sum(): 29
+ob2.sum(): 39
+
+Change StaticDemo.y to 100
+ob1.sum(): 110
+ob2.sum(): 120
+```
+
+As you can see, the **static** variable **y** is shared by both **ob1** and **ob2**. Changing it affects the entire class, not just an instance.
+
+The difference between a **static** method and a normal method is that the **static** method is called through its class name, without any object of that class being created. You have seen an example of this already: the **sqrt()** method, which is a **static** method within Java's standard **Math** class. Here is an example that creates a **static** method:
+```java
+class StaticMeth {
+    static int val  = 1024; // a static variable
+
+    // a static method
+    static int valDiv2() {
+        return val/2;
+    }
+}
+class SDemo2 {
+    public static void main(String[] args) {
+        System.out.println("val is " + StaticMeth.val);
+        System.out.println("StaticMeth.valDiv2(): " + StaticMeth.valDiv2());
+
+        StaticMeth.val = 4;
+        System.out.println("val is " + StaticMeth.val);
+        System.out.println("StaticMeth.valDiv2(): " + StaticMeth.valDiv2());
+    }
+}
+```
+
+The output is shown here:
+```text
+val is 1024
+StaticMeth.valDiv2(): 512
+val is 4
+StaticMeth.valDiv2(): 2
+```
+
+Methods declared as **static** have several restrictions:
+* They can directly call only other **static** methods.
+* They can directly access only **static** data.
+* They do not have a **this** reference.
+
+For example, in the following class, the **static** method **valDivDenom()** is illegal:
+```java
+class StaticError {
+    int denom = 3; // a normal instance variable
+    static int val = 1024; // a static variable 
+    
+    // Error! Can't access a non-static variable from within a static method
+    static int valDivDenom() {
+        return val/denom; // won't compile!
+    }
+}
+```
+
+Here, **denom** is a normal instance variable that cannot be accessed within a **static** method.
+
+#### Static Blocks
+
+Sometimes a class will require some type of initialization before it is ready to create objects. For example, it might need to establish a connection to a remote site. It also might need to initialize certain **static** variables before any of the class' **static** methods are used. To handle these types of situations, Java allows you to declare a **static** block. A static block is executed when the class is first loaded. Thus, it is executed before the class can be used for any other purpose. Here is an example of a **static** block:
+```java
+class StaticBlock {
+    static double rootOf2;
+    static double rootOf3;
+
+    static { // This block is executed when the class is loaded
+        System.out.println("Inside static block.");
+        rootOf2 = Math.sqrt(2.0);
+        rootOf3 = Math.sqrt(3.0);
+    }
+
+    StaticBlock(String msg) {
+        System.out.println(msg);
+    }
+}
+class SDemo3 {
+    public static void main(String[] args) {
+        StaticBlock ob = new StaticBlock("Inside Constructor");
+
+        System.out.println("Square root of 2 is " + StaticBlock.rootOf2);
+        System.out.println("Square root of 3 is " + StaticBlock.rootOf3);
+    }
+}
+```
+
+The output is shown here:
+```text
+Inside static block.
+Inside Constructor
+Square root of 2 is 1.4142135623730951
+Square root of 3 is 1.7320508075688772
+```
+
+As you can see, the **static** block is executed before any objects are constructed.
+
 Enjoy!
