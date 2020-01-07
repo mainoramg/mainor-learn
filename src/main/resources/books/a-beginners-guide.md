@@ -2300,4 +2300,530 @@ Does this translate into a call to **vaTest(int ...)**, with one varargs argumen
 
 Because of ambiguity errors like those just shown, sometimes you will need to forego overloading and simply use two different method names. Also, in some cases, ambiguity errors expose a conceptual flaw in your code, which you can remedy by more carefully crafting a solution.
 
+## Chapter 7: Inheritance
+
+In the language of Java, a class that is inherited is called a *superclass*. The class that does the inheriting is called a *subclass*. Therefore, a subclass is a specialized version of a superclass. It inherits all of the variables and methods defined by the superclass and adds its own, unique elements.
+
+### Inheritance Basics
+
+Inheritance is done by using the **extends** keyword. Thus, the subclass adds to (extends) the superclass. The general form of a **class** declaration that inherits a superclass is shown here:
+```text
+class subclass-name extends superclass-name {
+    // body of class
+}
+```
+
+You can specify only one superclass for any subclass that you create. Java does not support the inheritance of multiple superclasses into a single subclass. You can, however, create a hierarchy of inheritance in which a subclass becomes a superclass of another subclass. Of course, no class can be a superclass of itself.
+
+### Member Access and Inheritance
+
+Inheriting a class *does not* overrule the **private** access restriction. Thus, even though a subclass includes all of the members of its superclass, it cannot access those members of the superclass that have been declared **private**.
+
+Remember that a class member that has been declared **private** will remain private to its class. It is not accessible by any code outside its class, including subclasses. Java programmers typically use accessor methods to provide access to the private members of a class.
+
+**Question: When should I make an instance variable private?**
+**Answer**: There are no hard and fast rules, but here are two general principles. If an instance variable is to be used only by methods defined within its class, then it should be made private. If an instance variable must be within certain bounds, then it should be private and made available only through accessor methods. This way, you can prevent invalid values from being assigned.
+
+### Constructors and Inheritance
+
+In a hierarchy, it is possible for both superclasses and subclasses to have their own constructors. This raises an important question: What constructor is responsible for building an object of the subclass-the one in the superclass, the one in the subclass, or both? The answer is this: The constructor for the superclass constructs the superclass portion of the object, and the constructor for the subclass constructs the subclass part. This makes sense because the superclass has no knowledge of or access to any element in a subclass. Thus, their construction must be separate. The preceding examples have relied upon the default constructors created automatically by Java, so this was not an issue. However, in practice, most classes will have explicit constructors. Here you will see how to handle this situation.
+
+When only the subclass defines a constructor, the process is straightforward: simply construct the subclass object. The superclass portion of the object is constructed automatically using its default constructor. For example, here is a reworked version of **Triangle** that defines a constructor. It also makes **style** private, since it is now set by the constructor.
+```java
+class TwoDShape {
+    private double width;  // there are
+    private double height; // now private
+
+    // Accessor methods for width and height
+    double getWidth() { return width; }
+    void setWidth(double width) { this.width = width; }
+    double getHeight() { return height; }
+    void setHeight(double height) { this.height = height; }
+
+    void showDim() {
+        System.out.println("Width and height are " + width + " and " + height);
+    }
+}
+class Triangle extends TwoDShape {
+    private String style;
+
+    // Constructor
+    Triangle(String s, double w, double h) {
+        setWidth(w); // Initialize TwoDShape portion of object
+        setHeight(h);
+
+        style = s;
+    }
+
+    double area() {
+        return getWidth() * getHeight() / 2;
+    }
+
+    void showStyle() {
+        System.out.println("Triangle is " + style);
+    }
+}
+class Shapes3 {
+    public static void main(String[] args) {
+        Triangle t1 = new Triangle("filled", 4.0, 4.0);
+        Triangle t2 = new Triangle("outlined", 8.0, 12.0);
+
+        System.out.println("Info for t1: ");
+        t1.showStyle();
+        t1.showDim();
+        System.out.println("Area is " + t1.area());
+
+        System.out.println();
+
+        System.out.println("Info for t2: ");
+        t2.showStyle();
+        t2.showDim();
+        System.out.println("Area is " + t2.area());
+    }
+}
+```
+
+Here, **Triangle**'s constructor initializes the members of **TwoDClass** that it inherits along with its own **style** field.
+
+When both the superclass and the subclass define constructors, the process is a bit more complicated because both the superclass and subclass constructors must be executed. In this case, you must use another of Java's keywords, **super**, which has two general forms. The first calls a superclass constructor. The second is used to access a member of the superclass that has been hidden by a member of a subclass. Here, we will look at its first use.
+
+### Using super to Call Superclasses Constructors
+
+A subclass can call a constructor defined by its superclass by use of the following form of **super**:
+```text
+super(parameter-list);
+```
+
+Here, *parameter-list* specifies any parameters needed by the constructor in the superclass. **super()** must always be the first statement executed inside a subclass constructor. To see how **super()** is used, consider the version of **TwoDShape** in the following program. It defines a constructor that initializes **width** and **height**.
+```java
+class TwoDShape {
+    private double width;
+    private double height;
+
+    // Parameterized constructor
+    TwoDShape(double w, double h) { // A constructor for TwoDShape
+        width = w;
+        height = h;
+    }
+
+    // Accessor methods for width and height
+    double getWidth() { return width; }
+    void setWidth(double width) { this.width = width; }
+    double getHeight() { return height; }
+    void setHeight(double height) { this.height = height; }
+
+    void showDim() {
+        System.out.println("Width and height are " + width + " and " + height);
+    }
+}
+class Triangle extends TwoDShape {
+    private String style;
+
+    // Constructor
+    Triangle(String s, double w, double h) {
+        super(w, h); // Use super() to execute the TwoDShape constructor
+
+        style = s;
+    }
+
+    double area() {
+        return getWidth() * getHeight() / 2;
+    }
+
+    void showStyle() {
+        System.out.println("Triangle is " + style);
+    }
+}
+class Shapes4 {
+    public static void main(String[] args) {
+        Triangle t1 = new Triangle("filled", 4.0, 4.0);
+        Triangle t2 = new Triangle("outlined", 8.0, 12.0);
+
+        System.out.println("Info for t1: ");
+        t1.showStyle();
+        t1.showDim();
+        System.out.println("Area is " + t1.area());
+
+        System.out.println();
+
+        System.out.println("Info for t2: ");
+        t2.showStyle();
+        t2.showDim();
+        System.out.println("Area is " + t2.area());
+    }
+}
+```
+
+Here, **Triangle()** calls **super()** with the parameters **w** and **h**. This causes the **TwoDShape()** constructor to be called, which initializes **width** and **height** using these values. **Triangle** no longer initializes these values itself. It need only initialize the value unique to it: **style**. This leaves **TwoDShape** free to construct its subobject in any manner that it so chooses. Furthermore, **TwoDShape** can add functionality about which existing subclasses have no knowledge, thus preventing existing code from breaking.
+
+Any form of constructor defined by the superclass can be called by **super()**. The constructor executed will be the one that matches the arguments. For example, here are expanded versions of both **TwoDShape** and **Triangle** that include default constructors and constructors that take one argument:
+```java
+class TwoDShape {
+    private double width;
+    private double height;
+
+    // A default constructor
+    TwoDShape() {
+        width = height = 0.0;
+    }
+
+    // Parameterized constructor
+    TwoDShape(double w, double h) {
+        width = w;
+        height = h;
+    }
+
+    // Construct object with equal width and height
+    TwoDShape(double x) {
+        width = height = x;
+    }
+
+    // Accessor methods for width and height
+    double getWidth() { return width; }
+    void setWidth(double width) { this.width = width; }
+    double getHeight() { return height; }
+    void setHeight(double height) { this.height = height; }
+
+    void showDim() {
+        System.out.println("Width and height are " + width + " and " + height);
+    }
+}
+class Triangle extends TwoDShape {
+    private String style;
+
+    // A default constructor
+    Triangle() {
+        super(); // Use super() to call the various forms of the TwoDShape constructor
+
+        style = "none";
+    }
+
+    // Constructor
+    Triangle(String s, double w, double h) {
+        super(w, h); // Use super() to call the various forms of the TwoDShape constructor
+
+        style = s;
+    }
+
+    // One argument constructor
+    Triangle(double x) {
+        super(x); // Use super() to call the various forms of the TwoDShape constructor
+
+        style = "filled";
+    }
+
+    double area() {
+        return getWidth() * getHeight() / 2;
+    }
+
+    void showStyle() {
+        System.out.println("Triangle is " + style);
+    }
+}
+class Shapes5 {
+    public static void main(String[] args) {
+        Triangle t1 = new Triangle();
+        Triangle t2 = new Triangle("outlined", 8.0, 12.0);
+        Triangle t3 = new Triangle(4.0);
+
+        t1 = t2;
+
+        System.out.println("Info for t1: ");
+        t1.showStyle();
+        t1.showDim();
+        System.out.println("Area is " + t1.area());
+
+        System.out.println();
+
+        System.out.println("Info for t2: ");
+        t2.showStyle();
+        t2.showDim();
+        System.out.println("Area is " + t2.area());
+
+        System.out.println();
+
+        System.out.println("Info for t3: ");
+        t3.showStyle();
+        t3.showDim();
+        System.out.println("Area is " + t3.area());
+
+        System.out.println();
+    }
+}
+```
+
+Here is the output from this version:
+```text
+Info for t1: 
+Triangle is outlined
+Width and height are 8.0 and 12.0
+Area is 48.0
+
+Info for t2: 
+Triangle is outlined
+Width and height are 8.0 and 12.0
+Area is 48.0
+
+Info for t3: 
+Triangle is filled
+Width and height are 4.0 and 4.0
+Area is 8.0
+```
+
+Let's review the key concepts behind **super()**. When a subclass calls **super()**, it is calling the constructor of its immediate superclass. Thus, **super()** always refers to the superclass immediately above the calling class. This is true even in a multilevel hierarchy. Also, **super()** must always be the first statement executed inside a subclass constructor.
+
+### Using super to Access Superclasses Members
+
+There is a second form of **super** that acts somewhat like **this**, except that it always refers to the superclass of the subclass in which it is used. This usage has the following general form:
+```text
+super.member
+```
+
+Here, *member* can be either a method or an instance variable.
+
+This form of **super** is most applicable to situations in which member names of a subclass hide members by the same name in the superclass. Consider this simple class hierarchy:
+```java
+class A {
+    int i;
+}
+class B extends A {
+    int i; // this i hides the i in A
+
+    B(int a, int b) {
+        super.i = a; // Here, super.i refers to the i in A
+        i = b; // i in B
+    }
+
+    void show() {
+        System.out.println("i in superclass: " + super.i);
+        System.out.println("i in subclass: " + i);
+    }
+}
+class UseSuper {
+    public static void main(String[] args) {
+        B subOb = new B(1, 2);
+        subOb.show();
+    }
+}
+```
+
+This program displays the following:
+```text
+i in superclass: 1
+i in subclass: 2
+```
+
+Although the instance variable **i** in **B** hides the **i** in **A**, **super** allows access to the **i** defined in the superclass. **super** can also be used to call methods that are hidden by a subclass.
+
+The key point is that once you have created a superclass that defines the general aspects of an object, that superclass can be inherited to form specialized classes. Each subclass simply adds its own, unique attributes. This is the essence of inheritance.
+
+### Creating a Multilevel Hierarchy
+
+Up to this point, we have been using simple class hierarchies that consist of only a superclass and a subclass. However, you can build hierarchies that contain as many layers of inheritance as you like. As mentioned, it is perfectly acceptable to use a subclass as a superclass of another. For example, given three classes called **A**, **B**, and **C**, **C** can be a subclass of **B**, which is a subclass of **A**. When this type of situation occurs, each subclass inherits all of the traits found in all of its superclasses. In this case, **C** inherits all aspects of **B** and **A**.
+
+One other important point: **super()** always refers to the constructor in the closest superclass. Given the **A**, **B**, and **C** classes example in the paragraph above; the **super()** in **C** calls the constructor in **B**. The **super()** in **B** calls the constructor in **A**. In a class hierarchy, if a superclass constructor requires parameters, then all subclasses must pass those parameters "up the line." This is true whether or not a subclass needs parameters of its own.
+
+### When Are Constructors Executed?
+
+In the foregoing discussion of inheritance and class hierarchies, an important question may have occurred to you: When a subclass object is created, whose constructor is executed first, the one in the subclass or the one defined by the superclass? For example, given a subclass called **B** and a superclass called **A**, is **A**'s constructor executed before **B**'s, or vice versa? The answer is that in a class hierarchy, constructors complete their execution in order of derivation, from superclass to subclass. Further, since **super()** must be the first statement executed in a subclass' constructor, this order is the same whether or not **super()** ) is used. If **super()** is not used, then the default (parameterless) constructor of each superclass will be executed. The following program illustrates when constructors are executed:
+```java
+class A {
+    A() {
+        System.out.println("Constructing A.");
+    }
+}
+class B extends A {
+    B() {
+        System.out.println("Constructing B");
+    }
+}
+class C extends B {
+    C() {
+        System.out.println("Constructing C.");
+    }
+}
+class OrderOfConstruction {
+    public static void main(String[] args) {
+        C c = new C();
+    }
+}
+```
+
+The output from this program is shown here:
+```text
+Constructing A.
+Constructing B
+Constructing C.
+```
+
+As you can see, the constructors are executed in order of derivation.
+
+If you think about it, it makes sense that constructors are executed in order of derivation. Because a superclass has no knowledge of any subclass, any initialization it needs to perform is separate from and possibly prerequisite to any initialization performed by the subclass. Therefore, it must complete its execution first.
+
+### Superclass References and Subclass Objects
+
+As you know, Java is a strongly typed language. Aside from the standard conversions and automatic promotions that apply to its primitive types, type compatibility is strictly enforced. Therefore, a reference variable for one class type cannot normally refer to an object of another class type.
+
+There is, however, an important exception to Java's strict type enforcement. A reference variable of a superclass can be assigned a reference to an object of any subclass derived from that superclass. In other words, a superclass reference can refer to a subclass object. Here is an example:
+```java
+class X {
+    int a;
+    X(int i) { a = i; }
+}
+class Y extends X {
+    int b;
+    Y(int i, int j) {
+        super(j);
+        b = i;
+    }
+}
+class SupSubRef {
+    public static void main(String[] args) {
+        X x = new X(10);
+        X x2;
+        Y y = new Y(5, 6);
+
+        x2 = x; // OK, both of same type
+        System.out.println("x2.a: " + x2.a);
+        
+        x2 = y; // OK because Y is a subclass of X; thus x2 can refer to y
+        System.out.println("x2.a: " + x2.a);
+        
+        // X references know only about X members
+        x2.a = 19; // OK
+//      x2.b = 27; // Error, X doesn't have a b member
+    }
+}
+```
+
+Here, **Y** is now derived from **X**; thus, it is permissible for **x2** to be assigned a reference to a **Y** object.
+
+It is important to understand that it is the type of the reference variable-not the type of the object that it refers to-that determines what members can be accessed. That is, when a reference to a subclass object is assigned to a superclass reference variable, you will have access only to those parts of the object defined by the superclass. This is why **x2** can't access **b** even when it refers to a **Y** object. If you think about it, this makes sense, because the superclass has no knowledge of what a subclass adds to it. This is why the last line of code in the program is commented out.
+
+An important place where subclass references are assigned to superclass variables is when constructors are called in a class hierarchy. As you know, it is common for a class to define a constructor that takes an object of the class as a parameter. This allows the class to construct a copy of an object. Subclasses of such a class can take advantage of this feature. For example, consider the following versions of **TwoDShape** and **Triangle**. Both add constructors that take an object as a parameter.
+```java
+class TwoDShape {
+    private double width;
+    private double height;
+
+    // A default constructor
+    TwoDShape() {
+        width = height = 0.0;
+    }
+
+    // Parameterized constructor
+    TwoDShape(double w, double h) {
+        width = w;
+        height = h;
+    }
+
+    // Construct object with equal width and height
+    TwoDShape(double x) {
+        width = height = x;
+    }
+
+    // Construct an object from an object
+    TwoDShape(TwoDShape ob) { // Construct object from an object
+        width = ob.width;
+        height = ob.height;
+    }
+
+    // Accessor methods for width and height
+    double getWidth() { return width; }
+    void setWidth(double width) { this.width = width; }
+    double getHeight() { return height; }
+    void setHeight(double height) { this.height = height; }
+
+    void showDim() {
+        System.out.println("Width and height are " + width + " and " + height);
+    }
+}
+class Triangle extends TwoDShape {
+    private String style;
+
+    // A default constructor
+    Triangle() {
+        super(); // call superclass constructor
+        style = "none";
+    }
+
+    // Constructor for Triangle
+    Triangle(String s, double w, double h) {
+        super(w, h); // call superclass constructor
+        style = s;
+    }
+
+    // One argument constructor
+    Triangle(double x) {
+        super(x); // call superclass constructor
+        style = "filled";
+    }
+
+    // Construct an object from an object
+    Triangle(Triangle ob) {
+        super(ob); // Pass a Triangle reference to TwoDShape's constructor
+        style = ob.style;
+    }
+
+    double area() {
+        return getWidth() * getHeight() / 2;
+    }
+
+    void showStyle() {
+        System.out.println("Triangle is " + style);
+    }
+}
+class Shapes7 {
+    public static void main(String[] args) {
+        Triangle t1 = new Triangle("outlined", 8.0, 12.0);
+        Triangle t2 = new Triangle(t1); // make a copy of t1
+
+        System.out.println("Info for t1: ");
+        t1.showStyle();
+        t1.showDim();
+        System.out.println("Area is " + t1.area());
+
+        System.out.println();
+
+        System.out.println("Info for t2: ");
+        t2.showStyle();
+        t2.showDim();
+        System.out.println("Area is " + t2.area());
+    }
+}
+```
+
+In this program, **t2** is constructed from **t1** and is, thus, identical. The output is shown here:
+```text
+Info for t1: 
+Triangle is outlined
+Width and height are 8.0 and 12.0
+Area is 48.0
+
+Info for t2: 
+Triangle is outlined
+Width and height are 8.0 and 12.0
+Area is 48.0
+```
+
+Pay special attention to this **Triangle** constructor:
+```java
+// Construct an object from an object
+Triangle(Triangle ob) {
+    super(ob); // Pass a Triangle reference to TwoDShape's constructor
+    style = ob.style;
+}
+```
+
+It receives an object of type **Triangle** and it passes that object (through **super**) to this **TwoDShape** constructor:
+```java
+// Construct an object from an object
+TwoDShape(TwoDShape ob) { // Construct object from an object
+    width = ob.width;
+    height = ob.height;
+}
+```
+
+The key point is that **TwoDShape()** is expecting a **TwoDShape** object. However, **Triangle()** passes it a **Triangle** object. The reason this works is because, as explained, a superclass reference can refer to a subclass object. Thus, it is perfectly acceptable to pass **TwoDShape()** a reference to an object of a class derived from **TwoDShape**. Because the **TwoDShape()** constructor is initializing only those portions of the subclass object that are members of **TwoDShape**, it doesn't matter that the object might also contain other members added by derived classes.
+
 Enjoy!
