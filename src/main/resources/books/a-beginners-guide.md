@@ -2826,4 +2826,96 @@ TwoDShape(TwoDShape ob) { // Construct object from an object
 
 The key point is that **TwoDShape()** is expecting a **TwoDShape** object. However, **Triangle()** passes it a **Triangle** object. The reason this works is because, as explained, a superclass reference can refer to a subclass object. Thus, it is perfectly acceptable to pass **TwoDShape()** a reference to an object of a class derived from **TwoDShape**. Because the **TwoDShape()** constructor is initializing only those portions of the subclass object that are members of **TwoDShape**, it doesn't matter that the object might also contain other members added by derived classes.
 
+### Method Overriding
+
+In a class hierarchy, when a method in a subclass has the same return type and signature as a method in its superclass, then the method in the subclass is said to *override* the method in the superclass. When an overridden method is called from within a subclass, it will always refer to the version of that method defined by the subclass. The version of the method defined by the superclass will be hidden.
+
+If you want to access the superclass version of an overridden method, you can do so by using **super**.
+
+Method overriding occurs only when the signatures of the two methods are identical. If they are not, then the two methods are simply overloaded. For example, consider this modified version of the preceding example:
+```java
+class A {
+    void show() {
+        System.out.println("This is show() method on A");
+    }
+}
+class B extends A {
+    // overload show()
+    void show(String msg) { // Because signatures differ, this show() simply overloads show() in superclass A
+        System.out.println(msg);
+    }
+}
+class Overload {
+    public static void main(String[] args) {
+        B subOb = new B();
+        subOb.show("This is show() method on B"); // // this calls show() in B
+        subOb.show(); // this calls show() in A
+    }
+}
+```
+
+The output produced by this program is shown here:
+```text
+This is show() method on B
+This is show() method on A
+```
+
+The version of **show()** in **B** takes a string parameter. This makes its signature different from the one in **A**, which takes no parameters. Therefore, no overriding (or name hiding) takes place.
+
+#### Overriding Methods Support Polymorphism
+
+While the examples in the preceding section demonstrate the mechanics of method overriding, they do not show its power. Indeed, if there were nothing more to method overriding than a namespace convention, then it would be, at best, an interesting curiosity but of little real value. However, this is not the case. Method overriding forms the basis for one of Java's most powerful concepts: *dynamic method dispatch*. Dynamic method dispatch is the mechanism by which a call to an overridden method is resolved at run time rather than compile time. Dynamic method dispatch is important because this is how Java implements run-time polymorphism.
+
+Let's begin by restating an important principle: a superclass reference variable can refer to a subclass object. Java uses this fact to resolve calls to overridden methods at run time. Here's how. When an overridden method is called through a superclass reference, Java determines which version of that method to execute based upon the type of the object being referred to at the time the call occurs. Thus, this determination is made at run time. When different types of objects are referred to, different versions of an overridden method will be called. In other words, *it is the type of the object being referred to* (not the type of the reference variable) that determines which version of an overridden method will be executed. Therefore, if a superclass contains a method that is overridden by a subclass, then when different types of objects are referred to through a superclass reference variable, different versions of the method are executed.
+
+Here is an example that illustrates dynamic method dispatch:
+```java
+class Sup {
+    void who() {
+        System.out.println("who() in Sup");
+    }
+}
+class Sub1 extends Sup {
+    void who() {
+        System.out.println("who() in Sub1");
+    }
+}
+class Sub2 extends Sup {
+    void who() {
+        System.out.println("who() in Sub2");
+    }
+}
+class DynDispDemo {
+    public static void main(String[] args) {
+        Sup superOb = new Sup();
+        Sub1 subOb1 = new Sub1();
+        Sub2 subOb2 = new Sub2();
+        
+        Sup supRef;
+        
+        supRef = superOb;
+        supRef.who();
+
+        supRef = subOb1;
+        supRef.who();
+
+        supRef = subOb2;
+        supRef.who();
+    }
+}
+```
+
+The output from the program is shown here:
+```text
+who() in Sup
+who() in Sub1
+who() in Sub2
+```
+
+This program creates a superclass called **Sup** and two subclasses of it, called **Sub1** and **Sub2**. **Sup** declares a method called **who()**, and the subclasses override it. Inside the **main()** method, objects of type **Sup**, **Sub1**, and **Sub2** are declared. Also, a reference of type **Sup**, called **supRef**, is declared. The program then assigns a reference to each type of object to **supRef** and uses that reference to call **who()**. As the output shows, the version of **who()** executed is determined by the type of object being referred to at the time of the call, not by the class type of **supRef**.
+
+#### Why Overridden Methods?
+
+As stated earlier, overridden methods allow Java to support run-time polymorphism. Polymorphism is essential to object-oriented programming for one reason: it allows a general class to specify methods that will be common to all of its derivatives, while allowing subclasses to define the specific implementation of some or all of those methods. Overridden methods are another way that Java implements the "one interface, multiple methods" aspect of polymorphism. Part of the key to successfully applying polymorphism is understanding that the superclasses and subclasses form a hierarchy that moves from lesser to greater specialization. Used correctly, the superclass provides all elements that a subclass can use directly. It also defines those methods that the derived class must implement on its own. This allows the subclass the flexibility to define its own methods, yet still enforces a consistent interface. Thus, by combining inheritance with overridden methods, a superclass can define the general form of the methods that will be used by all of its subclasses.
+
 Enjoy!
