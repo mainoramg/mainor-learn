@@ -1,8 +1,8 @@
 # A beginners Guide
 
-## Chapter 1: Java Fundamentals
+# Chapter 1: Java Fundamentals
 
-### Java Keywords
+## Java Keywords
 These keywords cannot be used as names for a variable, class, or method. The keywords `const` and `goto` are reserved but not used.
 ```text
 abstract    default    goto          package         this
@@ -23,7 +23,7 @@ In addition to the keywords, Java reserves the following. These are values used 
 ```text
 true        false      null
 ```
-### Identifiers
+## Identifiers
 An identifier is a name given to a method, a variable, or any other user-defined item.
 * Can be from one to several characters long.
 * May start with any **letter** of the alphabet, an **underscore**, or a **dollar** sign. Next may be either a **letter**, a **digit**, a **dollar** sign, or an **underscore**.
@@ -37,9 +37,9 @@ Test    x       y2        MaxLoad
 $up     _top    my_var    sample23
 ```
 
-## Chapter 2: Introducing Data Types and Operators
+# Chapter 2: Introducing Data Types and Operators
 
-### Primitive Types
+## Primitive Types
 At the core of Java are eight primitive types of data. The term *primitive* is used here to indicate that these types are not objects in a object-oriented sense, but rather, normal binary values. These primitive types are not objects because of efficiency concerns.
 
 Type | Meaning
@@ -53,7 +53,7 @@ int | Integer
 long | Long integer
 short | Short integer
 
-#### Integers
+### Integers
 Java defines four integer types: **byte**, **short**, **int**, and **long**. All of the integer types are signed positive and negative values. Java does not support unsigned (positive-only) integers.
 
 Type | Width in Bits | Range
@@ -69,7 +69,7 @@ Use of the integer types:
 * **int**: the most commonly used integer type is **int**. Variables of type **int** are often employed to control loops, to index arrays, and to perform general purpose math.
 * **long**: when you need an integer that has a range greater than **int**, use **long**.
 
-#### Floating-Point
+### Floating-Point
 The floating-point types can represent numbers that have fractional components. There are two kinds of floating-point types: **float** and **double**.
 
 Type | Width in Bits | Represent
@@ -79,7 +79,7 @@ double | 64 | Double-precision numbers
 
 Of the two, **double** is the most commonly used because all of the math functions in Java's class library use **double** values. For example, the **sqrt()** method (which is defined by the **Math** class) returns a **double** value that is the square root of its **double** argument.
 
-#### Characters
+### Characters
 Java uses Unicode. Unicode defines a character set than can represent all of the characters found in all human languages. The standard 8-bit ASCII character set is a subset of Unicode and range from 0 to 127. Thus, the ASCII characters are still valid Java characters.
 
 Type | Width in Bits | Range
@@ -100,7 +100,7 @@ ch = 90;
 System.out.println("ch is now "+ch); //output: ch is now Z
 ```
 
-### Literals
+## Literals
 
 *Literals* refer to fixed values that are represented in their human readable form. Literals are also called *constants*. Java literals can be of any of the primitive data types.
 
@@ -121,7 +121,7 @@ Beginning with JDK 7, you can embed one or more underscores into an integer or f
 ```
 This specifies the value 123,451,234. The use of underscores is particularly useful when encoding things like part numbers, customer IDs, and status codes that are commonly thought of as consisting of subgroups of digits.
 
-#### Hexadecimal, Octal and Binary Literals
+### Hexadecimal, Octal and Binary Literals
 
 Literal | Example | Note
 ------- | ------- | ----
@@ -129,7 +129,7 @@ Hexadecimal | 0xFF | A hexadecimal literal must begin with **0x** or **0X** (a z
 Octal | 018 | An octal literal begins with a zero
 Binary | 0b1100 | A binary literal must begin with **0b** or **0B** (a zero followed by an b or B). Important: only beginning with JDK 7
 
-#### Character Escape Sequences
+### Character Escape Sequences
 
 These sequences are used in place of the characters that they represent.
 
@@ -151,7 +151,7 @@ For example, this assigns **ch** the tab character:
 char ch = '\t';
 ```
 
-#### String Literals
+### String Literals
 
 A *string* is a set of characters enclosed by double quotes. In addition to normal characters, a string literal can also contain one or more of the escape sequences. For example:
 ```java
@@ -159,7 +159,7 @@ System.out.println("First line\nSecond line");
 System.out.println("A\tB\tC");
 ```
 
-### The scope and Lifetime of Variables
+## The scope and Lifetime of Variables
 
 There is one quirk to Java's scope rules that may surprise you: although blocks can be nested, no variable declared within an inner scope can have the same name as a variable declared by an enclosing scope. For example the following program, which tries to declare two separate variables with the same name, will not compile:
 ```java
@@ -176,9 +176,9 @@ public class NestVar {
 }
 ```
 
-### Operators
+## Operators
 
-#### Arithmetic Operators
+### Arithmetic Operators
 
 Operator | Meaning
 -------- | -------
@@ -196,7 +196,7 @@ Special situations:
 * You can obtain the remainder of a division by suing the modulus operator %. Example: 10 % 3 = 1
 * The % can be applied to both integer and floating-point types. Thus, 10.0 % 3.0 is also 1.
 
-##### Increment and Decrement
+#### Increment and Decrement
 
 The increment operator adds 1 to its operand, and the decrement operator subtracts 1. Therefore,
 
@@ -225,7 +225,7 @@ y = x++;
 // y is set to 10
 ```
 
-#### Relational and Logical Operators
+### Relational and Logical Operators
 
 The relational operators ans shown here:
 
@@ -262,11 +262,11 @@ True | True | True | True | False | False
 
 As the table shows, the outcome of an exclusive OR operation is true when exactly one and only one operand is true.
 
-#### Short-Circuit Logical Operators
+### Short-Circuit Logical Operators
 
 The short-circuit AND operator is **&&**, and the short-circuit OR operator is **||**. Their normal counterparts are **&** and **|**. The only difference between the normal and short-circuit versions is that the normal operands will always evaluate each operand, but short-circuit versions will evaluate the second operand only when necessary.
 
-#### The Assigment Operator
+### The Assigment Operator
 
 The assigment operator does have one interesting attribute that you may not be familiar with: it allows you to create a chain of assignments. For example:
 ```java
@@ -275,7 +275,7 @@ int x, y, z;
 x = y = z = 100; // set x, y, and z to 100
 ```
 
-#### Shorthand Assignments (Compound Assignments)
+### Shorthand Assignments (Compound Assignments)
 
 Java provides special *shorthand* assignment operators that simplify the coding of certain assignments statements. This shorthand will work for all the binary operators in Java (that is, those that require two operands). The general form of the shorthand is:
 
@@ -296,7 +296,7 @@ Operator | Operator | Operator | Operator
 
 Because there operators combine an operation with an assignment, they are formally referred to as *compound assignment* operators.
 
-#### Type Conversion in Assignments
+### Type Conversion in Assignments
 
 In programming, it is common to assign one type of variable to another. For example, you might want to assign an **int** value to a **float** variable, as shown here:
 ```java
@@ -337,7 +337,7 @@ Some interesting facts about conversions:
 * **char** and **boolean** are not compatible with each other.
 * An integer literal can be assigned to **char**.
 
-#### Casting Incompatible Types
+### Casting Incompatible Types
 
 When a cast involves a *narrowing conversion*, information might be lost:
 * When casting a **long** into a **short**, information will be lost if the **long**'s value is greater than the range of a **short** because its high-order bits are removed.
@@ -365,7 +365,7 @@ b = 88; // ASCII code for X
 ch = (char) b; // Cast between incompatible types. ch = 'X'
 ```
 
-#### Operator Precedence
+### Operator Precedence
 
 The following table shows the order of precedence for all Java operators, from highest to lowest.
 
@@ -390,9 +390,9 @@ The following table shows the order of precedence for all Java operators, from h
 **Lowest** |  |  |  |  |  | 
 
 
-#### Expressions
+### Expressions
 
-##### Type Conversion in Expressions
+#### Type Conversion in Expressions
 
 Within an expression, it is possible to mix two or more different types of data as long as they are compatible with each other. For example, you can mix **short** and **long** within an expression because they are both numeric types. When different types of data are mixed within an expression, they are all converted to the same type. This is accomplished through the use of Java's *type promotion rules*:
 * First, all **char**, **byte**, and **short** values are promoted to **int**.
@@ -425,9 +425,9 @@ ch1 = (char) (ch1 + ch2);
 
 Without the cast, the result of adding **ch1** to **ch2** would be **int**, which can't be assigned to a **char**. 
 
-## Chapter 3: Program Control Statements
+# Chapter 3: Program Control Statements
 
-### The switch Statement
+## The switch Statement
 
 Frequently, the expression controlling a **switch** is simply a variable rather than a larger expression. The *expression* controlling the **switch** must be of the following types:
 * **byte**
@@ -520,7 +520,7 @@ switch (i) {
 
 In this fragment, if **i** has the value 1, 2, or 3, the first **println()** statement executes. If it is 4, the second **println()** statement executes. The "stacking" of **case**s, as shown in this example, is common when several **case**s share common code.
 
-#### Nested switch Statements
+### Nested switch Statements
 
 It is possible to have a **switch** as part of the statement sequence of an outer **switch**. This is called a nested **switch**. Even if the **case** constants of the inner and outer **switch** contain common values, no conflicts will arise. For example, the following code fragment is perfectly acceptable:
 ```java
@@ -540,7 +540,7 @@ switch (ch1) {
 }
 ```
 
-### The for Loop
+## The for Loop
 
 The **for** loop can proceed in a positive or negative fashion, and it can change the loop control variable by any amount. For example, the following program prints the numbers 100 to -95, in decrements of 5:
 ```java
@@ -554,7 +554,7 @@ for (int count = 10; count < 5; count++)
     x += count; // this statement will not execute
 ```
 
-#### Some Variations on the for Loop
+### Some Variations on the for Loop
 
 The **for** is one of the most versatile statements in the Java language because it allows a wide range of variations. For example, multiple loop control variables can be used. Consider the following program:
 ```java
@@ -574,7 +574,7 @@ for (i = 0; (char) System.in.read() != 'S'; i++)
     System.out.println("Pass #" + i);
 ```
 
-#### Missing Pieces
+### Missing Pieces
 
 In java, it is possible for any or all of the initialization, condition, or iteration portions of the **for** loop to be blank.
 
@@ -595,7 +595,7 @@ for ( ; i < 10; ) {
 }
 ```
 
-##### The Infinite Loop
+#### The Infinite Loop
 
 You can create an *infinite loop* (a loop that never terminates) using the **for** by leaving the conditional expression empty. Hint: To halt a loop of this type you use the **break** statement.
 ```java
@@ -605,7 +605,7 @@ for (;;) // intentionally infinite loop
 }
 ```
 
-#### Loops with No Body
+### Loops with No Body
 
 In Java, the body associated with a **for** loop (or any other loop) can be empty. This is because a *null statement* is syntactically valid. Body-less loops are often useful. For example, the following program uses one to sum the numbers 1 through 5:
 ```java
@@ -624,7 +624,7 @@ sum = sum + i;
 i++;
 ```
 
-### The do-while Loop
+## The do-while Loop
 
 The last of Java's loops is the **do-while**. Unlike the **for** and the **while** loops, in which the condition is tested at the top of the loop, the **do-while** loop checks its condition at the bottom of the loop. This means that a **do-while** loop will always execute at least once. The general form of the **do-while** loop is:
 ```text
@@ -641,7 +641,7 @@ Although the braces are not necessary when only one statement is present, they a
 * Use the **do-while** when you need a loop that will always perform at least one iteration.
 * The **while** is best used when the loop will repeat an unknown number of times.
 
-### Use break to Exit a Loop
+## Use break to Exit a Loop
 
 The **break** statement can be used with any of Java's loops, including intentionally infinite loops. For example, the following program simply reads input until the user types the letter q:
 ```java
@@ -687,7 +687,7 @@ Here are two other points to remember about **break**:
 * Second, the **break** that terminates a **switch** statement affects only that **switch** statement and not any enclosing loops.
 
 
-### Use break as a Form of goto
+## Use break as a Form of goto
 
 In addition to its uses with the **switch** statement and loops, the **break** statement can be employed by itself to provide a "civilized" form of the goto statement. For example, the goto can be helpful when exiting from a deeply nested set of loops. To handle such situations, Java defines an expanded form of the **break** statement. By using this form of **break**, you can, for example, break out of one or more blocks of code. These blocks need not be part of a loop or a **switch**. They can be any block. Further, you can specify precisely where execution will resume, because this form of **break** works with a label. As you will see, **break** gives you the benefits of a goto without its problems.
 
@@ -816,7 +816,7 @@ for (int j = 10; j < 100; j++) {
 }
 ```
 
-### Use continue
+## Use continue
 
 In **while** and **do-while** loops, a **continue** statement will cause control to go directly to the conditional expression and then continue the looping process. In the case of the **for**, the iteration expression of the loop is evaluated, then the conditional expression is executed, and then the loop continues.
 
@@ -844,13 +844,13 @@ Outer loop pass 8, Inner loop: 1234
 Outer loop pass 9, Inner loop: 1234
 ```
 
-## Chapter 4: Introducing Classes, Objects, and Methods
+# Chapter 4: Introducing Classes, Objects, and Methods
 
-### Class Fundamentals
+## Class Fundamentals
 
 A class is a template that defines the form of an object.
 
-#### Defining a Class
+### Defining a Class
 
 Here is a complete program that uses the example **Vehicle** class:
 ```java
@@ -888,7 +888,7 @@ To run this program, you must execute **VehicleDemo.class**. The following outpu
 Minivan can carry 7 with a range of 336
 ```
 
-### How Objects Are Created
+## How Objects Are Created
 
 The **new** operator dynamically allocates (that is, allocates at run time) memory for an object and returns a reference to it. This reference is, more or less, the address in memory of the object allocated by **new**. This reference is then stored in a variable. Thus, in Java, all class objects must be dynamically allocated. The two steps combined in the preceding statement can be rewritten like this to show each step individually:
 ```java
@@ -898,7 +898,7 @@ minivan = new Vehicle(); // allocate a Vehicle object
 
 The first line declares **minivan** as a reference to an object of type **Vehicle**. Thus, **minivan** is a variable that can refer to an object, but it is not an object itself. At this point, **minivan** does not refer to an object. The next line creates a new **Vehicle** object and assigns a reference to it to **minivan**. Now, **minivan** is linked with an object.
 
-### Reference Variables and Assignment
+## Reference Variables and Assignment
 
 In an assignment operation, object reference variables act differently than do variables of a primitive type, such as **int**. When you assign one primitive-type variable to another, the situation is straightforward. The variable on the left receives a *copy* of the *value* of the variable on the right. When you assign one object reference variable to another, the situation is a bit more complicated because you are changing the object that the reference variable refers to. The effect of this difference can cause some counterintuitive results. For example, consider the following fragment:
 ```java
@@ -930,7 +930,7 @@ car2 = car3; // now car2 and car3 refer to the same object.
 
 After this sequence executes, **car2** refers to the same object as **car3**. The object referred to by **car1** is unchanged.
 
-### Returning from a Method
+## Returning from a Method
 
 In a **void** method, you can use the immediate termination of a method by using this form of **return**:
 ```text
@@ -958,7 +958,7 @@ void MyMeth() {
 }
 ```
 
-### Constructors
+## Constructors
 
 A *constructor* initializes an object when it is created. It has the same name as its class and is syntactically similar to a method. However, constructors have no explicit return type. Typically, you will use a constructor to give initial values to the instance variables defined by the class, or to perform any other startup procedures required to create a fully formed object.
 
@@ -976,7 +976,7 @@ class MyClass {
 }
 ``` 
 
-### The new Operator Revisited
+## The new Operator Revisited
 
 Now that you know more about classes and their constructors, let's take a closer look at the **new** operator. In the context of an assignment, the **new** operator has this general form:
 ```text
@@ -987,7 +987,7 @@ Here, *class-var* is a variable of the class type being created. The *class-name
 
 Since memory is finite, it is possible that **new** will not be able to allocate memory for an object because insufficient memory exists. If this happens, a run-time exception will occur.
 
-### Garbage Collection
+## Garbage Collection
 
 As you have seen, objects are dynamically allocated from a pool of free memory by using the **new** operator. As explained, memory is not infinite, and the free memory can be exhausted. Thus, it is possible for **new** to fail because there is insufficient free memory to create the desired object. For this reason, a key component of any dynamic allocation scheme is the recovery of free memory from unused objects, making that memory available for subsequent reallocation. In some programming languages, the release of previously allocated memory is handled manually. However, Java uses a different, more trouble-free approach: *garbage collection*.
 
@@ -995,7 +995,7 @@ Java's garbage collection system reclaims objects automatically-occurring transp
 
 Garbage collection occurs only sporadically during the execution of your program. It will not occur simply because one or more objects exist that are no longer used. For efficiency, the garbage collector will usually run only when two conditions are met: there are objects to recycle, and there is a need to recycle them. Remember, garbage collection takes time, so the Java run-time system does it only when it is appropriate. Thus, you can't know precisely when garbage collection will take place.
 
-### The finalize() Method
+## The finalize() Method
 
 It is possible to define a method that will be called just before an object's final destruction by the garbage collector. This method is called **finalize()**, and it can be used to ensure that an object terminates cleanly. For example, you might use **finalize()** to make sure that an open file owned by that object is closed.
 
@@ -1012,7 +1012,7 @@ Here, the keyword **protected** is a specifier that limits access to **finalize(
 
 It is important to understand that **finalize()** is called just before garbage collection. It is not called when an object goes out of scope, for example. This means that you cannot know when-or even if-**finalize()** will be executed. For example, if your program ends before garbage collection occurs, **finalize()** will not execute. Therefore, it should be used as a "backup" procedure to ensure the proper handling of some resource, or for special-use applications, not as the means that your program uses in its normal operation. In short, **finalize()** is a specialized method that is seldom needed by most programs.
 
-### The this Keyword
+## The this Keyword
 
 The **this** has some important uses: the Java syntax permits the name of a parameter or a local variable to be the same as the name of an instance variable. When this happens, the local name hides the instance variable. You can gain access to the hidden instance variable by referring to it through **this**. For example, the following is a syntactically valid way to write the **Pwr()** constructor.
 ```java
@@ -1026,13 +1026,13 @@ Pwr(double b, int e) {
 }
 ```
 
-## Chapter 5: More Data Types and Operators
+# Chapter 5: More Data Types and Operators
 
-### Arrays
+## Arrays
 
 Although arrays in Java can be used just like arrays in other programming languages, they have one special attribute: they are implemented as objects. This fact is one reason that a discussion of arrays was deferred until objects had been introduced. By implementing arrays as objects, several important advantages are gained, not the least of which is that unused arrays can be garbage collected.
 
-#### One-Dimensional Arrays
+### One-Dimensional Arrays
 
 A one-dimensional array is a list of related variables. Such lists are common in programming. For example, you might use a one-dimensional array to store the account numbers of the active users on a network. Another array might be used to store the current batting averages for a baseball team.
 
@@ -1060,7 +1060,7 @@ Here, the initial values are specified by *val1* through *valN*. They are assign
 int nums[] = {99, -10, 100123, -978, 463};
 ```
 
-##### Bubble Sort Example
+#### Bubble Sort Example
 
 Because a one-dimensional array organizes data into an indexable linear list, it is the perfect data structure for sorting. In this project you will learn a simple way to sort an array. As you may know, there are a number of different sorting algorithms. There are the quick sort, the shaker sort, and the shell sort, to name just three. However, the best known, simplest, and easiest to understand is called the Bubble sort. Although the Bubble sort is not very efficient-in fact, its performance is unacceptable for sorting large arrays-it may be used effectively for sorting small arrays.
 
@@ -1127,11 +1127,11 @@ Sorted array is: -978 -10 -9 18 49 99 287 463 5623 100123
 
 Although the Bubble sort is good for small arrays, it is not efficient when used on larger ones. The best general-purpose sorting algorithm is the Quicksort.
 
-### Multidimensional Arrays
+## Multidimensional Arrays
 
 In Java, a multidimensional array is an array of arrays.
 
-#### Two-Dimensional Arrays
+### Two-Dimensional Arrays
 
 The simplest form of the multidimensional array is the two-dimensional array. A two-dimensional array is, in essence, a list of one-dimensional arrays. To declare a two-dimensional integer array **table** of size 10, 20 you would write:
 ```java
@@ -1165,7 +1165,7 @@ Index | `0` | `1` | `2` | `3`
 table[1][2] --> 7
 ```
 
-### Irregular Arrays
+## Irregular Arrays
 
 When you allocate memory for a multidimensional array, you need to specify only the memory for the first (leftmost) dimension. You can allocate the remaining dimensions separately. For example, the following code allocates memory for the first dimension of **table** when it is declared. It allocates the second dimension manually:
 ```java
@@ -1185,7 +1185,7 @@ riders[3] = new int[2]; // only two elements long
 riders[4] = new int[2]; // only two elements long
 ```
 
-#### Arrays of Three or more Dimensions
+### Arrays of Three or more Dimensions
 
 Java allows arrays with more than two dimensions. Here is the general form of a multidimensional array declaration:
 ```text
@@ -1197,7 +1197,7 @@ For example, the following declaration creates a 4 x 10 x 3 three-dimensional in
 int multidim[][][] = new int[4][10][3];
 ```
 
-#### Initializing Multidimensional Arrays
+### Initializing Multidimensional Arrays
 
 A multidimensional array can be initialized by enclosing each dimension's initializer list within its own set of curly braces. For example, the general form of array initialization for a two-dimensional array is shown here:
 ```text
@@ -1230,7 +1230,7 @@ int sqrs [][] = {
 };
 ```
 
-### Alternative Array Declaration Syntax
+## Alternative Array Declaration Syntax
 
 There is a second form that can be used to declare an array:
 ```text
@@ -1266,7 +1266,7 @@ int[] someMethod() { ... }
  
 This declares that **someMethod()** returns an array of type **int**.
 
-### Assigning Array References
+## Assigning Array References
 
 As with other objects, when you assign one array reference variable to another, you are simply changing what object that variable refers to. You are not causing a copy of the array to be made, nor are you causing the contents of one array to be copied to the other. For example, consider this program:
 ```java
@@ -1319,7 +1319,7 @@ Here is num1 after change through nums2: 0 1 2 99 4 5 6 7 8 9
 
 As the output shows, after the assignment of **nums1** to **nums2**, both array reference variables refer to the same object.
 
-### Using the length Member
+## Using the length Member
 
 Keep in mind that the value of **length** has nothing to do with the number of elements that are actually in use. It contains the number of elements that the array is capable of holding.
 
@@ -1328,7 +1328,7 @@ To obtain the length of any individual array part of a two-dimensional array, yo
 table[0].length
 ```
 
-### The For-Each Style for Loop
+## The For-Each Style for Loop
 
 The second form of the **for** implements a "for-each" style loop. A for-each loop cycles through a collection of objects, such as an array, in strictly sequential fashion, from start to finish. Originally, Java did not offer a for-each style loop. However, with the release of JDK 5, the **for** loop was enhanced to provide this option. The for-each style of **for** is also referred to as the *enhanced* **for** loop.
 
@@ -1385,7 +1385,7 @@ The first **for** loop increases the value of the iteration variable by a factor
 1 2 3 4 5 6 7 8 9 10 
 ```
 
-#### Iterating Over Multidimensional Arrays
+### Iterating Over Multidimensional Arrays
 
 The enhanced **for** also works on multidimensional arrays. Remember, however, that in Java, multidimensional arrays consist of *arrays of arrays*. This is important when iterating over a multidimensional array because each iteration obtains the *next array*, not an individual element. Furthermore, the iteration variable in the **for** loop must be compatible with the type of array being obtained. For example, consider the following program, it uses nested **for** loops to obtain the elements of a two-dimensional array in row order, from first to last:
 ```java
@@ -1427,18 +1427,18 @@ Value is: 15
 Summation: 90
 ```
 
-### Strings
+## Strings
 
 In many other programming languages, a string is an array of characters. This is not the case in Java. In Java, strings are objects.
 
-#### Constructing Strings
+### Constructing Strings
 
 Different ways you can construct a **String**:
 * You can construct a **String** just like you construct any other type of object: `String str = new String("Hello")`
 * You can also construct a **String** from another **String**. For example: `String str = new String("Hello")` and then `String str2 = new String(str)`
 * Another easy way to create a **String** is shown here: `String str = "Java strings are powerful."`
 
-#### Operating on Strings
+### Operating on Strings
 
 The **String** class contains several methods that operate on strings. Here are the general forms for a few:
 
@@ -1515,7 +1515,7 @@ String str4 = str1 + str2 + str3; // initializes str4 with the string: "OneTwoTh
 **Question: Why does** String **define the** equals() **method? Cant't I just use** == **?**
 **Answer**: The **equals()** method compares the character sequences of two **String** objects for equality. Applying the **==** to two **String** references simply determines whether the two references refer to the same object.
 
-#### Strings Are Immutable
+### Strings Are Immutable
 
 The content of a **String** object are immutable. That is, once created, the character sequence that makes up the string cannot be altered. It must be made clear, however, that **String** reference variables may, of course, change the object to which they refer. It is just that the content of a specific **String** object cannot be changed after it is created.
 
@@ -1540,7 +1540,7 @@ System.out.println("substr: " + substr); // substr: makes the Web
 
 As you can see, the original string **orgstr** is unchanged, and **substr** contains the substring.
 
-### Using Command-Line Arguments
+## Using Command-Line Arguments
 
 A command-line argument is the information that directly follows the program's name on the command line when it is executed. To access the command--line arguments inside a Java program is quite easy-they are stored as strings in the **String** array passed to **main()**. For example, the following program displays all of the command-line arguments that it is called with:
 ```java
@@ -1563,11 +1563,11 @@ arg[1]: two
 arg[2]: three
 ```
 
-### The Bitwise Operators
+## The Bitwise Operators
 
 Pending.
 
-### The ? Operator (Ternary Operator)
+## The ? Operator (Ternary Operator)
 
 The **?** operator is often used to replace **if-else** statements of this general form:
 ```text
@@ -1597,11 +1597,11 @@ This is how this sequence can be rewritten using the **?** operator:
 y = (x < 0) ? 10 : 20;
 ```
 
-## Chapter 6: A Closer Look at Methods and Classes
+# Chapter 6: A Closer Look at Methods and Classes
 
-### Controlling Access to Class Members
+## Controlling Access to Class Members
 
-#### Java's Access Modifiers
+### Java's Access Modifiers
 
 Member access control is achieved through the use of three *access modifiers*: **public**, **private**, and **protected**:
 * **public**: member can be accessed by other code in your program. This includes methods defined inside other classes.
@@ -1618,13 +1618,13 @@ private accountBalance bal;
 private boolean isError(byte status) { // ...
 ```
 
-### Pass Objects to Methods
+## Pass Objects to Methods
 
-#### How Arguments Are Passed
+### How Arguments Are Passed
 
 You need to understand in a general sense the two ways in which an argument can be passed to a subroutine. As you will see, although Java uses call-by-value to pass arguments, the precise effect differs between whether a primitive type or a reference type is passed.
 
-##### Call-By-Value
+#### Call-By-Value
 
 The first way is *call-by-value*. This approach copies the *value* of an argument into the formal parameter of the subroutine. Therefore, changes made to the parameter of the subroutine have no effect on the argument in the call.
 
@@ -1659,7 +1659,7 @@ a and b after call: 15 20
 
 As you can see, the operations that occur inside **noChange()** have no effect on the values of **a** and **b** used in the call.
 
-##### Call-By-Reference
+#### Call-By-Reference
 
 The second way an argument can be passed is *call-by-reference*. In this approach, a reference to an argument (not the value of the argument) is passed to the parameter. Inside the subroutine, this reference is used to access the actual argument specified in the call. This means that changes made to the parameter *will* affect the argument used to call the subroutine.
 
@@ -1704,7 +1704,7 @@ As you can see, in this case, the actions inside **change()** have affected the 
 
 Remember, when an object reference is passed to a method, the reference itself is passed by use of call-by-value. However, since the value being passed refers to an object, the copy of that value will still refer to the same object referred to by its corresponding argument.
 
-### Method Overloading
+## Method Overloading
 
 In java, two or more methods within the same class can share the same name, as long as their parameter declarations are different. Method overloading is one of the ways that Java implements polymorphism. Method overloading supports polymorphism because it is one way that Java implements the "one interface, multiple methods" paradigm.
 
@@ -1802,7 +1802,7 @@ When you overload a method, each version of that method can perform any activity
 **Question: I've heard the term *signature* used by Java programmers. What is it?**
 **Answer**: As it applies to Java, a signature is the name of a method plus its parameter list. Thus, for the purposes of overloading, no two methods within the same class can have the same signature. Notice that a signature does not include the return type, since it is not used by Java for overload resolution.
 
-### Overloading Constructors
+## Overloading Constructors
 
 Like methods, constructors can also be overloaded. Doing so allows you to construct objects in a variety of ways. One of the most common reasons that constructors are overloaded is to allow one object to initialize another. For example, consider this program that uses the **Summation** class to compute the summation of an integer value:
 ```java
@@ -1840,7 +1840,7 @@ s2.sum: 15
 
 Often, as this example shows, an advantage of providing a constructor that uses one object to initialize another is efficiency. In this case, when **s2** is constructed, it is not necessary to recompute the summation. Of course, even in cases when efficiency is not an issue, it is often useful to provide a constructor that makes a copy of an object.
 
-### Understanding static
+## Understanding static
 There will be times when you will want to define a class member that will be used independently of any object of that class. Normally a class member must be accessed through an object of its class, but it is possible to create a member that can be used by itself, without reference to a specific instance. To create such a member, precede its declaration with the keyword **static**. When a member is declared **static**, it can be accessed before any objects of its class are created, and without reference to any object. You can declare both methods and variables to be **static**. The most common example of a **static** member is **main()**. **main()** is declared as **static** because it must be called by the JVM when your program begins. Outside the class, to use a **static** member, you need only specify the name of its class followed by the dot operator. No object needs to be created. For example, if you want to assign the value 10 to a **static** variable called **count** that is part of the **Timer** class, use this line:
 ```java
 Timer.count = 10;
@@ -1956,7 +1956,7 @@ class StaticError {
 
 Here, **denom** is a normal instance variable that cannot be accessed within a **static** method.
 
-#### Static Blocks
+### Static Blocks
 
 Sometimes a class will require some type of initialization before it is ready to create objects. For example, it might need to establish a connection to a remote site. It also might need to initialize certain **static** variables before any of the class' **static** methods are used. To handle these types of situations, Java allows you to declare a **static** block. A static block is executed when the class is first loaded. Thus, it is executed before the class can be used for any other purpose. Here is an example of a **static** block:
 ```java
@@ -1994,7 +1994,7 @@ Square root of 3 is 1.7320508075688772
 
 As you can see, the **static** block is executed before any objects are constructed.
 
-### Introducing Nested and Inner Classes
+## Introducing Nested and Inner Classes
 
 In java, you can define a *nested class*. This is a class that is declared within another class. A nested class does not exist independently of its enclosing class. Thus, the scope of a nested class is bounded by its outer class. A nested class that is declared directly within its enclosing class scope is a member of its enclosing class. It is also possible to declare a nested class that is local to a block.
 
@@ -2068,7 +2068,7 @@ One last point: You can create an inner class that does not have a name. This is
 **Question: What makes a** static **nested class different from a non-static one?**
 **Answer**: A **static** nested class is one that has the **static** modifier applied. Because it is **static**, it can access only other **static** members of the enclosing class directly. It must access other members of its outer class through an object reference.
 
-### Varargs: Variable-Length Arguments
+## Varargs: Variable-Length Arguments
 
 Sometimes you will want to create a method that takes a variable number of arguments, based on its precise usage. In this situation, it would be convenient to pass only the arguments to which the defaults did not apply. To create such a method implies that there must be some way to create a list of arguments that is variable in length, rather than fixed.
 
@@ -2076,7 +2076,7 @@ In the past, methods that required a variable-length argument list could be hand
 
 Beginning with JDK 5, this need was addressed by the inclusion of a feature that simplified the creation of methods that require a variable number of arguments. This feature is called *varargs*, which is short for variable-length arguments. A method that takes a variable number of arguments is called a *variable-arity method*, or simply a *varargs method*. The parameter list for a varargs method is not fixed, but rather variable in length. Thus, a varargs method can take a variable number of arguments.
 
-#### Varargs Basics
+### Varargs Basics
 
 A variable-length argument is specified by three periods (...). For example, here is how to write a method called **vaTest()** that takes a variable number of arguments:
 ```java
@@ -2193,7 +2193,7 @@ int doIt(int a, int b, double c, int ... vals, double ... morevals) { // Error!
 
 The attempt to declare the second varargs parameter is illegal.
 
-#### Overloading Varargs Methods
+### Overloading Varargs Methods
 
 You can overload a method that takes a variable-length argument. For example, the following program overloads **vaTest()** three times:
 ```java
@@ -2260,7 +2260,7 @@ This program illustrates both ways that a varargs method can be overloaded. Firs
 
 The second way to overload a varargs method is to add one or more normal parameters. This is what was done with **vaTest(String, int ...)**. In this case, Java uses both the number of arguments and the type of the arguments to determine which method to call.
 
-#### Varargs and Ambiguity
+### Varargs and Ambiguity
 
 Somewhat unexpected errors can result when overloading a method that takes a variable-length argument. These errors involve ambiguity because it is possible to create an ambiguous call to an overloaded varargs method. For example, consider the following program:
 ```java
@@ -2300,11 +2300,11 @@ Does this translate into a call to **vaTest(int ...)**, with one varargs argumen
 
 Because of ambiguity errors like those just shown, sometimes you will need to forego overloading and simply use two different method names. Also, in some cases, ambiguity errors expose a conceptual flaw in your code, which you can remedy by more carefully crafting a solution.
 
-## Chapter 7: Inheritance
+# Chapter 7: Inheritance
 
 In the language of Java, a class that is inherited is called a *superclass*. The class that does the inheriting is called a *subclass*. Therefore, a subclass is a specialized version of a superclass. It inherits all of the variables and methods defined by the superclass and adds its own, unique elements.
 
-### Inheritance Basics
+## Inheritance Basics
 
 Inheritance is done by using the **extends** keyword. Thus, the subclass adds to (extends) the superclass. The general form of a **class** declaration that inherits a superclass is shown here:
 ```text
@@ -2315,7 +2315,7 @@ class subclass-name extends superclass-name {
 
 You can specify only one superclass for any subclass that you create. Java does not support the inheritance of multiple superclasses into a single subclass. You can, however, create a hierarchy of inheritance in which a subclass becomes a superclass of another subclass. Of course, no class can be a superclass of itself.
 
-### Member Access and Inheritance
+## Member Access and Inheritance
 
 Inheriting a class *does not* overrule the **private** access restriction. Thus, even though a subclass includes all of the members of its superclass, it cannot access those members of the superclass that have been declared **private**.
 
@@ -2324,7 +2324,7 @@ Remember that a class member that has been declared **private** will remain priv
 **Question: When should I make an instance variable private?**
 **Answer**: There are no hard and fast rules, but here are two general principles. If an instance variable is to be used only by methods defined within its class, then it should be made private. If an instance variable must be within certain bounds, then it should be private and made available only through accessor methods. This way, you can prevent invalid values from being assigned.
 
-### Constructors and Inheritance
+## Constructors and Inheritance
 
 In a hierarchy, it is possible for both superclasses and subclasses to have their own constructors. This raises an important question: What constructor is responsible for building an object of the subclass-the one in the superclass, the one in the subclass, or both? The answer is this: The constructor for the superclass constructs the superclass portion of the object, and the constructor for the subclass constructs the subclass part. This makes sense because the superclass has no knowledge of or access to any element in a subclass. Thus, their construction must be separate. The preceding examples have relied upon the default constructors created automatically by Java, so this was not an issue. However, in practice, most classes will have explicit constructors. Here you will see how to handle this situation.
 
@@ -2387,7 +2387,7 @@ Here, **Triangle**'s constructor initializes the members of **TwoDClass** that i
 
 When both the superclass and the subclass define constructors, the process is a bit more complicated because both the superclass and subclass constructors must be executed. In this case, you must use another of Java's keywords, **super**, which has two general forms. The first calls a superclass constructor. The second is used to access a member of the superclass that has been hidden by a member of a subclass. Here, we will look at its first use.
 
-### Using super to Call Superclasses Constructors
+## Using super to Call Superclasses Constructors
 
 A subclass can call a constructor defined by its superclass by use of the following form of **super**:
 ```text
@@ -2572,7 +2572,7 @@ Area is 8.0
 
 Let's review the key concepts behind **super()**. When a subclass calls **super()**, it is calling the constructor of its immediate superclass. Thus, **super()** always refers to the superclass immediately above the calling class. This is true even in a multilevel hierarchy. Also, **super()** must always be the first statement executed inside a subclass constructor.
 
-### Using super to Access Superclasses Members
+## Using super to Access Superclasses Members
 
 There is a second form of **super** that acts somewhat like **this**, except that it always refers to the superclass of the subclass in which it is used. This usage has the following general form:
 ```text
@@ -2617,13 +2617,13 @@ Although the instance variable **i** in **B** hides the **i** in **A**, **super*
 
 The key point is that once you have created a superclass that defines the general aspects of an object, that superclass can be inherited to form specialized classes. Each subclass simply adds its own, unique attributes. This is the essence of inheritance.
 
-### Creating a Multilevel Hierarchy
+## Creating a Multilevel Hierarchy
 
 Up to this point, we have been using simple class hierarchies that consist of only a superclass and a subclass. However, you can build hierarchies that contain as many layers of inheritance as you like. As mentioned, it is perfectly acceptable to use a subclass as a superclass of another. For example, given three classes called **A**, **B**, and **C**, **C** can be a subclass of **B**, which is a subclass of **A**. When this type of situation occurs, each subclass inherits all of the traits found in all of its superclasses. In this case, **C** inherits all aspects of **B** and **A**.
 
 One other important point: **super()** always refers to the constructor in the closest superclass. Given the **A**, **B**, and **C** classes example in the paragraph above; the **super()** in **C** calls the constructor in **B**. The **super()** in **B** calls the constructor in **A**. In a class hierarchy, if a superclass constructor requires parameters, then all subclasses must pass those parameters "up the line." This is true whether or not a subclass needs parameters of its own.
 
-### When Are Constructors Executed?
+## When Are Constructors Executed?
 
 In the foregoing discussion of inheritance and class hierarchies, an important question may have occurred to you: When a subclass object is created, whose constructor is executed first, the one in the subclass or the one defined by the superclass? For example, given a subclass called **B** and a superclass called **A**, is **A**'s constructor executed before **B**'s, or vice versa? The answer is that in a class hierarchy, constructors complete their execution in order of derivation, from superclass to subclass. Further, since **super()** must be the first statement executed in a subclass' constructor, this order is the same whether or not **super()** ) is used. If **super()** is not used, then the default (parameterless) constructor of each superclass will be executed. The following program illustrates when constructors are executed:
 ```java
@@ -2660,7 +2660,7 @@ As you can see, the constructors are executed in order of derivation.
 
 If you think about it, it makes sense that constructors are executed in order of derivation. Because a superclass has no knowledge of any subclass, any initialization it needs to perform is separate from and possibly prerequisite to any initialization performed by the subclass. Therefore, it must complete its execution first.
 
-### Superclass References and Subclass Objects
+## Superclass References and Subclass Objects
 
 As you know, Java is a strongly typed language. Aside from the standard conversions and automatic promotions that apply to its primitive types, type compatibility is strictly enforced. Therefore, a reference variable for one class type cannot normally refer to an object of another class type.
 
@@ -2826,7 +2826,7 @@ TwoDShape(TwoDShape ob) { // Construct object from an object
 
 The key point is that **TwoDShape()** is expecting a **TwoDShape** object. However, **Triangle()** passes it a **Triangle** object. The reason this works is because, as explained, a superclass reference can refer to a subclass object. Thus, it is perfectly acceptable to pass **TwoDShape()** a reference to an object of a class derived from **TwoDShape**. Because the **TwoDShape()** constructor is initializing only those portions of the subclass object that are members of **TwoDShape**, it doesn't matter that the object might also contain other members added by derived classes.
 
-### Method Overriding
+## Method Overriding
 
 In a class hierarchy, when a method in a subclass has the same return type and signature as a method in its superclass, then the method in the subclass is said to *override* the method in the superclass. When an overridden method is called from within a subclass, it will always refer to the version of that method defined by the subclass. The version of the method defined by the superclass will be hidden.
 
@@ -2862,7 +2862,7 @@ This is show() method on A
 
 The version of **show()** in **B** takes a string parameter. This makes its signature different from the one in **A**, which takes no parameters. Therefore, no overriding (or name hiding) takes place.
 
-#### Overriding Methods Support Polymorphism
+### Overriding Methods Support Polymorphism
 
 While the examples in the preceding section demonstrate the mechanics of method overriding, they do not show its power. Indeed, if there were nothing more to method overriding than a namespace convention, then it would be, at best, an interesting curiosity but of little real value. However, this is not the case. Method overriding forms the basis for one of Java's most powerful concepts: *dynamic method dispatch*. Dynamic method dispatch is the mechanism by which a call to an overridden method is resolved at run time rather than compile time. Dynamic method dispatch is important because this is how Java implements run-time polymorphism.
 
@@ -2914,11 +2914,11 @@ who() in Sub2
 
 This program creates a superclass called **Sup** and two subclasses of it, called **Sub1** and **Sub2**. **Sup** declares a method called **who()**, and the subclasses override it. Inside the **main()** method, objects of type **Sup**, **Sub1**, and **Sub2** are declared. Also, a reference of type **Sup**, called **supRef**, is declared. The program then assigns a reference to each type of object to **supRef** and uses that reference to call **who()**. As the output shows, the version of **who()** executed is determined by the type of object being referred to at the time of the call, not by the class type of **supRef**.
 
-#### Why Overridden Methods?
+### Why Overridden Methods?
 
 As stated earlier, overridden methods allow Java to support run-time polymorphism. Polymorphism is essential to object-oriented programming for one reason: it allows a general class to specify methods that will be common to all of its derivatives, while allowing subclasses to define the specific implementation of some or all of those methods. Overridden methods are another way that Java implements the "one interface, multiple methods" aspect of polymorphism. Part of the key to successfully applying polymorphism is understanding that the superclasses and subclasses form a hierarchy that moves from lesser to greater specialization. Used correctly, the superclass provides all elements that a subclass can use directly. It also defines those methods that the derived class must implement on its own. This allows the subclass the flexibility to define its own methods, yet still enforces a consistent interface. Thus, by combining inheritance with overridden methods, a superclass can define the general form of the methods that will be used by all of its subclasses.
 
-### Using Abstract Classes
+## Using Abstract Classes
 
 Sometimes you will want to create a superclass that defines only a generalized form that will be shared by all of its subclasses, leaving it to each subclass to fill in the details. Such a class determines the nature of the methods that the subclasses must implement but does not, itself, provide an implementation of one or more of these methods. One way this situation can occur is when a superclass is unable to create a meaningful implementation for a method.
 
@@ -3069,11 +3069,11 @@ As the program illustrates, all subclasses of **TwoDShape** *must* override **ar
 
 One last point: Notice that **TwoDShape** still includes the **showDim()** and **getName()** methods and that these are not modified by **abstract**. It is perfectly acceptable-indeed, quite common-for an abstract class to contain concrete methods which a subclass is free to use as is. Only those methods declared as **abstract** need be overridden by subclasses.
 
-### Using final
+## Using final
 
 As powerful and useful as method overriding and inheritance are, sometimes you will want to prevent them. For example, you might have a class that encapsulates control of some hardware device. Further, this class might offer the user the ability to initialize the device, making use of private, proprietary information. In this case, you don't want users of your class to be able to override the initialization method. Whatever the reason, in Java it is easy to prevent a method from being overridden or a class from being inherited by using the keyword **final**.
 
-#### final Prevents Overriding
+### final Prevents Overriding
 
 To prevent a method from being overridden, specify **final** as a modifier at the start of its declaration. Methods declared as **final** cannot be overridden. The following fragment illustrates **final**:
 ```java
@@ -3091,7 +3091,7 @@ class B extends A {
 
 Because **meth()** is declared as **final**, it cannot be overridden in **B**. If you attempt to do so, a compile-time error will result.
 
-#### final Prevents Inheritance
+### final Prevents Inheritance
 
 You can prevent a class from being inherited by preceding its declaration with **final**. Declaring a class as **final** implicitly declares all of its methods as **final**, too. As you might expect, it is illegal to declare a class as both **abstract** and **final** since an abstract class is incomplete by itself and relies upon its subclasses to provide complete implementations. Here is an example of a **final** class:
 ```java
@@ -3105,7 +3105,7 @@ class B extends A { // ERROR! Can't subclass A
 
 As the comments imply, it is illegal for **B** to inherit **A** since **A** is declared as **final**.
 
-#### Using final with Data Members
+### Using final with Data Members
 
 In addition to the uses of **final** just shown, **final** can also be applied to member variables to create what amounts to named constants. If you precede a class variable's name with **final**, its value cannot be changed throughout the lifetime of your program. You can, of course, give that variable an initial value.
 
@@ -3115,7 +3115,7 @@ In addition to the uses of **final** just shown, **final** can also be applied t
 **Answer**: The answer to both is Yes. Making a **final** member variable **static** lets you refer to the constant through its class name rather than through an object. For example: `className.FINAL_CONSTANT_NAME` 
 Declaring a parameter **final** prevents it from being changed within the method. Declaring a local variable **final** prevents it from being assigned a value more than once.
 
-### The Object Class
+## The Object Class
 
 Java defines one special class called **Object** that is an implicit superclass of all other classes. In other words, all other classes are subclasses of **Object**. This means that a reference variable of type **Object** can refer to an object of any other class. Also, since arrays are implemented as classes, a variable of type **Object** can also refer to any array. **Object** defines the following methods, which means that they are available in every object:
 
