@@ -2920,26 +2920,219 @@ As stated earlier, overridden methods allow Java to support run-time polymorphis
 
 ### Using Abstract Classes
 
-Pending.
+Sometimes you will want to create a superclass that defines only a generalized form that will be shared by all of its subclasses, leaving it to each subclass to fill in the details. Such a class determines the nature of the methods that the subclasses must implement but does not, itself, provide an implementation of one or more of these methods. One way this situation can occur is when a superclass is unable to create a meaningful implementation for a method.
+
+As you will see as you create your own class libraries, it is not uncommon for a method to have no meaningful definition in the context of its superclass. You can handle this situation in two ways. One way is to simply have it report a warning message. While this approach can be useful in certain situations-such as debugging-it is not usually appropriate. You may have methods which must be overridden by the subclass in order for the subclass to have any meaning. In this case, you want some way to ensure that a subclass does, indeed, override all necessary methods. Java's solution to this problem is the *abstract method*. 
+
+An abstract method is created by specifying the **abstract** type modifier. An abstract method contains no body and is, therefore, not implemented by the superclass. Thus, a subclass must override it-it cannot simply use the version defined in the superclass. To declare an abstract method, use this general form:
+```text
+abstract type name(parameter-list);
+```
+
+As you can see, no method body is present. The **abstract** modifier can be used only on instance methods. It cannot be applied to **static** methods or to constructors.
+
+A class that contains one or more abstract methods must also be declared as abstract by preceding its **class** declaration with the **abstract** modifier. Since an abstract class does not define a complete implementation, there can be no objects of an abstract class. Thus, attempting to create an object of an abstract class by using **new** will result in a compile-time error.
+
+When a subclass inherits an abstract class, it must implement all of the abstract methods in the superclass. If it doesn't, then the subclass must also be specified as **abstract**. Thus, the **abstract** attribute is inherited until such time as a complete implementation is achieved.
+
+Using an abstract class, you can improve the **TwoDShape** class. Since there is no meaningful concept of area for an undefined two-dimensional figure, the following version of the preceding program declares **area()** as **abstract** inside **TwoDShape**, and **TwoDShape** as **abstract**. This, of course, means that all classes derived from **TwoDShape** must override **area()**.
+```java
+abstract class TwoDShape { // TwoDShape is now abstract
+    private double width;
+    private double height;
+    private String name;
+
+    // A default constructor
+    TwoDShape() {
+        width = height = 0.0;
+        name = "none";
+    }
+
+    // Parameterized constructor
+    TwoDShape(double w, double h, String n) {
+        width = w;
+        height = h;
+        name = n;
+    }
+
+    // Construct object with equal width and height
+    TwoDShape(double x, String n) {
+        width = height = x;
+        name = n;
+    }
+
+    // Construct an object from an object
+    TwoDShape(TwoDShape ob) {
+        width = ob.width;
+        height = ob.height;
+        name = ob.name;
+    }
+
+    // Accessor methods for width and height
+    double getWidth() { return width; }
+    void setWidth(double width) { this.width = width; }
+    double getHeight() { return height; }
+    void setHeight(double height) { this.height = height; }
+    String getName() { return name; }
+
+    void showDim() {
+        System.out.println("Width and height are " + width + " and " + height);
+    }
+
+    // Make area() into an abstract method
+    abstract double area();
+}
+class Triangle extends TwoDShape {
+    private String style;
+
+    // A default constructor
+    Triangle() {
+        super();
+        style = "none";
+    }
+
+    // Constructor for Triangle
+    Triangle(String s, double w, double h) {
+        super(w, h, "triangle");
+        style = s;
+    }
+
+    // One argument constructor
+    Triangle(double x) {
+        super(x, "triangle");
+        style = "filled";
+    }
+
+    // Construct an object from an object
+    Triangle(Triangle ob) {
+        super(ob);
+        style = ob.style;
+    }
+
+    double area() {
+        return getWidth() * getHeight() / 2;
+    }
+
+    void showStyle() {
+        System.out.println("Triangle is " + style);
+    }
+}
+class Rectangle extends TwoDShape {
+    //A default Constructor
+    Rectangle() {
+        super();
+    }
+
+    // Constructor for Rectangle
+    public Rectangle(double w, double h) {
+        super(w, h, "rectangle");
+    }
+
+    // Construct a square
+    public Rectangle(double x) {
+        super(x, "square");
+    }
+
+    // Construct an object from an object
+    public Rectangle(TwoDShape ob) {
+        super(ob);
+    }
+
+    boolean isSquare() {
+        if (getWidth() == getHeight()) return true;
+        return false;
+    }
+
+    double area() {
+        return getWidth() * getHeight();
+    }
+}
+class AbsShape {
+    public static void main(String[] args) {
+        TwoDShape shapes[] = new TwoDShape[4];
+
+        shapes[0] = new Triangle("outlined", 8.0, 12.0);
+        shapes[1] = new Rectangle(10);
+        shapes[2] = new Rectangle(10, 4);
+        shapes[3] = new Triangle(7.0);
+
+        for (TwoDShape shape : shapes) {
+            System.out.println("object is " + shape.getName());
+            System.out.println("Area is " + shape.area());
+            System.out.println();
+        }
+    }
+}
+```
+
+As the program illustrates, all subclasses of **TwoDShape** *must* override **area()**. To prove this to yourself, try creating a subclass that does not override **area()**. You will receive a compile-time error. Of course, it is still possible to create an object reference of type **TwoDShape**, which the program does. However, it is no longer possible to declare objects of type **TwoDShape**. Because of this, in **main()** the **shapes** array has been shortened to 4, and a **TwoDShape** object is no longer created.
+
+One last point: Notice that **TwoDShape** still includes the **showDim()** and **getName()** methods and that these are not modified by **abstract**. It is perfectly acceptable-indeed, quite common-for an abstract class to contain concrete methods which a subclass is free to use as is. Only those methods declared as **abstract** need be overridden by subclasses.
 
 ### Using final
 
-Pending.
+As powerful and useful as method overriding and inheritance are, sometimes you will want to prevent them. For example, you might have a class that encapsulates control of some hardware device. Further, this class might offer the user the ability to initialize the device, making use of private, proprietary information. In this case, you don't want users of your class to be able to override the initialization method. Whatever the reason, in Java it is easy to prevent a method from being overridden or a class from being inherited by using the keyword **final**.
 
 #### final Prevents Overriding
 
-Pending.
+To prevent a method from being overridden, specify **final** as a modifier at the start of its declaration. Methods declared as **final** cannot be overridden. The following fragment illustrates **final**:
+```java
+class A {
+    final void meth() {
+        System.out.println("This is a final method.");
+    }
+}
+class B extends A {
+    void meth() { // ERROR! Can't override
+        System.out.println("Illegal!");
+    }
+}
+```
+
+Because **meth()** is declared as **final**, it cannot be overridden in **B**. If you attempt to do so, a compile-time error will result.
 
 #### final Prevents Inheritance
 
-Pending.
+You can prevent a class from being inherited by preceding its declaration with **final**. Declaring a class as **final** implicitly declares all of its methods as **final**, too. As you might expect, it is illegal to declare a class as both **abstract** and **final** since an abstract class is incomplete by itself and relies upon its subclasses to provide complete implementations. Here is an example of a **final** class:
+```java
+final class A {
+    // ...
+}
+class B extends A { // ERROR! Can't subclass A
+    // ...
+}
+```
+
+As the comments imply, it is illegal for **B** to inherit **A** since **A** is declared as **final**.
 
 #### Using final with Data Members
 
-Pending.
+In addition to the uses of **final** just shown, **final** can also be applied to member variables to create what amounts to named constants. If you precede a class variable's name with **final**, its value cannot be changed throughout the lifetime of your program. You can, of course, give that variable an initial value.
+
+**final** constants can also be inherited by subclasses and accessed directly inside those subclasses. As a point of style, many Java programmers use uppercase identifiers for **final** constants, but this is not a hard and fast rule. 
+
+**Question: Can** final **member variables be made** static **? Can** final **be used on method parameters and local variables?**
+**Answer**: The answer to both is Yes. Making a **final** member variable **static** lets you refer to the constant through its class name rather than through an object. For example: `className.FINAL_CONSTANT_NAME` 
+Declaring a parameter **final** prevents it from being changed within the method. Declaring a local variable **final** prevents it from being assigned a value more than once.
 
 ### The Object Class
 
-Pending.
+Java defines one special class called **Object** that is an implicit superclass of all other classes. In other words, all other classes are subclasses of **Object**. This means that a reference variable of type **Object** can refer to an object of any other class. Also, since arrays are implemented as classes, a variable of type **Object** can also refer to any array. **Object** defines the following methods, which means that they are available in every object:
+
+Method | Purpose
+------ | -------
+Object clone() | Creates a new object that is the same as the object being cloned.
+boolean equals(Object *object*) | Determines whether one object is equal to another.
+void finalize() | Called before an unused object is recycled.
+Class<?> getClass() | Obtains the class of an object at run time. 
+int hashCode() | Returns the hash code associated with the invoking object. 
+void notify() | Resumes execution of a thread waiting on the invoking object. 
+void notifyAll() | Resumes execution of all threads waiting on the invoking object. 
+String toString() | Returns a string that describes the object. 
+void wait() <br/> void wait(long *milliseconds*) <br/> void wait(long *milliseconds*, int *nanoseconds*) | Waits on another thread of execution. 
+
+The methods **getClass()**, **notify()**, **notifyAll()**, and **wait()** are declared as **final**. You can override the others. Notice these two methods: **equals()** and **toString()**. The **equals()** method compares two objects. It returns **true** if the objects are equivalent, and **false** otherwise. The **toString()** method returns a string that contains a description of the object on which it is called. Also, this method is automatically called when an object is output using **println()**. Many classes override this method. Doing so allows them to tailor a description specifically for the types of objects that they create.
+
+One last point: Notice the unusual syntax in the return type for **getClass()**. This relates to Java's *generics* feature. Generics allow the type of data used by a class or method to be specified as a parameter.
 
 Enjoy!
