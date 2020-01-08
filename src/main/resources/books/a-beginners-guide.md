@@ -2918,4 +2918,28 @@ This program creates a superclass called **Sup** and two subclasses of it, calle
 
 As stated earlier, overridden methods allow Java to support run-time polymorphism. Polymorphism is essential to object-oriented programming for one reason: it allows a general class to specify methods that will be common to all of its derivatives, while allowing subclasses to define the specific implementation of some or all of those methods. Overridden methods are another way that Java implements the "one interface, multiple methods" aspect of polymorphism. Part of the key to successfully applying polymorphism is understanding that the superclasses and subclasses form a hierarchy that moves from lesser to greater specialization. Used correctly, the superclass provides all elements that a subclass can use directly. It also defines those methods that the derived class must implement on its own. This allows the subclass the flexibility to define its own methods, yet still enforces a consistent interface. Thus, by combining inheritance with overridden methods, a superclass can define the general form of the methods that will be used by all of its subclasses.
 
+### Using Abstract Classes
+
+Pending.
+
+### Using final
+
+Pending.
+
+#### final Prevents Overriding
+
+Pending.
+
+#### final Prevents Inheritance
+
+Pending.
+
+#### Using final with Data Members
+
+Pending.
+
+### The Object Class
+
+Pending.
+
 Enjoy!
