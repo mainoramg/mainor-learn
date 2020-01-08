@@ -34,3 +34,7 @@ Here are some examples of acceptable identifiers:
 Test    x       y2        MaxLoad
 $up     _top    my_var    sample23
 ```
+
+[Chapter 2: Introducing Data Types and Operators](chapter-02-data-types-and-operators.md)
+
+[Back to Table of Contents](../README.md)
