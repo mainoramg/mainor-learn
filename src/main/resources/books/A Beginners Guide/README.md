@@ -3,7 +3,28 @@
 ## Table of Contents
 
 ### [Chapter 1: Java Fundamentals](chapters/chapter-01-java-fundamentals.md)
+
 ### [Chapter 2: Introducing Data Types and Operators](chapters/chapter-02-data-types-and-operators.md)
+* [Primitive Types](chapters/chapter-02-data-types-and-operators.md#primitive-types)
+  * [Integers](chapters/chapter-02-data-types-and-operators.md#integers)
+  * [Floating-Point](chapters/chapter-02-data-types-and-operators.md#floating-point)
+  * [Characters](chapters/chapter-02-data-types-and-operators.md#characters)
+* [Literals](chapters/chapter-02-data-types-and-operators.md#literals)
+  * [Hexadecimal, Octal and Binary Literals](chapters/chapter-02-data-types-and-operators.md#hexadecimal-octal-and-binary-literals)
+  * [Character Escape Sequences](chapters/chapter-02-data-types-and-operators.md#character-escape-sequences)
+  * [String Literals](chapters/chapter-02-data-types-and-operators.md#string-literals)
+* [Operators](chapters/chapter-02-data-types-and-operators.md#operators)
+  * [Arithmetic Operators](chapters/chapter-02-data-types-and-operators.md#arithmetic-operators)
+    * [Increment and Decrement](chapters/chapter-02-data-types-and-operators.md#increment-and-decrement)
+  * [Relational and Logical Operators](chapters/chapter-02-data-types-and-operators.md#relational-and-logical-operators)
+    * [Short-Circuit Logical Operators](chapters/chapter-02-data-types-and-operators.md#short-circuit-logical-operators)
+  * [The Assigment Operator](chapters/chapter-02-data-types-and-operators.md#the-assigment-operator)
+    * [Shorthand Assignments (Compound Assignments)](chapters/chapter-02-data-types-and-operators.md#shorthand-assignments-compound-assignments))
+  * [Type Conversion in Assignments](chapters/chapter-02-data-types-and-operators.md#type-conversion-in-assignments)
+  * [Casting Incompatible Types](chapters/chapter-02-data-types-and-operators.md#casting-incompatible-types)
+  * [Operator Precedence](chapters/chapter-02-data-types-and-operators.md#operator-precedence)
+  * [Expressions](chapters/chapter-02-data-types-and-operators.md#expressions)
+    * [Type Conversion in Expressions](chapters/chapter-02-data-types-and-operators.md#type-conversion-in-expressions)
 
 # Chapter 3: Program Control Statements
 

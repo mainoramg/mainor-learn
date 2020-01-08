@@ -1,5 +1,27 @@
 # Chapter 2: Introducing Data Types and Operators
 
+## Table of Contents
+* [Primitive Types](#primitive-types)
+  * [Integers](#integers)
+  * [Floating-Point](#floating-point)
+  * [Characters](#characters)
+* [Literals](#literals)
+  * [Hexadecimal, Octal and Binary Literals](#hexadecimal-octal-and-binary-literals)
+  * [Character Escape Sequences](#character-escape-sequences)
+  * [String Literals](#string-literals)
+* [Operators](#operators)
+  * [Arithmetic Operators](#arithmetic-operators)
+    * [Increment and Decrement](#increment-and-decrement)
+  * [Relational and Logical Operators](#relational-and-logical-operators)
+    * [Short-Circuit Logical Operators](#short-circuit-logical-operators)
+  * [The Assigment Operator](#the-assigment-operator)
+    * [Shorthand Assignments (Compound Assignments)](#shorthand-assignments-compound-assignments))
+  * [Type Conversion in Assignments](#type-conversion-in-assignments)
+  * [Casting Incompatible Types](#casting-incompatible-types)
+  * [Operator Precedence](#operator-precedence)
+  * [Expressions](#expressions)
+    * [Type Conversion in Expressions](#type-conversion-in-expressions)
+
 ## Primitive Types
 At the core of Java are eight primitive types of data. The term *primitive* is used here to indicate that these types are not objects in a object-oriented sense, but rather, normal binary values. These primitive types are not objects because of efficiency concerns.
 
@@ -223,7 +245,7 @@ True | True | True | True | False | False
 
 As the table shows, the outcome of an exclusive OR operation is true when exactly one and only one operand is true.
 
-### Short-Circuit Logical Operators
+#### Short-Circuit Logical Operators
 
 The short-circuit AND operator is **&&**, and the short-circuit OR operator is **||**. Their normal counterparts are **&** and **|**. The only difference between the normal and short-circuit versions is that the normal operands will always evaluate each operand, but short-circuit versions will evaluate the second operand only when necessary.
 
@@ -236,7 +258,7 @@ int x, y, z;
 x = y = z = 100; // set x, y, and z to 100
 ```
 
-### Shorthand Assignments (Compound Assignments)
+#### Shorthand Assignments (Compound Assignments)
 
 Java provides special *shorthand* assignment operators that simplify the coding of certain assignments statements. This shorthand will work for all the binary operators in Java (that is, those that require two operands). The general form of the shorthand is:
 
@@ -385,3 +407,7 @@ ch1 = (char) (ch1 + ch2);
 ```
 
 Without the cast, the result of adding **ch1** to **ch2** would be **int**, which can't be assigned to a **char**. 
+
+[Chapter 3: Program Control Statements](chapter-03-program-control-statements.md)
+
+[Back to Table of Contents](../README.md)
