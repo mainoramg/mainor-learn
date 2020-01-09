@@ -2,11 +2,11 @@
 
 ## Table of Contents
 
-### [Chapter 1: Java Fundamentals](chapters/chapter-01-java-fundamentals.md)
+### [Chapter 1: Java Fundamentals](chapters/chapter-01-java-fundamentals.md#chapter-1-java-fundamentals)
 * [Java Keywords](chapters/chapter-01-java-fundamentals.md#java-keywords)
 * [Identifiers](chapters/chapter-01-java-fundamentals.md#identifiers)
 
-### [Chapter 2: Introducing Data Types and Operators](chapters/chapter-02-data-types-and-operators.md)
+### [Chapter 2: Introducing Data Types and Operators](chapters/chapter-02-data-types-and-operators.md#chapter-2-introducing-data-types-and-operators)
 * [Primitive Types](chapters/chapter-02-data-types-and-operators.md#primitive-types)
   * [Integers](chapters/chapter-02-data-types-and-operators.md#integers)
   * [Floating-Point](chapters/chapter-02-data-types-and-operators.md#floating-point)
@@ -28,7 +28,7 @@
   * [Expressions](chapters/chapter-02-data-types-and-operators.md#expressions)
     * [Type Conversion in Expressions](chapters/chapter-02-data-types-and-operators.md#type-conversion-in-expressions)
 
-### [Chapter 3: Program Control Statements](chapters/chapter-03-program-control-statements.md)
+### [Chapter 3: Program Control Statements](chapters/chapter-03-program-control-statements.md#chapter-3-program-control-statements)
 * [The switch Statement](chapters/chapter-03-program-control-statements.md#the-switch-statement)
   * [Nested switch Statements](chapters/chapter-03-program-control-statements.md#nested-switch-statements)
 * [The for Loop](chapters/chapter-03-program-control-statements.md#the-for-loop)
@@ -41,7 +41,7 @@
 * [Use break as a Form of goto](chapters/chapter-03-program-control-statements.md#use-break-as-a-form-of-goto)
 * [Use continue](chapters/chapter-03-program-control-statements.md#use-continue)
 
-### [Chapter 4: Introducing Classes, Objects, and Methods](chapters/chapter-04-introducing-classes-objects-and-methods.md)
+### [Chapter 4: Introducing Classes, Objects, and Methods](chapters/chapter-04-introducing-classes-objects-and-methods.md#chapter-4-introducing-classes-objects-and-methods)
 * [Class Fundamentals](chapters/chapter-04-introducing-classes-objects-and-methods.md#class-fundamentals)
   * [Defining a Class](chapters/chapter-04-introducing-classes-objects-and-methods.md#defining-a-class)
 * [How Objects Are Created](chapters/chapter-04-introducing-classes-objects-and-methods.md#how-objects-are-created)
@@ -53,7 +53,7 @@
 * [The finalize() Method](chapters/chapter-04-introducing-classes-objects-and-methods.md#the-finalize-method)
 * [The this Keyword](chapters/chapter-04-introducing-classes-objects-and-methods.md#the-this-keyword)
 
-### [Chapter 5: More Data Types and Operators](chapters/chapter-05-more-data-types-and-operators.md)
+### [Chapter 5: More Data Types and Operators](chapters/chapter-05-more-data-types-and-operators.md#chapter-5-more-data-types-and-operators)
 * [Arrays](chapters/chapter-05-more-data-types-and-operators.md#arrays)
   * [One-Dimensional Arrays](chapters/chapter-05-more-data-types-and-operators.md#one-dimensional-arrays)
     * [Bubble Sort Example](chapters/chapter-05-more-data-types-and-operators.md#bubble-sort-example)
@@ -75,7 +75,7 @@
 * [The Bitwise Operators](chapters/chapter-05-more-data-types-and-operators.md#the-bitwise-operators)
 * [The ? Operator (Ternary Operator)](chapters/chapter-05-more-data-types-and-operators.md#the--operator-ternary-operator)
 
-### [Chapter 6: A Closer Look at Methods and Classes](chapters/chapter-06-a-closer-look-at-methods-and-classes.md)
+### [Chapter 6: A Closer Look at Methods and Classes](chapters/chapter-06-a-closer-look-at-methods-and-classes.md#chapter-6-a-closer-look-at-methods-and-classes)
 * [Controlling Access to Class Members](chapters/chapter-06-a-closer-look-at-methods-and-classes.md#controlling-access-to-class-members)
   * [Java's Access Modifiers](chapters/chapter-06-a-closer-look-at-methods-and-classes.md#java's-access-modifiers)
 * [Pass Objects to Methods](chapters/chapter-06-a-closer-look-at-methods-and-classes.md#pass-objects-to-methods)
@@ -92,7 +92,7 @@
   * [Overloading Varargs Methods](chapters/chapter-06-a-closer-look-at-methods-and-classes.md#overloading-varargs-methods)
   * [Varargs and Ambiguity](chapters/chapter-06-a-closer-look-at-methods-and-classes.md#varargs-and-ambiguity)
 
-### [Chapter 7: Inheritance](chapters/chapter-07-inheritance.md)
+### [Chapter 7: Inheritance](chapters/chapter-07-inheritance.md#chapter-7-inheritance)
 * [Inheritance Basics](chapters/chapter-07-inheritance.md#inheritance-basics)
 * [Member Access and Inheritance](chapters/chapter-07-inheritance.md#member-access-and-inheritance)
 * [Constructors and Inheritance](chapters/chapter-07-inheritance.md#constructors-and-inheritance)
@@ -111,7 +111,7 @@
   * [Using final with Data Members](chapters/chapter-07-inheritance.md#using-final-with-data-members)
 * [The Object Class](chapters/chapter-07-inheritance.md#the-object-class)
 
-### [Chapter 8: Packages and Interfaces](chapters/chapter-08-packages-and-interfaces.md)
+### [Chapter 8: Packages and Interfaces](chapters/chapter-08-packages-and-interfaces.md#chapter-8-packages-and-interfaces)
 * [Packages](chapters/chapter-08-packages-and-interfaces.md#packages)
   * [Defining a Package](chapters/chapter-08-packages-and-interfaces.md#defining-a-package)
   * [Finding Packages and CLASSPATH](chapters/chapter-08-packages-and-interfaces.md#finding-packages-and-classpath)
