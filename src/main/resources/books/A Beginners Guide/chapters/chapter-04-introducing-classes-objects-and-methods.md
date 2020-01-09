@@ -1,5 +1,17 @@
 # Chapter 4: Introducing Classes, Objects, and Methods
 
+## Table of Contents
+* [Class Fundamentals](#class-fundamentals)
+  * [Defining a Class](#defining-a-class)
+* [How Objects Are Created](#how-objects-are-created)
+* [Reference Variables and Assignment](#reference-variables-and-assignment)
+* [Returning from a Method](#returning-from-a-method)
+* [Constructors](#constructors)
+* [The new Operator Revisited](#the-new-operator-revisited)
+* [Garbage Collection](#garbage-collection)
+* [The finalize() Method](#the-finalize-method)
+* [The this Keyword](#the-this-keyword)
+
 ## Class Fundamentals
 
 A class is a template that defines the form of an object.

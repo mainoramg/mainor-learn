@@ -1,5 +1,9 @@
 # Chapter 1: Java Fundamentals
 
+## Table of Contents
+* [Java Keywords](#java-keywords)
+* [Identifiers](#identifiers)
+
 ## Java Keywords
 These keywords cannot be used as names for a variable, class, or method. The keywords `const` and `goto` are reserved but not used.
 ```text

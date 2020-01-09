@@ -1,5 +1,27 @@
 # Chapter 5: More Data Types and Operators
 
+## Table of Contents
+* [Arrays](#arrays)
+  * [One-Dimensional Arrays](#one-dimensional-arrays)
+    * [Bubble Sort Example](#bubble-sort-example)
+* [Multidimensional Arrays](#multidimensional-arrays)
+  * [Two-Dimensional Arrays](#two-dimensional-arrays)
+  * [Irregular Arrays](#irregular-arrays)
+  * [Arrays of Three or more Dimensions](#arrays-of-three-or-more-dimensions)
+  * [Initializing Multidimensional Arrays](#initializing-multidimensional-arrays)
+* [Alternative Array Declaration Syntax](#alternative-array-declaration-syntax)
+* [Assigning Array References](#assigning-array-references)
+* [Using the length Member](#using-the-length-member)
+* [The For-Each Style for Loop](#the-for-each-style-for-loop)
+  * [Iterating Over Multidimensional Arrays](#iterating-over-multidimensional-arrays)
+* [Strings](#strings)
+  * [Constructing Strings](#constructing-strings)
+  * [Operating on Strings](#operating-on-strings)
+  * [Strings Are Immutable](#strings-are-immutable)
+* [Using Command-Line Arguments](#using-command-line-arguments)
+* [The Bitwise Operators](#the-bitwise-operators)
+* [The ? Operator (Ternary Operator)](#the--operator-ternary-operator)
+
 ## Arrays
 
 Although arrays in Java can be used just like arrays in other programming languages, they have one special attribute: they are implemented as objects. This fact is one reason that a discussion of arrays was deferred until objects had been introduced. By implementing arrays as objects, several important advantages are gained, not the least of which is that unused arrays can be garbage collected.
@@ -137,7 +159,7 @@ Index | `0` | `1` | `2` | `3`
 table[1][2] --> 7
 ```
 
-## Irregular Arrays
+### Irregular Arrays
 
 When you allocate memory for a multidimensional array, you need to specify only the memory for the first (leftmost) dimension. You can allocate the remaining dimensions separately. For example, the following code allocates memory for the first dimension of **table** when it is declared. It allocates the second dimension manually:
 ```java

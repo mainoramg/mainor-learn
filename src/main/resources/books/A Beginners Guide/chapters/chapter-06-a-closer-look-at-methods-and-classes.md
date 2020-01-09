@@ -1,5 +1,22 @@
 # Chapter 6: A Closer Look at Methods and Classes
 
+## Table of Contents
+* [Controlling Access to Class Members](#controlling-access-to-class-members)
+  * [Java's Access Modifiers](#java's-access-modifiers)
+* [Pass Objects to Methods](#pass-objects-to-methods)
+  * [How Arguments Are Passed](#how-arguments-are-passed)
+    * [Call-By-Value](#call-by-value)
+    * [Call-By-Reference](#call-by-reference)
+* [Method Overloading](#method-overloading)
+* [Overloading Constructors](#overloading-constructors)
+* [Understanding static](#understanding-static)
+  * [Static Blocks](#static-blocks)
+* [Introducing Nested and Inner Classes](#introducing-nested-and-inner-classes)
+* [Varargs: Variable-Length Arguments](#varargs-variable-length-arguments)
+  * [Varargs Basics](#varargs-basics)
+  * [Overloading Varargs Methods](#overloading-varargs-methods)
+  * [Varargs and Ambiguity](#varargs-and-ambiguity)
+
 ## Controlling Access to Class Members
 
 ### Java's Access Modifiers

@@ -1,5 +1,18 @@
 # Chapter 3: Program Control Statements
 
+## Table of Contents
+* [The switch Statement](#the-switch-statement)
+  * [Nested switch Statements](#nested-switch-statements)
+* [The for Loop](#the-for-loop)
+  * [Some Variations on the for Loop](#some-variations-on-the-for-loop)
+  * [Missing Pieces](#missing-pieces)
+    * [The Infinite Loop](#the-infinite-loop)
+  * [Loops with No Body](#loops-with-no-body)
+* [The do-while Loop](#the-do-while-loop)
+* [Use break to Exit a Loop](#use-break-to-exit-a-loop)
+* [Use break as a Form of goto](#use-break-as-a-form-of-goto)
+* [Use continue](#use-continue)
+
 ## The switch Statement
 
 Frequently, the expression controlling a **switch** is simply a variable rather than a larger expression. The *expression* controlling the **switch** must be of the following types:

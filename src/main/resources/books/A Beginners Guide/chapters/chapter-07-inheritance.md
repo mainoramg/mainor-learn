@@ -1,8 +1,27 @@
 # Chapter 7: Inheritance
 
-In the language of Java, a class that is inherited is called a *superclass*. The class that does the inheriting is called a *subclass*. Therefore, a subclass is a specialized version of a superclass. It inherits all of the variables and methods defined by the superclass and adds its own, unique elements.
+## Table of Contents
+* [Inheritance Basics](#inheritance-basics)
+* [Member Access and Inheritance](#member-access-and-inheritance)
+* [Constructors and Inheritance](#constructors-and-inheritance)
+* [Using super to Call Superclasses Constructors](#using-super-to-call-superclasses-constructors)
+* [Using super to Access Superclasses Members](#using-super-to-access-superclasses-members)
+* [Creating a Multilevel Hierarchy](#creating-a-multilevel-hierarchy)
+* [When Are Constructors Executed?](#when-are-constructors-executed?)
+* [Superclass References and Subclass Objects](#superclass-references-and-subclass-objects)
+* [Method Overriding](#method-overriding)
+  * [Overriding Methods Support Polymorphism](#overriding-methods-support-polymorphism)
+  * [Why Overridden Methods?](#why-overridden-methods)
+* [Using Abstract Classes](#using-abstract-classes)
+* [Using final](#using-final)
+  * [final Prevents Overriding](#final-prevents-overriding)
+  * [final Prevents Inheritance](#final-prevents-inheritance)
+  * [Using final with Data Members](#using-final-with-data-members)
+* [The Object Class](#the-object-class)
 
 ## Inheritance Basics
+
+In the language of Java, a class that is inherited is called a *superclass*. The class that does the inheriting is called a *subclass*. Therefore, a subclass is a specialized version of a superclass. It inherits all of the variables and methods defined by the superclass and adds its own, unique elements.
 
 Inheritance is done by using the **extends** keyword. Thus, the subclass adds to (extends) the superclass. The general form of a **class** declaration that inherits a superclass is shown here:
 ```text
