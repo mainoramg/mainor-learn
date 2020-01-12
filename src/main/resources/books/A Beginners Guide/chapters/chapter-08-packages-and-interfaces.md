@@ -13,7 +13,6 @@
 * [Interfaces](#interfaces)
 * [Implementing Interfaces](#implementing-interfaces)
 * [Using Interface References](#using-interface-references)
-* [Creating a Queue Interface](#creating-a-queue-interface)
 * [Variables in Interfaces](#variables-in-interfaces)
 * [Interfaces Can Be Extended](#interfaces-can-be-extended)
 * [Default Interface Methods](#default-interface-methods)
@@ -325,37 +324,304 @@ Since the beginning of this book, you have been using **java.lang**. It contains
 
 ## Interfaces
 
-An *interface* defines a set of methods that will be implemented by a class. Thus, an interface gives you a way to specify what a class will do, but not how it will do it.
+An *interface* defines a set of methods that will be implemented by a class. Thus, an interface gives you a way to specify what a class will do, but not how it will do it. You have already seen an example of this: the abstract method. An abstract method defines the signature for a method but provides no implementation. A subclass must provide its own implementation of each abstract method defined by its superclass. Thus, an abstract method specifies the *interface* to the method but not the *implementation*. While abstract classes and methods are useful, it is possible to take this concept a step further. In Java, you can fully separate a class' interface from its implementation by using the keyword **interface**.
 
-Pending.
+An **interface** is syntactically similar to an abstract class, in that you can specify one or more methods that have no body. Those methods must be implemented by a class in order for their actions to be defined. Thus, an interface specifies what must be done, but not how to do it. Once an interface is defined, any number of classes can implement it. Also, one class can implement any number of interfaces.
+
+To implement an interface, a class must provide bodies (implementations) for the methods described by the interface. Each class is free to determine the details of its own implementation. Two classes might implement the same interface in different ways, but each class still supports the same set of methods. Thus, code that has knowledge of the interface can use objects of either class since the interface to those objects is the same. By providing the **interface** keyword, Java allows you to fully utilize the "one interface, multiple methods" aspect of polymorphism.
+
+Before continuing an important point needs to be made. JDK 8 added a feature to **interface** that makes a significant change to its capabilities. Prior to JDK 8, an interface could not define any implementation whatsoever. Thus, prior to JDK 8, an interface could define only what, but not how, as just described. JDK 8 changes this. Today, it is possible to add a *default implementation* to an interface method. Thus, it is now possible for **interface** to specify some behavior. However, default methods constitute what is, in essence, a special-use feature, and the original intent behind **interface** still remains. Therefore, as a general rule, you will still often create and use interfaces in which no default methods exist. For this reason, we will begin by discussing the interface in its traditional form. The scribed at the end of this chapter. Here is a simplified general form of a traditional interface:
+```text
+access interface name {
+    ret-type method-name1(param-list);
+    ret-type method-name2(param-list);
+    type var1 = value;
+    type var2 = value;
+    // ...
+    ret-type method-nameN(param-list);
+    type varN = value;
+}
+```
+
+Here, access is either **public** or not used. When no access modifier is included, then default access results, and the interface is available only to other members of its package. When it is declared as **public**, the interface can be used by any other code. (When an **interface** is declared **public**, it must be in a file of the same name.) *name* is the name of the interface and can be any valid identifier.
+
+In the traditional form of an interface, methods are declared using only their return type and signature. They are, essentially, abstract methods. Thus, each class that includes such an **interface** must implement all of its methods. In an interface, methods are implicitly **public**.
+
+Variables declared in an **interface** are not instance variables. Instead, they are implicitly **public**, **final**, and **static** and must be initialized. Thus, they are essentially constants. Here is an example of an **interface** definition. It specifies the interface to a class that generates a series of numbers.
+```java
+public interface Series {
+    int getNext(); // return next number in series
+    void reset(); // restart
+    void setStart(int x); // set starting value
+}
+```
+
+This interface is declared **public** so that it can be implemented by code in any package.
 
 ## Implementing Interfaces
 
-Pending.
+Once an **interface** has been defined, one or more classes can implement that interface. To implement an interface, include the **implements** clause in a class definition and then create the methods required by the interface. The general form of a class that includes the **implements** clause looks like this:
+```text
+class classname extends superclass implements interface {
+    // class-body
+}
+```
+
+To implement more than one interface, the interfaces are separated with a comma. Of course, the **extends** clause is optional.
+
+The methods that implement an interface must be declared **public**. Also, the type signature of the implementing method must match exactly the type signature specified in the **interface** definition.
+
+Here is an example that implements the **Series** interface shown earlier. It creates a class called **ByTwos**, which generates a series of numbers, each two greater than the previous one.
+```java
+class ByTwos implements Series { // Implement the Series interface
+    int start;
+    int val;
+    
+    ByTwos() {
+        start = 0;
+        val = 0;
+    }
+    
+    public int getNext() {
+        val += 2;
+        return  val;
+    }
+    
+    public void reset() {
+        val = start;
+    }
+    
+    public void setStart(int x) {
+        start = x;
+        val = x;
+    }
+}
+```
+
+Notice that the methods **getNext()**, **reset()**, and **setStart()** are declared using the **public** access specifier. This is necessary. Whenever you implement a method defined by an interface, it must be implemented as **public** because all members of an interface are implicitly **public**.
+
+Here is a class that demonstrates **ByTwos**:
+```java
+class ByTwos implements Series { // Implement the Series interface
+    int start;
+    int val;
+
+    ByTwos() {
+        start = 0;
+        val = 0;
+    }
+
+    public int getNext() {
+        val += 2;
+        return  val;
+    }
+
+    public void reset() {
+        val = start;
+    }
+
+    public void setStart(int x) {
+        start = x;
+        val = x;
+    }
+}
+class SeriesDemo {
+    public static void main(String[] args) {
+        ByTwos ob = new ByTwos();
+
+        for (int i = 0; i < 5; i++)
+            System.out.println("Next value is " + ob.getNext());
+
+        System.out.println("\nResetting");
+        ob.reset();
+        for (int i = 0; i < 5; i++)
+            System.out.println("Next value is " + ob.getNext());
+
+        System.out.println("\nStarting at 100");
+        ob.setStart(100);
+        for (int i = 0; i < 5; i++)
+            System.out.println("Next value is " + ob.getNext());
+    }
+}
+```
+
+The output from this program is shown here:
+```text
+Next value is 2
+Next value is 4
+Next value is 6
+Next value is 8
+Next value is 10
+
+Resetting
+Next value is 2
+Next value is 4
+Next value is 6
+Next value is 8
+Next value is 10
+
+Starting at 100
+Next value is 102
+Next value is 104
+Next value is 106
+Next value is 108
+Next value is 110
+```
+
+It is both permissible and common for classes that implement interfaces to define additional members of their own.
+
+One more point: If a class includes an interface but does not fully implement the methods defined by that interface, then that class must be declared as **abstract**. No objects of such a class can be created, but it can be used as an abstract superclass, allowing subclasses to provide the complete implementation.
 
 ## Using Interface References
 
-Pending.
+You might be somewhat surprised to learn that you can declare a reference variable of an interface type. In other words, you can create an interface reference variable. Such a variable can refer to any object that implements its interface. When you call a method on an object through an interface reference, it is the version of the method implemented by the object that is executed. This process is similar to using a superclass reference to access a subclass object.
 
-## Creating a Queue Interface
+The following example illustrates this process. It uses the same interface reference variable to call methods on objects of both **ByTwos** and **ByThrees**.
+```java
+class ByTwos implements Series {
+    int start;
+    int val;
 
-Pending.
+    ByTwos() {
+        start = 0;
+        val = 0;
+    }
+
+    public int getNext() {
+        val += 2;
+        return  val;
+    }
+
+    public void reset() {
+        val = start;
+    }
+
+    public void setStart(int x) {
+        start = x;
+        val = x;
+    }
+}
+class ByThrees implements Series {
+    int start;
+    int val;
+
+    ByThrees() {
+        start = 0;
+        val = 0;
+    }
+
+    public int getNext() {
+        val += 3;
+        return  val;
+    }
+
+    public void reset() {
+        val = start;
+    }
+
+    public void setStart(int x) {
+        start = x;
+        val = x;
+    }
+}
+class SeriesDemo2 {
+    public static void main(String[] args) {
+        ByTwos twoOb = new ByTwos();
+        ByThrees threeOb = new ByThrees();
+        Series ob;
+
+        for (int i = 0; i < 5; i++) {
+            ob = twoOb;
+            System.out.println("Next ByTwos value is " + ob.getNext()); // Access an object via an interface reference
+
+            ob = threeOb;
+            System.out.println("Next ByThrees value is " + ob.getNext()); // Access an object via an interface reference
+        }
+    }
+}
+```
+
+In **main()**, **ob** is declared to be a reference to a **Series** interface. This means that it can be used to store references to any object that implements **Series**. In this case, it is used to refer to **twoOb** and **threeOb**, which are objects of type **ByTwos** and **ByThrees**, respectively, which both implement **Series**. An interface reference variable has knowledge only of the methods declared by its **interface** declaration. Thus, **ob** could not be used to access any other variables or methods that might be supported by the object.
 
 ## Variables in Interfaces
 
-Pending.
+As mentioned, variables can be declared in an interface, but they are implicitly **public**, **static**, and **final**. At first glance, you might think that there would be very limited use for such variables, but the opposite is true. Large programs typically make use of several constant values that describe such things as array size, various limits, special values, and the like. Since a large program is typically held in a number of separate source files, there needs to be a convenient way to make these constants available to each file. In Java, interface variables offer one solution.
+
+To define a set of shared constants, create an **interface** that contains only these constants, without any methods. Each file that needs access to the constants simply "implements" the interface. This brings the constants into view. Here is an example:
+```java
+interface IConst {
+    // These are constants
+    int MIN = 0;
+    int MAX = 10;
+    String ERRORMSG = "Boundary Error";
+}
+class IConstD implements IConst {
+    public static void main(String[] args) {
+        int nums[] = new int[MAX];
+        
+        for (int i = MIN; i < 11; i++) {
+            if (i >= MAX) System.out.println(ERRORMSG);
+            else {
+                nums[i] = i;
+                System.out.println(nums[i] + " ");
+            }
+        }
+    }
+}
+```
+
+**NOTE**: The technique of using an **interface** to define shared constants is controversial. It is described here for completeness.
 
 ## Interfaces Can Be Extended
 
-Pending.
+One interface can inherit another by use of the keyword **extends**. The syntax is the same as for inheriting classes. When a class implements an interface that inherits another interface, it must provide implementations for all methods required by the interface inheritance chain. Following is an example:
+```java
+interface A {
+    void meth1();
+    void meth2();
+}
+interface B extends A { // B inherits A: B now includes meth1() and meth2() - it adds meth3()
+    void meth3();
+}
+class MyClass implements B { // This class must implement all of A and B
+    public void meth1() {
+        System.out.println("Implement meth1().");
+    }
+    public void meth2() {
+        System.out.println("Implement meth2().");
+    }
+    public void meth3() {
+        System.out.println("Implement meth3().");
+    }
+}
+class IFExtend {
+    public static void main(String[] args) {
+        MyClass ob = new MyClass();
+        ob.meth1();
+        ob.meth2();
+        ob.meth3();
+    }
+}
+```
 
 ## Default Interface Methods
 
-Pending.
+As explained earlier, prior to JDK 8, an interface could not define any implementation whatsoever. This meant that for all previous versions of Java, the methods specified by an interface were abstract, containing no body. This is the traditional form of an interface and is the type of interface that the preceding discussions have used. The release of JDK 8 changed this by adding a new capability to **interface** called the *default method*. A default method lets you define a default implementation for an interface method. In other words, by use of a default method, it is now possible for an interface method to provide a body, rather than being abstract. During its development, the default method was also referred to as an *extension method*, and you will likely see both terms used.
+
+A primary motivation for the default method was to provide a means by which interfaces could be expanded without breaking existing code. Recall that there must be implementations for all methods defined by an interface. In the past, if a new method were added to a popular, widely used interface, then the addition of that method would break existing code because no implementation would be found for that method. The default method solves this problem by supplying an implementation that will be used if no other implementation is explicitly provided. Thus, the addition of a default method will not cause preexisting code to break.
+
+Another motivation for the default method was the desire to specify methods in an interface that are, essentially, optional, depending on how the interface is used. For example, an interface might define a group of methods that act on a sequence of elements. One of these methods might be called **remove()**, and its purpose is to remove an element from the sequence. However, if the interface is intended to support both modifiable and non-modifiable sequences, then **remove()** is essentially optional because it won't be used by non-modifiable sequences. In the past, a class that implemented a non-modifiable sequence would have had to define an empty implementation of **remove()**, even though it was not needed. Today, a default implementation for **remove()** can be specified in the interface that either does nothing or reports an error. Providing this default prevents a class used for non-modifiable sequences from having to define its own, placeholder version of **remove()**. Thus, by providing a default, the interface makes the implementation of **remove()** by a class optional.
+
+It is important to point out that the addition of default methods does not change a key aspect of **interface**: an interface still cannot have instance variables. Thus, the defining difference between an interface and a class is that a class can maintain state information, but an interface cannot. Furthermore, it is still not possible to create an instance of an interface by itself It must be implemented by a class. Therefore, even though, beginning with JDK 8, an interface can define default methods, the interface must still be implemented by a class if an instance is to be created.
+
+One last point: As a general rule, default methods constitute a special-purpose feature. Interfaces that you create will still be used primarily to specify what and not how. However, the inclusion of the default method gives you added flexibility.
 
 ### Default Method Fundamentals
 
-Pending.
+An interface default method is defined similar to the way a method is defined by a **class**. The primary difference is that the declaration is preceded by the keyword **default**. For example, consider this simple interface:
+```java
+
+```
 
 ### A More Practical Example of a Default Method
 

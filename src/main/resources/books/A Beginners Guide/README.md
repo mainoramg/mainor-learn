@@ -124,7 +124,6 @@
 * [Interfaces](chapters/chapter-08-packages-and-interfaces.md#interfaces)
 * [Implementing Interfaces](chapters/chapter-08-packages-and-interfaces.md#implementing-interfaces)
 * [Using Interface References](chapters/chapter-08-packages-and-interfaces.md#using-interface-references)
-* [Creating a Queue Interface](chapters/chapter-08-packages-and-interfaces.md#creating-a-queue-interface)
 * [Variables in Interfaces](chapters/chapter-08-packages-and-interfaces.md#variables-in-interfaces)
 * [Interfaces Can Be Extended](chapters/chapter-08-packages-and-interfaces.md#interfaces-can-be-extended)
 * [Default Interface Methods](chapters/chapter-08-packages-and-interfaces.md#default-interface-methods)
