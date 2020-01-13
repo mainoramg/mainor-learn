@@ -17,10 +17,8 @@
 * [Interfaces Can Be Extended](#interfaces-can-be-extended)
 * [Default Interface Methods](#default-interface-methods)
   * [Default Method Fundamentals](#default-method-fundamentals)
-  * [A More Practical Example of a Default Method](#a-more-practical-example-of-a-default-method)
   * [Multiple Inheritance Issues](#multiple-inheritance-issues)
 * [Use static Methods in an Interface](#use-static-methods-in-an-interface)
-* [Final Thoughts on Packages and Interfaces](#final-thoughts-on-packages-and-interfaces)
 
 ## Packages
 
@@ -620,21 +618,124 @@ One last point: As a general rule, default methods constitute a special-purpose 
 
 An interface default method is defined similar to the way a method is defined by a **class**. The primary difference is that the declaration is preceded by the keyword **default**. For example, consider this simple interface:
 ```java
+public interface MyIF {
+    // This is a "normal" interface method declaration
+    // It does NOT define a default implementation
+    int getUserID();
 
+    // This is a default method. Notice that it provides a default implementation
+    default int getAdminID() {
+        return 1;
+    }
+}
 ```
 
-### A More Practical Example of a Default Method
+**MyIF** declares two methods. The first, **getUserID()**, is a standard interface method declaration. It defines no implementation whatsoever. The second method is **getAdminID()**, and it does include a default implementation. In this case, it simply returns 1. Pay special attention to the way **getAdminID()** is declared. Its declaration is preceded by the **default** modifier. This syntax can be generalized. To define a default method, precede its declaration with **default**.
 
-Pending.
+Because **getAdminID()** includes a default implementation, it is not necessary for an implementing class to override it. In other words, if an implementing class does not provide its own implementation, the default is used. For example, the **MyIFImp** class shown next is perfectly valid:
+```java
+class MyIFImp implements MyIF {
+    // Only getUserID() defined by MyIF needs to be implemented.
+    // getAdminID() can be allowed to default.
+    public int getUserID() {
+        return 100;
+    }
+}
+```
+
+The following code creates an instance of **MyIFImp** and uses it to call both **getUserID()** and **getAdminID()**.
+```java
+class DefaultMethodDemo {
+    public static void main(String[] args) {
+        MyIFImp obj = new MyIFImp();
+        
+        // Can call getUserID(), because it is explicitly implemented by MyIFImp:
+        System.out.println("User ID is " + obj.getUserID());
+        
+        // Can also call getAdminID(), because of default implementation:
+        System.out.println("Administrator ID is " + obj.getAdminID());
+    }
+}
+```
+
+The output is shown here:
+```text
+User ID is 100
+Administrator ID is 1
+```
+
+As you can see, the default implementation of **getAdminID()** was automatically used. It was not necessary for **MyIFImp** to define it. Thus, for **getAdminID()**, implementation by a class is optional. (Of course, its implementation by a class will be *required* if the class needs to return a different ID.)
+
+It is both possible and common for an implementing class to define its own implementation of a default method. For example, **MyIFImp2** overrides **getAdminID()**, as shown here:
+```java
+class MyIFImp2 implements MyIF {
+    // Here, implementations for both getUserID() and getAdminID() are provided
+    public int getUserID() {
+        return 100;
+    }
+    public int getAdminID() {
+        return 42;
+    }
+}
+```
+
+Now, when **getAdminID()** is called, a value other than its default is returned.
+
+The default method provides two major benefits:
+* It gives you a way to gracefully evolve interfaces over time without breaking existing code.
+* It provides optional functionality without requiring that a class provide a placeholder implementation when that functionality is not needed.
 
 ### Multiple Inheritance Issues
 
-Pending.
+As explained earlier in this book, Java does not support the multiple inheritance of classes. Now that an interface can include default methods, you might be wondering if an interface can provide a way around this restriction. The answer is, essentially, no. Recall that there is still a key difference between a class and an interface: a class can maintain state information (through the use of instance variables), but an interface cannot.
+
+The preceding notwithstanding, default methods do offer a bit of what one would normally associate with the concept of multiple inheritance. For example, you might have a class that implements two interfaces. If each of these interfaces provides default methods, then some behavior is inherited from both. Thus, to a limited extent, default methods do support multiple inheritance of behavior. As you might guess, in such a situation, it is possible that a name conflict will occur.
+
+For example, assume that two interfaces called **Alpha** and **Beta** are implemented by a class called **MyClass**. What happens if both **Alpha** and **Beta** provide a method called **reset()** for which both declare a default implementation? Is the version by **Alpha** or the version by **Beta** used by **MyClass**? Or, consider a situation in which **Beta** extends **Alpha**. Which version of the default method is used? Or, what if **MyClass** provides its own implementation of the method? To handle these and other similar types of situations, Java defines a set of rules that resolve such conflicts.
+
+First, in all cases a class implementation takes priority over an interface default implementation. Thus, if **MyClass** provides an override of the **reset()** default method, **MyClass**'s version is used. This is the case even if **MyClass** implements both Alpha and Beta. In this case, both defaults are overridden by **MyClass**'s implementation.
+
+Second, in cases in which a class inherits two interfaces that both have the same default method, if the class does not override that method, then an error will result. Continuing with the example, if **MyClass** inherits both **Alpha** and **Beta**, but does not override **reset()**, then an error will occur.
+
+In cases in which one interface inherits another, with both defining a common default method, the inheriting interface's version of the method takes precedence. Therefore, continuing the example, if **Beta** extends **Alpha**, then **Beta**'s version of **reset()** will be used.
+
+It is possible to refer explicitly to a default implementation by using a new form of **super**. Its general form is shown here:
+```text
+InterfaceName.super.methodName()
+```
+
+For example, if **Beta** wants to refer to **Alpha**'s default for **reset()**, it can use this statement: `Alpha.super.reset();`
 
 ## Use static Methods in an Interface
 
-Pending.
+JDK 8 added another new capability to **interface**: the ability to define one or more **static** methods. Like **static** methods in a class, a **static** method defined by an interface can be called independently of any object. Thus, no implementation of the interface is necessary, and no instance of the interface is required in order to call a **static** method. Instead, a **static** method is called by specifying the interface name, followed by a period, followed by the method name. Here is the general form:
+```text
+InterfaceName.staticMethodName
+```
 
-## Final Thoughts on Packages and Interfaces
+Notice that this is similar to the way that a **static** method in a class is called.
 
-Pending.
+The following shows an example of a **static** method in an interface by adding one to **MyIF**, shown earlier. The **static** method is **getUniversalID()**. It returns zero.
+```java
+public interface MyIF {
+    // This is a "normal" interface method declaration
+    // It does NOT define a default implementation
+    int getUserID();
+
+    // This is a default method. Notice that it provides a default implementation
+    default int getAdminID() {
+        return 1;
+    }
+
+    // This is a static interface method
+    static int getUniversalID() {
+        return 0;
+    }
+}
+```
+
+The **getUniversalID()** method can be called, as shown here: `int uID = MyIF.getUniversalID();`
+
+As mentioned, no implementation or instance of **MyIF** is required to call **getUniversalID()** because it is **static**.
+
+One last point: **static** interface methods are not inherited by either an implementing class or a subinterface.

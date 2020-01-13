@@ -128,10 +128,8 @@
 * [Interfaces Can Be Extended](chapters/chapter-08-packages-and-interfaces.md#interfaces-can-be-extended)
 * [Default Interface Methods](chapters/chapter-08-packages-and-interfaces.md#default-interface-methods)
   * [Default Method Fundamentals](chapters/chapter-08-packages-and-interfaces.md#default-method-fundamentals)
-  * [A More Practical Example of a Default Method](chapters/chapter-08-packages-and-interfaces.md#a-more-practical-example-of-a-default-method)
   * [Multiple Inheritance Issues](chapters/chapter-08-packages-and-interfaces.md#multiple-inheritance-issues)
 * [Use static Methods in an Interface](chapters/chapter-08-packages-and-interfaces.md#use-static-methods-in-an-interface)
-* [Final Thoughts on Packages and Interfaces](chapters/chapter-08-packages-and-interfaces.md#final-thoughts-on-packages-and-interfaces)
 
 ### [Chapter 9: Exception Handling](chapters/chapter-09-exception-handling.md)
 
