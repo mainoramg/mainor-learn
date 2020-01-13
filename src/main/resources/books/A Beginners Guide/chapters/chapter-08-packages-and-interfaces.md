@@ -739,3 +739,7 @@ The **getUniversalID()** method can be called, as shown here: `int uID = MyIF.ge
 As mentioned, no implementation or instance of **MyIF** is required to call **getUniversalID()** because it is **static**.
 
 One last point: **static** interface methods are not inherited by either an implementing class or a subinterface.
+
+[Chapter 9: Exception Handling](chapter-09-exception-handling.md)
+
+[Back to Table of Contents](../README.md)
