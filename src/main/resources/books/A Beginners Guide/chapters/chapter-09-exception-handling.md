@@ -6,7 +6,6 @@
   * [Using try and catch](#using-try-and-catch)
   * [A Simple Exception Example](#a-simple-exception-example)
 * [The Consequences of an Uncaught Exception](#the-consequences-of-an-uncaught-exception)
-  * [Exceptions Enable You to Handle Errors Gracefully](#exceptions-enable-you-to-handle-errors-gracefully)
 * [Using Multiple catch Statements](#using-multiple-catch-statements)
 * [Catching Subclass Exceptions](#catching-subclass-exceptions)
 * [Try Blocks Can Be Nested](#try-blocks-can-be-nested)
@@ -37,10 +36,6 @@ Pending.
 Pending.
 
 ## The Consequences of an Uncaught Exception
-
-Pending.
-
-### Exceptions Enable You to Handle Errors Gracefully
 
 Pending.
 

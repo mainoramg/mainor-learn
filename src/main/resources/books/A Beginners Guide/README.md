@@ -137,7 +137,6 @@
   * [Using try and catch](chapters/chapter-09-exception-handling.md#using-try-and-catch)
   * [A Simple Exception Example](chapters/chapter-09-exception-handling.md#a-simple-exception-example)
 * [The Consequences of an Uncaught Exception](chapters/chapter-09-exception-handling.md#the-consequences-of-an-uncaught-exception)
-  * [Exceptions Enable You to Handle Errors Gracefully](chapters/chapter-09-exception-handling.md#exceptions-enable-you-to-handle-errors-gracefully)
 * [Using Multiple catch Statements](chapters/chapter-09-exception-handling.md#using-multiple-catch-statements)
 * [Catching Subclass Exceptions](chapters/chapter-09-exception-handling.md#catching-subclass-exceptions)
 * [Try Blocks Can Be Nested](chapters/chapter-09-exception-handling.md#try-blocks-can-be-nested)
