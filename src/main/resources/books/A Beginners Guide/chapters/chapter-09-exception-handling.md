@@ -401,15 +401,183 @@ In this program, divide-by-zero errors are handled locally, by **genException()*
 
 ## A Closer Look at Throwable
 
-Pending.
+Since all exceptions are subclasses of **Throwable**, all exceptions support the methods defined by **Throwable**. Several commonly used ones are shown in next table.
+
+Method | Description
+------ | -----------
+Throwable fillInStackTrace() | Returns a **Throwable** object that contains a completed stack trace. This object can be rethrown.
+String getLocalizedMessage() | Returns a localized description of the exception.
+String getMessage() | Returns a description of the exception.
+void printStackTrace() | Displays the stack trace.
+void printStackTrace(PrintStream *stream*) | Sends the stack trace to the specified stream.
+void printStackTrace(PrintWriter *stream*) | Sends the stack trace to the specified stream.
+String toString() | Returns a **String** object containing a complete description of the exception. This method is called by **println()** when outputting a **Throwable** object. 
+
+Of the methods defined by **Throwable**, two of the most interesting are **printStackTrace()** and **toString()**. You can display the standard error message plus a record of the method calls that lead up to the exception by calling **printStackTrace()**. You can use **toString()** to retrieve the standard error message. The **toString()** method is also called when an exception is used as an argument to **println()**. The following program demonstrates these methods:
+```java
+class ExcTest {
+    static void genException() {
+        int[] nums =  new int[4];
+
+        System.out.println("Before exception is generated.");
+
+        // generate an index out-of-bounds exception
+        nums[7] = 10;
+        System.out.println("this won't be displayed");
+    }
+}
+class UseThrowableMethods {
+    public static void main(String[] args) {
+        try {
+            ExcTest.genException();
+        }
+        catch (ArrayIndexOutOfBoundsException exc) {
+            // catch the exception
+            System.out.println("Standard message is: ");
+            System.out.println(exc);
+            System.out.println("\nStack trace:");
+            exc.printStackTrace();
+        }
+        System.out.println("After catch statement.");
+    }
+}
+```
+
+The output from the program is shown here:
+```text
+Before exception is generated.
+Standard message is: 
+java.lang.ArrayIndexOutOfBoundsException: Index 7 out of bounds for length 4
+
+Stack trace:
+java.lang.ArrayIndexOutOfBoundsException: Index 7 out of bounds for length 4
+	at ExcTest.genException(UseThrowableMethods.java:10)
+	at UseThrowableMethods.main(UseThrowableMethods.java:19)
+After catch statement.
+```
 
 ## Using finally
 
-Pending.
+To specify a block of code to execute when a **try**/**catch** block is exited, include a **finally** block at the end of a **try**/**catch** sequence. The general form of a **try**/**catch** that includes **finally** is shown here.
+```java
+try {
+    // block of code to monitor for errors
+}
+catch (ExcepType1 exOb) {
+    // handler for ExcepType1
+}
+catch (ExcepType2 exOb) {
+    // handler for ExcepType2
+}
+// ...
+finally {
+    // finally code
+}
+```
+
+The **finally** block will be executed whenever execution leaves a **try**/**catch** block, no matter what conditions cause it. That is, whether the **try** block ends normally, or because of an exception, the last code executed is that defined by **finally**. The **finally** block is also executed if any code within the **try** block or any of its **catch** statements return from the method.
+
+Here is an example of **finally**:
+```java
+class UseFinally {
+    public static void genException(int what) {
+        int t;
+        int[] nums =  new int[2];
+
+        System.out.println("Receiving " + what);
+        try {
+            switch (what) {
+                case 0:
+                    t = 10 / what; // generate div-by-zero error
+                    break;
+                case 1:
+                    nums[4] = 4; // generate array index error
+                    break;
+                case 2:
+                    return; // return from try block
+            }
+        }
+        catch (ArithmeticException exc) {
+            // catch the exception
+            System.out.println("Can't divide by Zero!");
+            return; // return from catch
+        }
+        catch (ArrayIndexOutOfBoundsException exc) {
+            // catch the exception
+            System.out.println("No matching element found.");
+        }
+        finally { // This is executed on the way out of try/catch blocks
+            System.out.println("Leaving try.");
+        }
+    }
+}
+class FinallyDemo {
+    public static void main(String[] args) {
+        for (int i = 0; i < 3; i++) {
+            UseFinally.genException(i);
+            System.out.println();
+        }
+    }
+}
+```
+
+Here is the output produced by the program:
+```text
+Receiving 0
+Can't divide by Zero!
+Leaving try.
+
+Receiving 1
+No matching element found.
+Leaving try.
+
+Receiving 2
+Leaving try.
+```
+
+As the output shows, no matter how the **try** block is exited, the **finally** block is executed.
 
 ## Using throws
 
-Pending.
+In some cases, if a method generates an exception that it does not handle, it must declare that exception in a **throws** clause. Here is the general form of a method that includes a **throws** clause:
+```text
+ret-type methName(param-list) throws except-list {
+    // body
+}
+```
+
+Here, *except-list* is a comma-separated list of exceptions that the method might throw outside of itself.
+
+You might be wondering why you did not need to specify a **throws** clause for some of the preceding examples, which threw exceptions outside of methods. The answer is that exceptions that are subclasses of **Error** or **RuntimeException** don't need to be specified in a **throws** list. Java simply assumes that a method may throw one. All other types of exceptions *do* need to be declared. Failure to do so causes a compile-time error.
+
+Actually, you saw an example of a **throws** clause earlier in this book. As you will recall, when performing keyboard input, you needed to add the clause `throws java.io.IOException` to **main()**. Now you can understand why. An input statement might generate an **IOException**, and at that time, we weren't able to handle that exception. Thus, such an exception would be thrown out of **main()** and needed to be specified as such. Now that you know about exceptions, you can easily handle IOException.
+
+Let's look at an example that handles **IOException**. It creates a method called **prompt()**, which displays a prompting message and then reads a character from the keyboard. Since input is being performed, an **IOException** might occur. However, the **prompt()** method does not handle **IOException** itself. Instead, it uses a throws clause, which means that the calling method must handle it. In this example, the calling method is **main()**, and it deals with the error.
+```java
+class ThrowsDemo {
+    public static char prompt(String str)
+        throws java.io.IOException { // Notice the throws
+        
+        System.out.println(str + ": ");
+        return (char) System.in.read();
+    }
+
+    public static void main(String[] args) {
+        char ch;
+        
+        try {
+            ch = prompt("Enter a letter"); /* Since prompt() might throw an exception, a call
+                                                  to it must be enclosed within a try block */
+        }
+        catch (java.io.IOException exc) {
+            System.out.println("I/O exception occurred.");
+            ch = 'X';
+        }
+
+        System.out.println("You pressed " + ch);
+    }
+}
+```
 
 ## Three Recently Added Exception Features
 
