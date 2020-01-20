@@ -15,9 +15,10 @@
 * [Using finally](#using-finally)
 * [Using throws](#using-throws)
 * [Three Recently Added Exception Features](#three-recently-added-exception-features)
+  * [Multi-catch](#multi-catch)
+  * [More Precise Rethrow](#more-precise-rethrow)
 * [Java's Built-in Exceptions](#javas-built-in-exceptions)
 * [Creating Exception Subclasses](#creating-exception-subclasses)
-* [Try This: Adding Exceptions to the Queue Class](#try-this-adding-exceptions-to-the-queue-class)
 
 An exception is an error that occurs at run time. Using Java's exception handling subsystem you can, in a structured and controlled manner, handle run-time errors. Exception handling streamlines error handling by allowing your program to define a block of code, called an *exception handler*, that is executed automatically when an error occurs.
 
@@ -550,7 +551,7 @@ Here, *except-list* is a comma-separated list of exceptions that the method migh
 
 You might be wondering why you did not need to specify a **throws** clause for some of the preceding examples, which threw exceptions outside of methods. The answer is that exceptions that are subclasses of **Error** or **RuntimeException** don't need to be specified in a **throws** list. Java simply assumes that a method may throw one. All other types of exceptions *do* need to be declared. Failure to do so causes a compile-time error.
 
-Actually, you saw an example of a **throws** clause earlier in this book. As you will recall, when performing keyboard input, you needed to add the clause `throws java.io.IOException` to **main()**. Now you can understand why. An input statement might generate an **IOException**, and at that time, we weren't able to handle that exception. Thus, such an exception would be thrown out of **main()** and needed to be specified as such. Now that you know about exceptions, you can easily handle IOException.
+Actually, you saw an example of a **throws** clause earlier in this book. As you will recall, when performing keyboard input, you needed to add the clause `throws java.io.IOException` to **main()**. Now you can understand why. An input statement might generate an **IOException**, and at that time, we weren't able to handle that exception. Thus, such an exception would be thrown out of **main()** and needed to be specified as such. Now that you know about exceptions, you can easily handle **IOException**.
 
 Let's look at an example that handles **IOException**. It creates a method called **prompt()**, which displays a prompting message and then reads a character from the keyboard. Since input is being performed, an **IOException** might occur. However, the **prompt()** method does not handle **IOException** itself. Instead, it uses a throws clause, which means that the calling method must handle it. In this example, the calling method is **main()**, and it deals with the error.
 ```java
@@ -581,16 +582,175 @@ class ThrowsDemo {
 
 ## Three Recently Added Exception Features
 
-Pending.
+Beginning with JDK 7, Java's exception handling mechanism was expanded with the addition of three features:
+1. The first supports *automatic resource management*, which automates the process of releasing a resource, such as a file, when it is no longer needed. It is based on an expanded form of **try**, called the *try-with-resources* statement, and it is described in Chapter 10, when files are discussed.
+2. The second new feature is called *multi-catch*.
+3. The third is sometimes called *final rethrow* or *more precise rethrow*.
+
+### Multi-catch
+
+Multi-catch allows two or more exceptions to be caught by the same **catch** clause. As you learned earlier, it is possible (indeed, common) for a **try** to be followed by two or more **catch** clauses. Although each **catch** clause often supplies its own unique code sequence, it is not uncommon to have situations in which two or more **catch** clauses execute *the same code sequence* even though they catch different exceptions. Instead of having to catch each exception type individually, you can use a single **catch** clause to handle the exceptions without code duplication.
+
+To create a multi-catch, specify a list of exceptions within a single **catch** clause. You do this by separating each exception type in the list with the OR operator. Each multi-catch parameter is implicitly **final**. (You can explicitly specify **final**, if desired, but it is not necessary.) Because each multi-catch parameter is implicitly **final**, it can't be assigned a new value.
+
+Here is how you can use the multi-catch feature to catch both **ArithmeticException** and **ArrayIndexOutOfBoundsException** with a single **catch** clause: `catch(ArithmeticException | ArrayIndexOutOfBoundsException e) {`
+
+Here is a simple program that demonstrates the use of this multi-catch:
+```java
+class MultiCatch {
+    public static void main(String[] args) {
+        int a = 88, b = 0;
+        int result;
+        char chrs[] = { 'A', 'B', 'C' };
+
+        for (int i = 0; i < 2; i++) {
+            try {
+                if (i == 0)
+                    result = a / b; // generate an ArithmeticException
+                else
+                    chrs[5] = 'X'; // generate an ArrayIndexOutOfBoundsException
+            }
+            // This catch clause catches both exceptions
+            catch (ArithmeticException | ArrayIndexOutOfBoundsException e) {
+                System.out.println("Exception caught: " + e);
+            }
+        }
+
+        System.out.println("After multi-catch.");
+    }
+}
+```
+
+### More Precise Rethrow
+
+The more precise rethrow feature restricts the type of exceptions that can be rethrown to only those checked exceptions that the associated **try** block throws, that are not handled by a preceding **catch** clause, and that are a subtype or supertype of the parameter. While this capability might not be needed often, it is now available for use. For the final rethrow feature to be in force, the **catch** parameter most be effectively **final**. This means that it must not be assigned a new value inside the **catch** block. It can also be explicitly specified as **final**, but this is not necessary.
 
 ## Java's Built-in Exceptions
 
-Pending.
+Inside the standard package **java.lang**, Java defines several exception classes. The most general of these exceptions are subclasses of the standard type **RuntimeException**. Since **java.lang** is implicitly imported into all Java programs, many exceptions derived from **RuntimeException** are automatically available. Furthermore, they need not be included in any method's **throws** list. In the language of Java, these are called *unchecked exceptions* because the compiler does not check to see if a method handles or throws these exceptions. The unchecked exceptions defined in *java.lang* are listed in **Table 9-2**. **Table 9-3** lists those exceptions defined by **java.lang** that must be included in a method's **throws** list if that method can generate one of these exceptions and does not handle it itself. These are called *checked exceptions*. In addition to the exceptions in **java.lang**, Java defines several other types of exceptions that relate to other packages, such as **IOException** mentioned earlier.
+
+**Table 9-2** The Unchecked Exceptions Defined in **java.lang**
+
+Exception | Meaning
+--------- | -------
+ArithmeticException | Arithmetic error, such as integer divide-by-zero.
+ArrayIndexOutOfBoundsException | Array index is out-of-bounds.
+ArrayStoreException | Assigment to an array element of an incompatible type.
+ClassCastException | Invalid cast.
+EnumConstantNotPresentException | An attempt is made to use an undefined enumeration value.
+IllegalArgumentException | Illegal argument used to invoke a method.
+IllegalCallerException | A method cannot be legally executed by the calling code.
+IllegalMonitorStateException | Illegal monitor operation, such as waiting on a unlocked thread.
+IllegalStateException | Environment or application is in incorrect state.
+IllegalThreadStateException | Requested operation not compatible with current thread state.
+IndexOutOfBoundsException | Some type of index is out-of-bounds.
+LayerInstantiationException | A module layer cannot be created.
+NegativeArraySizeException | Array created with a negative size.
+NullPointerException | Invalid use of a null reference.
+NumberFormatException | Invalid conversion of a string to a numeric format.
+SecurityException | Attempt to violate security.
+StringIndexOutOfBoundsException | Attempt to index outside the bounds of a string.
+TypeNotPresentException | Type not found.
+UnsupportedOperationException | An unsupported operation was encountered.
+
+**Table 9-3** The Checked Exceptions Defined in **java.lang**
+
+Exception | Meaning
+--------- | -------
+ClassNotFoundException | Class not found.
+CloneNotSupportedException | Attempt to clone an object that does not implement the **Cloneable** interface.
+IllegalAccessException | Attempt to a class is denied.
+InstantiationException | Attempt to create an object of an abstract class or interface.
+InterruptedException | One thread has been interrupted by another thread.
+NoSuchFieldException | A requested field does not exist.
+NoSuchMethodException | A requested method does not exist.
+ReflectiveOperationException | Superclass of reflection-related exceptions.
+
+**Question: I have heard that Java supports something called** *chained exceptions.* **What are they?**
+**Answer**: Chained exceptions were added to Java by JDK 1.4. The chained exception feature allows you to specify one exception as the underlying cause of another. For example, imagine a situation in which a method throws an **ArithmeticException** because of an attempt to divide by zero. However, the actual cause of the problem was that an I/O error occurred, which caused the divisor to be set improperly. Although the method must certainly throw an **ArithmeticException**, since that is the error that occurred, you might also want to let the calling code know that the underlying cause was an I/O error. Chained exceptions let you handle this, and any other situation, in which layers of exceptions exist.
+
+To allow chained exceptions, two constructors and two methods were added to **Throwable**. The constructors are shown here:
+```text
+Throwable(Throwable causeExc)
+Throwable(String msg, Throwable causeExc)
+```
+
+In the first form, *causeExc* is the exception that causes the current exception. That is, *causeExc* is the underlying reason that an exception occurred. The second form allows you to specify a description at the same time that you specify a cause exception. These two constructors have also been added to the **Error**, **Exception**, and **RuntimeException** classes.
+
+The chained exception methods added to **Throwable** are **getCause()** and **initCause()**. These methods are shown here:
+```text
+Throwable getCause()
+Throwable initCause(Throwable causeExc)
+```
+
+The **getCause()** method returns the exception that underlies the current exception. If there is no underlying exception, **null** is returned. The **initCause()** method associates **causeExc** with the invoking exception and returns a reference to the exception. Thus, you can associate a cause with an exception after the exception has been created. In general, **initCause()** is used to set a cause for legacy exception classes that don't support the two additional constructors described earlier.
+
+Chained exceptions are not something that every program will need. However, in cases in which knowledge of an underlying cause is useful, they offer an elegant solution.
 
 ## Creating Exception Subclasses
 
-Pending.
+Part of the power of Java's approach to exceptions is its ability to handle exception types that you create. Through the use of custom exceptions, you can manage errors that relate specifically to your application. Creating an exception class is easy. Just define a subclass of **Exception** (which is, of course, a subclass of **Throwable**). Your subclasses don't need to actually implement anything —it is their existence in the type system that allows you to use them as exceptions.
 
-## Try This: Adding Exceptions to the Queue Class
+The **Exception** class does not define any methods of its own. It does, of course, inherit those methods provided by **Throwable**. Thus, all exceptions, including those that you create, have the methods defined by **Throwable** available to them. Of course, you can override one or more of these methods in exception subclasses that you create.
 
-Pending.
+Here is an example that creates an exception called **NonIntResultException**, which is generated when the result of dividing two integer values produces a result with a fractional component. **NonIntResultException** has two fields which hold the integer values; a constructor; and an override of the **toString()** method, allowing the description of the exception to be displayed using **println()**.
+```java
+class NonIntResultException extends Exception {
+    int n;
+    int d;
+
+    NonIntResultException(int i, int j) {
+        n = i;
+        d = j;
+    }
+
+    public String toString() {
+        return "Result of " + n + " / " + d + " is non-integer.";
+    }
+}
+class CustomExceptDemo {
+    public static void main(String[] args) {
+        // Here, numer contains some odd values.
+        int[] numer = { 4, 8, 15, 32, 64, 127, 256, 512 };
+        int[] denom = { 2, 0, 4, 4, 0, 8 };
+
+        for (int i = 0; i < numer.length; i++) {
+            try {
+                if ((numer[i]%2) != 0)
+                    throw new NonIntResultException(numer[i], denom[i]);
+
+                System.out.println(numer[i] + " / " + denom[i] +
+                                    " is " + numer[i]/denom[i]);
+            }
+            catch (ArithmeticException exc) {
+                System.out.println("Can't divide by Zero!");
+            }
+            catch (ArrayIndexOutOfBoundsException exc) {
+                System.out.println("No matching element found.");
+            }
+            catch (NonIntResultException exc) {
+                System.out.println(exc);
+            }
+        }
+    }
+}
+```
+
+The output from the program is shown here:
+```text
+4 / 2 is 2
+Can't divide by Zero!
+Result of 15 / 4 is non-integer.
+32 / 4 is 8
+Can't divide by Zero!
+Result of 127 / 8 is non-integer.
+No matching element found.
+No matching element found.
+```
+
+**Question: When should I use exception handling in a program? When should I create my own custom exception classes?**
+**Answer**: Since the Java API makes extensive use of exceptions to report errors, nearly all real-world programs will make use of exception handling. This is the part of exception handling that most new Java programmers find easy. It is harder to decide when and how to use your own custom-made exceptions. In general, errors can be reported in two ways: return values and exceptions. When is one approach better than the other? Simply put, in Java, exception handling should be the norm. Certainly, returning an error code is a valid alternative in some cases, but exceptions provide a more powerful, structured way to handle errors. They are the way professional Java programmers handle errors in their code.
+
+[Chapter 10: Using I/O](chapter-10-using-i-o.md)
+
+[Back to Table of Contents](../README.md)

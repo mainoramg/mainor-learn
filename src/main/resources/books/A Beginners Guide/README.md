@@ -146,9 +146,10 @@
 * [Using finally](chapters/chapter-09-exception-handling.md#using-finally)
 * [Using throws](chapters/chapter-09-exception-handling.md#using-throws)
 * [Three Recently Added Exception Features](chapters/chapter-09-exception-handling.md#three-recently-added-exception-features)
+  * [Multi-catch](chapters/chapter-09-exception-handling.md#multi-catch)
+  * [More Precise Rethrow](chapters/chapter-09-exception-handling.md#more-precise-rethrow)
 * [Java's Built-in Exceptions](chapters/chapter-09-exception-handling.md#javas-built-in-exceptions)
 * [Creating Exception Subclasses](chapters/chapter-09-exception-handling.md#creating-exception-subclasses)
-* [Try This: Adding Exceptions to the Queue Class](chapters/chapter-09-exception-handling.md#try-this-adding-exceptions-to-the-queue-class)
 
 ### [Chapter 10: Using I/O](chapters/chapter-10-using-i-o.md)
 
