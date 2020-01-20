@@ -430,6 +430,6 @@ Outer loop pass 8, Inner loop: 1234
 Outer loop pass 9, Inner loop: 1234
 ```
 
-[Chapter 4: Introducing Classes, Objects, and Methods](chapter-04-introducing-classes-objects-and-methods.md)
+[Chapter 4: Introducing Classes, Objects, and Methods](chapter-04-introducing-classes-objects-and-methods.md#chapter-4-introducing-classes-objects-and-methods)
 
-[Back to Table of Contents](../README.md)
+[Back to Table of Contents](../README.md#table-of-contents)

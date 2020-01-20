@@ -751,6 +751,6 @@ No matching element found.
 **Question: When should I use exception handling in a program? When should I create my own custom exception classes?**
 **Answer**: Since the Java API makes extensive use of exceptions to report errors, nearly all real-world programs will make use of exception handling. This is the part of exception handling that most new Java programmers find easy. It is harder to decide when and how to use your own custom-made exceptions. In general, errors can be reported in two ways: return values and exceptions. When is one approach better than the other? Simply put, in Java, exception handling should be the norm. Certainly, returning an error code is a valid alternative in some cases, but exceptions provide a more powerful, structured way to handle errors. They are the way professional Java programmers handle errors in their code.
 
-[Chapter 10: Using I/O](chapter-10-using-i-o.md)
+[Chapter 10: Using I/O](chapter-10-using-i-o.md#chapter-10-using-io)
 
-[Back to Table of Contents](../README.md)
+[Back to Table of Contents](../README.md#table-of-contents)

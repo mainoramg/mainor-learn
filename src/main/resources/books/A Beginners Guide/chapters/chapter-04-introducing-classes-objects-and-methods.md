@@ -192,6 +192,6 @@ Pwr(double b, int e) {
 }
 ```
 
-[Chapter 5: More Data Types and Operators](chapter-05-more-data-types-and-operators.md)
+[Chapter 5: More Data Types and Operators](chapter-05-more-data-types-and-operators.md#chapter-5-more-data-types-and-operators)
 
-[Back to Table of Contents](../README.md)
+[Back to Table of Contents](../README.md#table-of-contents)

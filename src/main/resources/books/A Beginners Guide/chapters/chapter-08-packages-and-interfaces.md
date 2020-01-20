@@ -740,6 +740,6 @@ As mentioned, no implementation or instance of **MyIF** is required to call **ge
 
 One last point: **static** interface methods are not inherited by either an implementing class or a subinterface.
 
-[Chapter 9: Exception Handling](chapter-09-exception-handling.md)
+[Chapter 9: Exception Handling](chapter-09-exception-handling.md#chapter-9-exception-handling)
 
-[Back to Table of Contents](../README.md)
+[Back to Table of Contents](../README.md#table-of-contents)

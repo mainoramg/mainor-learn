@@ -852,6 +852,6 @@ The methods **getClass()**, **notify()**, **notifyAll()**, and **wait()** are de
 
 One last point: Notice the unusual syntax in the return type for **getClass()**. This relates to Java's *generics* feature. Generics allow the type of data used by a class or method to be specified as a parameter.
 
-[Chapter 8: Packages and Interfaces](chapter-08-packages-and-interfaces.md)
+[Chapter 8: Packages and Interfaces](chapter-08-packages-and-interfaces.md#chapter-8-packages-and-interfaces)
 
-[Back to Table of Contents](../README.md)
+[Back to Table of Contents](../README.md#table-of-contents)

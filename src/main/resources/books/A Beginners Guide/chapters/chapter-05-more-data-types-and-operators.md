@@ -591,6 +591,6 @@ This is how this sequence can be rewritten using the **?** operator:
 y = (x < 0) ? 10 : 20;
 ```
 
-[Chapter 6: A Closer Look at Methods and Classes](chapter-06-a-closer-look-at-methods-and-classes.md)
+[Chapter 6: A Closer Look at Methods and Classes](chapter-06-a-closer-look-at-methods-and-classes.md#chapter-6-a-closer-look-at-methods-and-classes)
 
-[Back to Table of Contents](../README.md)
+[Back to Table of Contents](../README.md#table-of-contents)

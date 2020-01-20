@@ -408,6 +408,6 @@ ch1 = (char) (ch1 + ch2);
 
 Without the cast, the result of adding **ch1** to **ch2** would be **int**, which can't be assigned to a **char**. 
 
-[Chapter 3: Program Control Statements](chapter-03-program-control-statements.md)
+[Chapter 3: Program Control Statements](chapter-03-program-control-statements.md#chapter-3-program-control-statements)
 
-[Back to Table of Contents](../README.md)
+[Back to Table of Contents](../README.md#table-of-contents)

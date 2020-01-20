@@ -131,7 +131,7 @@
   * [Multiple Inheritance Issues](chapters/chapter-08-packages-and-interfaces.md#multiple-inheritance-issues)
 * [Use static Methods in an Interface](chapters/chapter-08-packages-and-interfaces.md#use-static-methods-in-an-interface)
 
-### [Chapter 9: Exception Handling](chapters/chapter-09-exception-handling.md)
+### [Chapter 9: Exception Handling](chapters/chapter-09-exception-handling.md#chapter-9-exception-handling)
 * [The Exception Hierarchy](chapters/chapter-09-exception-handling.md#the-exception-hierarchy)
 * [Exception Handling Fundamentals](chapters/chapter-09-exception-handling.md#exception-handling-fundamentals)
   * [Using try and catch](chapters/chapter-09-exception-handling.md#using-try-and-catch)
@@ -151,7 +151,7 @@
 * [Java's Built-in Exceptions](chapters/chapter-09-exception-handling.md#javas-built-in-exceptions)
 * [Creating Exception Subclasses](chapters/chapter-09-exception-handling.md#creating-exception-subclasses)
 
-### [Chapter 10: Using I/O](chapters/chapter-10-using-i-o.md)
+### [Chapter 10: Using I/O](chapters/chapter-10-using-i-o.md#chapter-10-using-io)
 
 ### [Chapter 11: Multithreaded Programming](chapters/chapter-11-multithreaded-programming.md)
 

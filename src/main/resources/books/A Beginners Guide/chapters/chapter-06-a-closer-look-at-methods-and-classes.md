@@ -718,6 +718,6 @@ Does this translate into a call to **vaTest(int ...)**, with one varargs argumen
 
 Because of ambiguity errors like those just shown, sometimes you will need to forego overloading and simply use two different method names. Also, in some cases, ambiguity errors expose a conceptual flaw in your code, which you can remedy by more carefully crafting a solution.
 
-[Chapter 7: Inheritance](chapter-07-inheritance.md)
+[Chapter 7: Inheritance](chapter-07-inheritance.md#chapter-7-inheritance)
 
-[Back to Table of Contents](../README.md)
+[Back to Table of Contents](../README.md#table-of-contents)
