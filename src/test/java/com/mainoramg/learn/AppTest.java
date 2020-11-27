@@ -1,4 +1,4 @@
-package com.mainor.learn;
+package com.mainoramg.learn;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

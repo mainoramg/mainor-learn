@@ -1,4 +1,4 @@
-package com.mainor.learn;
+package com.mainoramg.learn;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,5 +58,10 @@ public class MapToHtml {
             html.append("</ul>");
         }
         return html.toString();
+    }
+
+    public static void main(String[] args) {
+        MapToHtml mapToHtml = new MapToHtml();
+        System.out.println(mapToHtml.mapToHtml(mapToHtml.getData()));
     }
 }

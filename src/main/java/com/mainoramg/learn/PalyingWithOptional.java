@@ -1,4 +1,4 @@
-package com.mainor.learn;
+package com.mainoramg.learn;
 
 import java.util.HashMap;
 import java.util.Optional;
@@ -14,5 +14,11 @@ public class PalyingWithOptional {
         } else {
             System.out.println("originalHost: "+data.get("originalHost").toString());
         }
+    }
+
+    public static void main(String[] args) {
+        PalyingWithOptional palyingWithOptional = new PalyingWithOptional();
+        palyingWithOptional.mapExample("mainoramg.com.test");
+        palyingWithOptional.mapExample(null);
     }
 }

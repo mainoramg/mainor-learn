@@ -1,4 +1,4 @@
-package com.mainor.learn;
+package com.mainoramg.learn;
 
 public class PlayingWithEnum {
     public enum Type {
@@ -57,5 +57,11 @@ public class PlayingWithEnum {
         public String toString() {
             return "{" + getId() + ", " + getStatus() + ", " + getType() + "}";
         }
+    }
+
+    public static void main(String[] args) {
+        PlayingWithEnum test = new PlayingWithEnum();
+        System.out.println( "isVoid true: " + test.letsChangeTheType(true, PlayingWithEnum.Type.VOID).toString() );
+        System.out.println( "isVoid false: " + test.letsChangeTheType(false, PlayingWithEnum.Type.VOID).toString() );
     }
 }

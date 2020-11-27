@@ -1,4 +1,4 @@
-package com.mainor.learn;
+package com.mainoramg.learn;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -36,5 +36,15 @@ public class PlayingWithDates {
 
     public String getYear() {
         return Integer.toString(this.localDate.getYear());
+    }
+
+    public static void main(String[] args) {
+        PlayingWithDates playingWithDates = new PlayingWithDates();
+        String date = "05/02/1970";
+        playingWithDates.setLocalDateFromString(date);
+        System.out.println("Original date: "+date);
+        System.out.println("Month: "+playingWithDates.getMonth());
+        System.out.println("Day: "+playingWithDates.getDay());
+        System.out.println("Year: "+playingWithDates.getYear());
     }
 }
