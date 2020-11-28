@@ -3,15 +3,15 @@ package com.mainoramg.learn;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class PlayingWithDates {
+public class DatesPlayground {
 
     LocalDate localDate;
 
-    public PlayingWithDates(LocalDate localDate) {
+    public DatesPlayground(LocalDate localDate) {
         this.localDate = localDate;
     }
 
-    public PlayingWithDates() {
+    public DatesPlayground() {
     }
 
     public LocalDate getLocalDate() {
@@ -39,12 +39,12 @@ public class PlayingWithDates {
     }
 
     public static void main(String[] args) {
-        PlayingWithDates playingWithDates = new PlayingWithDates();
+        DatesPlayground datesPlayground = new DatesPlayground();
         String date = "05/02/1970";
-        playingWithDates.setLocalDateFromString(date);
+        datesPlayground.setLocalDateFromString(date);
         System.out.println("Original date: "+date);
-        System.out.println("Month: "+playingWithDates.getMonth());
-        System.out.println("Day: "+playingWithDates.getDay());
-        System.out.println("Year: "+playingWithDates.getYear());
+        System.out.println("Month: "+ datesPlayground.getMonth());
+        System.out.println("Day: "+ datesPlayground.getDay());
+        System.out.println("Year: "+ datesPlayground.getYear());
     }
 }

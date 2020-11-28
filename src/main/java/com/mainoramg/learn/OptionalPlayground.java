@@ -3,7 +3,7 @@ package com.mainoramg.learn;
 import java.util.HashMap;
 import java.util.Optional;
 
-public class PalyingWithOptional {
+public class OptionalPlayground {
     String domain = "mainoramg.com";
 
     void mapExample(Object requestHeader) {
@@ -17,8 +17,8 @@ public class PalyingWithOptional {
     }
 
     public static void main(String[] args) {
-        PalyingWithOptional palyingWithOptional = new PalyingWithOptional();
-        palyingWithOptional.mapExample("mainoramg.com.test");
-        palyingWithOptional.mapExample(null);
+        OptionalPlayground optionalPlayground = new OptionalPlayground();
+        optionalPlayground.mapExample("mainoramg.com.test");
+        optionalPlayground.mapExample(null);
     }
 }

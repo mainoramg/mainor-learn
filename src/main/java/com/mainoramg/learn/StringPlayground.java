@@ -1,6 +1,6 @@
 package com.mainoramg.learn;
 
-public class PlayingWithString {
+public class StringPlayground {
 
     public static String lastFour(String bin, String l4) {
         l4 = l4 == null ? "" : l4;
@@ -9,9 +9,9 @@ public class PlayingWithString {
     }
 
     public static void main(String[] args) {
-        System.out.println( "Test for lastFour(456789, 1254): " + PlayingWithString.lastFour("456789", "1254") );
-        System.out.println( "Test for lastFour(456789, ): " + PlayingWithString.lastFour("456789", "") );
-        System.out.println( "Test for lastFour(456789, null): " + PlayingWithString.lastFour("456789", null) );
+        System.out.println( "Test for lastFour(456789, 1254): " + StringPlayground.lastFour("456789", "1254") );
+        System.out.println( "Test for lastFour(456789, ): " + StringPlayground.lastFour("456789", "") );
+        System.out.println( "Test for lastFour(456789, null): " + StringPlayground.lastFour("456789", null) );
 
         String downloads = "[test]";
         downloads = downloads.substring(1);

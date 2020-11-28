@@ -1,6 +1,6 @@
 package com.mainoramg.learn;
 
-public class PlayingWithEnum {
+public class EnumPlayground {
     public enum Type {
         SALE,
         AUTH,
@@ -60,8 +60,8 @@ public class PlayingWithEnum {
     }
 
     public static void main(String[] args) {
-        PlayingWithEnum test = new PlayingWithEnum();
-        System.out.println( "isVoid true: " + test.letsChangeTheType(true, PlayingWithEnum.Type.VOID).toString() );
-        System.out.println( "isVoid false: " + test.letsChangeTheType(false, PlayingWithEnum.Type.VOID).toString() );
+        EnumPlayground test = new EnumPlayground();
+        System.out.println( "isVoid true: " + test.letsChangeTheType(true, EnumPlayground.Type.VOID).toString() );
+        System.out.println( "isVoid false: " + test.letsChangeTheType(false, EnumPlayground.Type.VOID).toString() );
     }
 }
