@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class StreamsPlayground {
 
@@ -35,5 +38,23 @@ public class StreamsPlayground {
                 .isPresent();
 
         System.out.println("is manager? = " + isManager);
+    }
+
+    private static void codeToOrganize(){
+        String value = "yahoo.com,comcast.net,aol.com";
+        String valueFromDb = Optional.ofNullable(value).orElse("");
+
+        List<String> blockedEmailDomains = Stream.of(valueFromDb.split(",",-1)).filter(emailDomain -> !emailDomain.isEmpty() && !"null".equals(emailDomain)).collect(Collectors.toList());
+
+        System.out.println("is blockedDomains empty="+blockedEmailDomains.isEmpty());
+
+        System.out.println("Display blocked domains:");
+        for (String item : blockedEmailDomains
+        ) {
+            System.out.println("domain = "+item);
+        }
+
+        String sqlValue = blockedEmailDomains.stream().collect(Collectors.joining("|"));
+        System.out.println("SQL value = " + sqlValue);
     }
 }

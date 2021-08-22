@@ -1,20 +1,28 @@
 package com.mainoramg.learn;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
 import java.util.Locale;
 
 public class DatesPlayground {
 
+    public static final String DATETIME_PATTERN_FROM_DB = "uuuu-MM-dd HH:mm:ss";
+    public static final String DATETIME_FORMAT_FOR_DISPLAY = "MM/dd/uuuu@HH:mm:ss";
+    public static final String DATETIME_ZONE_ID = "-05:00";
+
     LocalDate localDate;
 
     public static void main(String[] args) {
-        getMonthDayYearFromLocalDate();
-        compareTwoInstant();
+//        getMonthDayYearFromLocalDate();
+//        compareTwoInstant();
+        getHoursBetweenTwoInstants("2021-02-09 13:18:06");
+        getHoursDifference("02/20/2021@14:59:37");
     }
 
     /**
@@ -49,6 +57,36 @@ public class DatesPlayground {
         System.out.println("Month: "+ datesPlayground.getMonth());
         System.out.println("Day: "+ datesPlayground.getDay());
         System.out.println("Year: "+ datesPlayground.getYear());
+    }
+
+    /**
+     * Get hours between a given timestamp and current timestamp
+     */
+    public static void getHoursBetweenTwoInstants(String givenDateTime) {
+        long hours =
+                Duration.between(
+                        LocalDateTime.parse(
+                                givenDateTime,
+                                DateTimeFormatter.ofPattern(DATETIME_PATTERN_FROM_DB, Locale.US)
+                        ).atZone(ZoneId.of(DATETIME_ZONE_ID)).toInstant(),
+                        Instant.now()
+                ).toHours();
+        System.out.println("Hours between given time and now: " + hours);
+    }
+
+    public static void getHoursDifference(String givenDateTime) {
+        Temporal transactionTime =
+                LocalDateTime.parse(
+                        givenDateTime,
+                        DateTimeFormatter.ofPattern(DATETIME_FORMAT_FOR_DISPLAY, Locale.US)
+                ).atZone(ZoneId.of(DATETIME_ZONE_ID)).toInstant();
+        System.out.println("transactionTime = " + transactionTime.toString());
+
+        Temporal currentTime = Instant.now();
+        System.out.println("currentTime = " + currentTime.toString());
+
+        long hoursBetween = Duration.between(transactionTime, currentTime).toHours();
+        System.out.println("hoursBetween = " + hoursBetween);
     }
 
     public DatesPlayground(LocalDate localDate) {
