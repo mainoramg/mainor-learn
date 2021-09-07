@@ -1,4 +1,4 @@
-package com.mainoramg.buchalka;
+package com.mainoramg.buchalka.section4;
 
 public class MegaBytesConverter {
 
