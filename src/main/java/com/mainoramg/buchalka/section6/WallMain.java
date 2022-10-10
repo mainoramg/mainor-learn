@@ -3,7 +3,7 @@ package com.mainoramg.buchalka.section6;
 public class WallMain {
 
     public static void main(String[] args) {
-        Wall wall = new Wall(5,4);
+        Wall2 wall = new Wall2(5,4);
         System.out.println("area= " + wall.getArea());
 
         wall.setHeight(-1.5);

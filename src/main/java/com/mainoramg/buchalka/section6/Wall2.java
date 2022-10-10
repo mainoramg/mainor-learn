@@ -1,13 +1,13 @@
 package com.mainoramg.buchalka.section6;
 
-public class Wall {
+public class Wall2 {
     private double width;
     private double height;
 
-    public Wall() {
+    public Wall2() {
     }
 
-    public Wall(double width, double height) {
+    public Wall2(double width, double height) {
         this.width = width < 0 ? 0 : width;
         this.height = height < 0 ? 0 : height;
     }
