@@ -1,4 +1,4 @@
-package com.mainoramg.buchalka.section6;
+package com.mainoramg.buchalka.section7;
 
 public class CompositionMain {
     public static void main(String[] args) {
