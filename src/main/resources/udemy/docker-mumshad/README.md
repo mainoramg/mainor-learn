@@ -191,3 +191,111 @@ docker logs blissful_hopper
 The container only lives as long as the process inside it is alive. For example if the web service inside the container stops or crashes then the container exits.
 
 When providing a `CONTAINER ID` to any of the commands, you can provide only the first characters that are different from the other containers on the host machine. For example: `docker attach a043d`
+
+## Docker Images
+
+### Dockerfile
+
+To create your own image locally in your system, create a `Dockerfile` with the following instructions:
+
+`FROM`: base image you want to use, usually an OS image. Every docker image must be based on another docker image. All Dockerfile must start with `FROM` instruction.
+
+`RUN`: to run a specific command to set up the image.
+
+`COPY`: to copy files from local system into the image.
+
+`ENTRYPOINT`: allow us to specify a command that will be run when the image is run as a container.
+
+This is an example of a Dockerfile:
+
+```dockerfile
+FROM ubuntu
+
+RUN apt-get update && apt-get -y install python
+
+RUN pip install flask flask-mysql
+
+COPY . /opt/source-code
+
+ENTRYPOINT  FLASK_APP=/opt/source-code/app.py flask run
+```
+
+To build the image, run the `build` command and use ` -f` to specify the `Dockerfile` and ` -t` to give it a name and tag:
+
+```shell
+docker build . -f Dockerfile -t mmumshad/my-custom-app
+```
+
+### docker push
+
+Before pushing your image, you must tag it (use ` -t`) when building it:
+
+```shell
+docker build . -t mmumshad/my-simple-webapp
+```
+
+If you want to make the image available for everyone, push it to the Docker Hub using the `push` command:
+
+```shell
+docker push mmumshad/my-custom-app
+```
+
+You have to log in first before pushing an image:
+
+```shell
+docker login
+```
+
+### docker history
+
+To see the history of an image, run the `history` command:
+
+```shell
+docker history mmumshad/simple-webapp
+```
+
+### Environment Variables
+
+To add an environment variable when running a container, use the ` -e`:
+
+```shell
+docker run -e APP_COLOR=blue simple-webapp-color
+```
+
+To find out what are the environment variables of an already running docker container, use the `inspect` command, you have to provide the `CONTAINER ID` or the `CONTAINER NAME`:
+
+```shell
+docker inspect blissful_hopper
+```
+
+You will see the environment variables under the `Config` section, and then the `Env` section.
+
+### Command vs Entrypoint
+
+To specify a command, use the `CMD` instruction:
+
+```dockerfile
+FROM ubuntu
+
+CMD sleep 5
+```
+
+There are two ways of specify the `CMD` instruction:
+
+```dockerfile
+CMD command param1
+```
+
+```dockerfile
+CMD ["command","param1"]
+```
+
+For example:
+
+```dockerfile
+CMD sleep 5
+```
+
+```dockerfile
+CMD ["sleep","5"]
+```
