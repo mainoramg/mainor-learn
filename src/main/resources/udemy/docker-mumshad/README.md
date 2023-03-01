@@ -272,6 +272,20 @@ You will see the environment variables under the `Config` section, and then the 
 
 ### Command vs Entrypoint
 
+To override the default `CMD` command specified within the image, append a command to the `docker run` command:
+
+```shell
+docker run ubuntu [COMMAND]
+```
+
+For example:
+
+```shell
+docker run ubuntu sleep 5
+```
+
+If you want to make that change permanent, specify a new command, you can create your own image and add the `CMD` argument with the command you want to run:
+
 To specify a command, use the `CMD` instruction:
 
 ```dockerfile
@@ -299,3 +313,29 @@ CMD sleep 5
 ```dockerfile
 CMD ["sleep","5"]
 ```
+
+The `ENTRYPOINT` instruction is like the `CMD` instruction as you can specify the command that will run when the container starts.
+
+If you append a command when running the container, it will get **appended** to the `ENTRYPOINT` command.
+
+But if you only have a `CMD` specified in the image, when you append a command when running the container, the `CMD` instruction in the image will get **replaced** with the one specified in the `docker run` command.
+
+To configure a default value to get appended to the `ENTRYPOINT` instruction, if there is no value specified when running the container, you use the `CMD` instruction:
+
+```dockerfile
+# this is the Dockerfile for ubuntu-sleeper
+FROM ubuntu
+
+ENTRYPOINT ["sleep"]
+
+CMD ["5"]
+```
+
+IMPORTANT NOTE: both `ENTRYPOINT` and `CMD` must be specified in JSON format (array format) to make the append/replace work.
+
+This command: `docker run ubuntu-sleeper` will append the default value specified in the `CMD` instruction in the image to the `ENTRYPOINT` command, so it will run: `sleep 5`
+
+This command: `docker run ubuntu-sleeper 10` will append the `10` to the `ENTRYPOINT`, so it will run: `sleep 10`.
+
+Finally, in case you want to override the `ENTRYPOINT` command, you can use the ` --entrypoint` and then the command: `docker run --entrypoint sleep2 ubuntu-sleeper 10`, so it will run: `sleep2 10`.
+
