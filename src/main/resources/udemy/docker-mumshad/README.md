@@ -82,6 +82,24 @@ Use the parameter ` -v` to map a volume (folder): specify the docker host path y
 docker run -v /opt/datadir:/var/lib/mysql mysql
 ```
 
+#### Links (Deprecated)
+
+IMPORTANT NOTE: this is deprecated.
+
+In order to link one container to others, which is basically add a entry to the `hosts` file, you use the parameter ` --link`: specify the container name, then a colon `:`, and finally the alias:
+
+```shell
+docker run -d --name=redis redis
+
+docker run -d --name=db postgres:9.4
+
+docker run -d --name=vote -p 5000:80 --link redis:redis voting-app
+
+docker run -d --name=result -p 5001:80 --link db:db result-app
+
+docker run -d --name=worker --link db:db --link redis:redis worker
+```
+
 ### docker attach
 
 To attach back to a running container, you have to provide the `CONTAINER ID` or the `CONTAINER NAME`:
@@ -339,3 +357,196 @@ This command: `docker run ubuntu-sleeper 10` will append the `10` to the `ENTRYP
 
 Finally, in case you want to override the `ENTRYPOINT` command, you can use the ` --entrypoint` and then the command: `docker run --entrypoint sleep2 ubuntu-sleeper 10`, so it will run: `sleep2 10`.
 
+## Docker Compose
+
+### docker-compose.yml
+
+This is a file when you specify multiple containers, so you can run one or more containers:
+
+Old way using only `docker run` command:
+
+```shell
+docker run -d --name=redis redis
+
+docker run -d --name=db postgres:9.4
+
+docker run -d --name=vote -p 5000:80 --link redis:redis voting-app
+
+docker run -d --name=result -p 5001:80 --link db:db result-app
+
+docker run -d --name=worker --link db:db --link redis:redis worker
+```
+
+New way using `docker-compose` command:
+
+This is the `docker-compose.yml`:
+
+```
+redis:
+  image: redis
+db:
+  image: postgres:9.4
+vote:
+  image: voting-app
+  ports:
+    - 5000:80
+  links:
+    - redis
+result:
+  image: result-app
+  ports:
+    - 5001:80
+  links:
+    - db
+worker:
+  image: worker
+  links:
+    - redis
+    - db
+```
+
+Note: when specifying the `links` these both ways are the same:
+
+```
+worker:
+  image: worker
+  links:
+    - redis
+    - db
+```
+
+```
+worker:
+  image: worker
+  links:
+    - redis: redis
+    - db: db
+```
+
+### docker-compose up
+
+Once `docker-compose.yml` file is ready, you run the `docker-compose up` command, it will read the `docker-compose.yml` and start all the containers:
+
+```shell
+docker-compose up
+```
+
+### docker-compose - build
+
+If you have your own container when runs your app, and it has a `Dockerfile`, you can use the `build` key in the `docker-compose.yml` file to build the image, for the value you add the path to the `Dockerfile`:
+
+```
+redis:
+  image: redis
+db:
+  image: postgres:9.4
+vote:
+  build: ./vote
+  ports:
+    - 5000:80
+  links:
+    - redis
+result:
+  build: ./result
+  ports:
+    - 5001:80
+  links:
+    - db
+worker:
+  build: ./worker
+  links:
+    - redis
+    - db
+```
+
+### docker-compose - versions
+
+#### version: 1
+
+Networking: attaches all the containers it runs to the default `bridge` network, and the uses `links` to enable communication between containers.
+
+```
+redis:
+  image: redis
+db:
+  image: postgres:9.4
+vote:
+  image: voting-app
+  ports:
+    - 5000:80
+  links:
+    - redis
+```
+
+#### version: 2
+
+From version 2 and on, you must specify the version at the top of the `docker-compose.yml`.
+
+Also, you have the new section `services` when you specify all the containers.
+
+Networking: automatically creates a dedicated `bridge` network for this application and then attaches all containers to that new network, so all containers are able to communicate using their service name. You don't need yo use `links` anymore.
+
+Introduces a `depends_on` feature: to specify the start-up order of the containers, in case you need to start a container before another.
+
+```
+version: 2
+services:
+  redis:
+    image: redis
+  db:
+    image: postgres:9.4
+  vote:
+    image: voting-app
+    ports:
+      - 5000:80
+    depends_on:
+      - redis
+```
+
+Another new section is `networks` when you can specify the networks, and then you can specify to each container to which network it will attach. This is an **incomplete** `docker-compose.yml` file, only to specify the networks section:
+
+```
+version: 2
+services:
+  redis:
+    image: redis
+    networks:
+      - back-end
+  db:
+    image: postgres:9.4
+    networks:
+      - back-end
+  vote:
+    image: voting-app
+    networks:
+      - front-end
+      - back-end
+  result:
+    image: result
+    networks:
+      - front-end
+      - back-end
+
+networks:
+  - front-end
+  - back-end
+```
+
+#### version: 3
+
+From version 2 and on, you must specify the version at the top of the `docker-compose.yml`.
+
+It comes with support for Docker Swarm.
+
+```
+version: 3
+services:
+  redis:
+    image: redis
+  db:
+    image: postgres:9.4
+  vote:
+    image: voting-app
+    ports:
+      - 5000:80
+```
