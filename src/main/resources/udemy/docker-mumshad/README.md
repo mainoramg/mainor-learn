@@ -82,6 +82,14 @@ Use the parameter ` -v` to map a volume (folder): specify the docker host path y
 docker run -v /opt/datadir:/var/lib/mysql mysql
 ```
 
+#### Restart Policy
+
+Use the parameter ` --restart` to setup the restart policy, a value could be `always`:
+
+```shell
+docker run -d --restart always registry:2
+```
+
 #### Links (Deprecated)
 
 IMPORTANT NOTE: this is deprecated.
@@ -150,6 +158,12 @@ List images:
 
 ```shell
 docker images
+```
+
+To remove all the dangling (without at least one container associated to them) images we have locally:
+
+```shell
+docker image prune -a
 ```
 
 ### docker rmi
@@ -550,3 +564,76 @@ services:
     ports:
       - 5000:80
 ```
+
+## Docker Registry
+
+When specifying the image name, the correct form is `user-or-account/image-or-repository`, but when the `user` or `account` is the same as the `image` or `repository`, you can only specify the `image`. Both are the same:
+
+```
+image: nginx
+```
+
+```
+image: nginx/nginx
+```
+
+If you do not specify the docker registry, it is assumed that images should be pull from Docker Hub (`docker.io`):
+
+```
+image: docker.io/nginx/nginx
+#      |_______| |___| |___|
+#      registry  user  image
+```
+
+### Private Registry
+
+If you want to use a private docker registry, you have to login to the private repository:
+
+```shell
+docker login my-private-docker-registry.com
+```
+
+Then to use an image from the private registry, you have to specify the registry:
+
+```shell
+docker run my-private-docker-registry.com/apps/internal-app
+```
+
+### Deploy Private Registry
+
+Docker provides an app (image) to run a local registry:
+
+```shell
+docker run -d -p 5000:5000 --name registry registry:2
+```
+
+Tag an image to the local registry running at `localhost:5000`:
+
+```shell
+docker image tag my-image localhost:5000/my-image
+```
+
+To push the image to the local registry at `localhost:5000`:
+
+```shell
+docker push localhost:5000/my-image
+```
+
+To pull the image from the local registry at `localhost:5000` you can use it as it is or use the IP/domain-name of the docker host:
+
+```shell
+docker pull localhost:5000/my-image
+
+docker pull 192.168.56.100:5000/my-image
+```
+
+To check the list of images pushed into the local registry:
+
+```shell
+curl -X GET localhost:5000/v2/_catalog
+```
+
+To remove images from our local registry:
+
+## Docker Engine, Storage and Networking
+
