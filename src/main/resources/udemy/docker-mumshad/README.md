@@ -637,3 +637,97 @@ To remove images from our local registry:
 
 ## Docker Engine, Storage and Networking
 
+### Docker Engine
+
+You can run the Docker CLI from a different computer than the one running the Docker Engine. You have to use ` -H` option:
+
+```shell
+docker -H=remote-docker-engine:2375
+
+# an example:
+docker -H=10.123.2.1:2375 run nginx
+```
+
+#### cgroups
+
+Docker uses `cgroups` to restrict the resources used in the system docker engine is running. You can limit the CPU and memory of a container by:
+
+```shell
+# limit CPU use to 50%:
+docker run --cpus=.5 ubuntu
+
+# limit memory:
+docker run --memory=100m ubuntu
+```
+
+#### Namespaces - PID
+
+The processes in the container run with a different PID than the host, but you can see the all processes running in the host, even the ones running in the container, but with a different PID.
+To see all the processes running in a container:
+
+```shell
+docker exec container-id ps -eaf
+```
+
+### Docker Storage
+
+Important terms:
+
+1. Layered Architecture:
+   1. Image Layers: read only
+   2. Container Layer: read write
+2. COPY-ON-WRITE
+
+#### volumes
+
+Default path in host system where docker volumes are storage: `/var/lib/docker/volumes`
+
+To crate a volume:
+
+```shell
+docker volume create data_volume
+```
+
+This will create the folder: `/var/lib/docker/volumes/data_volume`
+
+You can use this volume by passing the ` -v` option to the run command:
+
+```shell
+docker run -v data_volume:/var/lib/mysql mysql
+```
+
+Important note: if you do not create the volume, docker will automatically create the volume in the path: `/var/lib/docker/volumes/`. For example:
+
+```shell
+docker run -v data_volume2:/var/lib/mysql mysql
+```
+
+It creates automatically the folder: `/var/lib/docker/volumes/data_volume2`
+
+There are two types of mounts:
+
+1. Volume mounting: when tou create a volume a use it in the run command: `docker run -v data_volume:/var/lib/mysql mysql`
+2. Bind mounting: when you have the data in a different folder than `/var/lib/docker/volumes/`: `docker run -v /data/mysql:/var/lib/mysql mysql`
+
+The ` -v` option is deprecated, you should use ` --mount`:
+
+```shell
+# using -v:
+docker run -v /data/mysql:/var/lib/mysql mysql
+
+# using --mount:
+docker run --mount type=bind,source=/data/mysql,target=/var/lib/mysql mysql
+```
+
+#### Storage drivers
+
+Docker storage drivers are the responsible for all the layered architecture operations, moving files across layers, etc.
+
+Some common storage drivers are:
+
+1. AUFS
+2. ZFS
+3. BTRFS
+4. Device Mapper
+5. Overlay
+6. Overlay2
