@@ -731,3 +731,92 @@ Some common storage drivers are:
 4. Device Mapper
 5. Overlay
 6. Overlay2
+
+If you want to check which drivers docker is using:
+
+```shell
+docker info | more
+```
+
+To check the size of files in unix:
+
+```shell
+du -sh *
+```
+
+To see the actual disk space consumption by docker in the host system:
+
+```shell
+docker system df
+
+# to see a breakdown (more details) use -v:
+docker system df -v
+```
+
+### Docker Networking
+
+Docker has 3 defaults networks: `bridge`, `none`, and `host`
+
+To check more details about a network:
+
+```shell
+# instead of bridge you can input any network name
+docker network inspect bridge
+```
+
+#### bridge
+
+It is the network a container is attached by default. 
+
+You don't need to specify it when running a container: `docker run ubuntu`
+
+Containers get an IP usually in the range: `172.17.X.X`. You can use this IP to access other containers.
+
+To access containers attached to this network from the outside world, map the ports of this container to ports in the host system.
+
+#### none
+
+You have to specify it when running a container: `docker run --network=none ubuntu`
+
+The containers are NOT attach to any network. Containers do not have any external access. Containers run in an isolated network.
+
+#### host
+
+You have to specify it when running a container: `docker run --network=host ubuntu`
+
+If you attach a container to this network, it takes out any network isolation between the docker host and the container.
+
+For example, if you run a webserver that listens the port 5000, you can access it from the docker host without any port mapping required.
+
+If several containers are attached to this network, be careful to use different port on each service on each container. Multiple containers cannot use the same ports.
+
+#### User-defined networks
+
+To create a network:
+
+```shell
+docker network create \
+ --driver brigde \
+ --subnet 182.18.0.0/16 \
+ the-name-of-my-isolated-network
+```
+
+To list all networks:
+
+```shell
+docker network ls
+```
+
+To find out what networks the container is attached, use the `inspect` command, you have to provide the `CONTAINER ID` or the `CONTAINER NAME`. Check under the `"Networks"` section:
+
+```shell
+docker inspect blissful_hopper
+```
+
+#### Embedded DNS
+
+Containers can reach each other using their names if they are attached to the same network.
+
+You can use the IP to access each other, but IP could change if you restart the containers. Better to use the name of the containers.
+
+The DNS server runs at `127.0.0.11`
