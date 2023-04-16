@@ -820,3 +820,91 @@ Containers can reach each other using their names if they are attached to the sa
 You can use the IP to access each other, but IP could change if you restart the containers. Better to use the name of the containers.
 
 The DNS server runs at `127.0.0.11`
+
+## Container Orchestration
+
+There are multiple orchestration solutions like: Docker Swarm, Kubernetes, MESOS.
+
+### Docker Swarm
+
+You need to setup multiple Docker Host. 
+
+Select one host to be the manager (master), this one is called Swarm Manager. Run the following command in the Swarm Manager to  initialize the Swarm Manager:
+
+```shell
+docker swarm init
+```
+
+It will provide the command to be run in the slaves (Worker Node):
+
+```shell
+# replace <token> with the token provided
+docker swarm join --token <token>
+```
+
+#### Docker Service
+
+To create a service run the following command in the Swarm Manager node:
+
+```shell
+docker service create --replicas=3 my-image-name
+```
+
+It will create 3 Worker Nodes running the image we provided.
+
+The `docker service` command is similar to the `docker run` command, you can pass same parameters:
+
+```shell
+# some examples:
+docker service create --replicas=3 -p 8080:80 my-image-name
+docker service create --replicas=3 --network frontend my-image-name
+```
+
+### Kubernetes
+
+To run a kubernetes cluster:
+
+```shell
+# run a kubernetes cluster:
+kubectl run --replicas=1000 my-image-name
+
+# scale a kubernetes cluster (add more replicas):
+kubectl scale --replicas=2000 my-image-name
+
+# update all the images one by one using a single command:
+kubectl rolling-update my-image-name --image=my-other-image-name:2
+
+# if something goes wrong with the update, you can rollback:
+kubectl rolling-update my-image-name --rollback
+```
+
+#### Kubernetes architecture
+
+It has nodes, a node runs our containers. A cluster is multiple nodes. One node has to be the master.
+
+When you install kubernetes, actually you install all its components:
+
+1. API Server: act as the frontend for Kubernetes. The way to interact with the kubernetes cluster.
+2. etcd: it is a key and value store for all the data to manage the clusters. To prevent conflicts between the masters.
+3. kubelet: the agent that runs in on each node in the cluster. Responsible for making sure the container is running on the node as expected.
+4. Container Runtime: underlying software to run containers, like Docker.
+5. Controller: brain behind orchestration. Responsible for noticing if nodes goes down and bring up new nodes if necessary.
+6. Scheduler: it looks for new created containers and assigns it to nodes.
+
+#### kubectl
+
+Kubernetes CLI is called Kube Control `kubectl`.
+
+```shell
+# To deploy an application to the cluster:
+kubectl run hello-minikube
+
+# To run several applications on the cluster:
+kubectl run my-web-app --image=my-web-app --replicas=1000
+
+# To view information about the cluster:
+kubectl cluster-info
+
+# To list all the nodes of the cluster:
+kubectl get nodes
+```
