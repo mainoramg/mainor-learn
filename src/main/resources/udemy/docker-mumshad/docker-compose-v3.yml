@@ -1,0 +1,34 @@
+version: "3"
+services:
+  redis:
+    image: "redis"
+    networks:
+      - backend
+  db:
+    image: "postgres:9.4"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    networks:
+      - backend
+  worker:
+    build: ./worker
+    networks:
+      - backend
+  vote:
+    build: ./vote
+    ports:
+      - 5001:80
+    networks:
+      - frontend
+      - backend
+  result:
+    build: ./result
+    ports:
+      - 5002:80
+    networks:
+      - frontend
+      - backend
+networks:
+  frontend:
+  backend:
